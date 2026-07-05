@@ -9,10 +9,10 @@ import {
   Boxes,
   CreditCard,
   FolderOpen,
-  LayoutDashboard,
   ListChecks,
   LogOut,
   Menu,
+  RadioTower,
   Settings,
   X,
 } from "lucide-react";
@@ -23,7 +23,7 @@ import { useState } from "react";
 import { ThemeSwitcher } from "./theme-switcher";
 
 const NAV = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/", label: "GitNews", icon: RadioTower },
   { href: "/jobs", label: "Jobs", icon: ListChecks },
   { href: "/platform", label: "Platform", icon: Boxes },
   { href: "/files", label: "Files", icon: FolderOpen },
