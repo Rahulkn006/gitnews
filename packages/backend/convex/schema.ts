@@ -86,6 +86,45 @@ export default defineSchema({
     createdAt: v.number(),
   }).index("by_workspace", ["workspaceId"]),
 
+  categories: defineTable({
+    name: v.string(),
+    slug: v.string(),
+    description: v.optional(v.string()),
+  }).index("by_slug", ["slug"]),
+
+  repositories: defineTable({
+    githubId: v.string(),
+    name: v.string(),
+    owner: v.string(),
+    avatar: v.optional(v.string()),
+    description: v.optional(v.string()),
+    stars: v.number(),
+    forks: v.number(),
+    language: v.optional(v.string()),
+    topics: v.array(v.string()),
+    readme: v.optional(v.string()),
+    repoUrl: v.string(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+    trendingScore: v.number(),
+    aiSummary: v.optional(v.string()),
+    category: v.optional(v.string()),
+  })
+    .index("by_github_id", ["githubId"])
+    .index("by_updated", ["updatedAt"])
+    .index("by_stars", ["stars"])
+    .index("by_trending", ["trendingScore"])
+    .index("by_category", ["category"]),
+
+  bookmarks: defineTable({
+    userId: v.id("users"),
+    repositoryId: v.id("repositories"),
+    createdAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_repository", ["repositoryId"])
+    .index("by_user_repository", ["userId", "repositoryId"]),
+
   workspaces: defineTable({
     name: v.string(),
     ownerId: v.id("users"),
