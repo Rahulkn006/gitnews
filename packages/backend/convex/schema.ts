@@ -108,13 +108,28 @@ export default defineSchema({
     updatedAt: v.number(),
     trendingScore: v.number(),
     aiSummary: v.optional(v.string()),
+    developerAnalysis: v.optional(
+      v.object({
+        targetAudience: v.string(),
+        ecosystemFit: v.string(),
+      })
+    ),
+    verdict: v.optional(
+      v.object({
+        learningValue: v.string(),
+        futurePotential: v.string(),
+        communityStrength: v.string(),
+        summary: v.string(),
+      })
+    ),
     category: v.optional(v.string()),
   })
     .index("by_github_id", ["githubId"])
     .index("by_updated", ["updatedAt"])
     .index("by_stars", ["stars"])
     .index("by_trending", ["trendingScore"])
-    .index("by_category", ["category"]),
+    .index("by_category", ["category"])
+    .index("by_owner_name", ["owner", "name"]),
 
   bookmarks: defineTable({
     userId: v.id("users"),

@@ -27,44 +27,84 @@ function normalizeTopics(topics?: string[] | null): string[] {
   return (topics ?? []).slice(0, 10).map((topic) => topic.toLowerCase());
 }
 
-async function buildAiSummary(repo: GitHubRepository, readme?: string): Promise<string> {
+type AiAnalysisResult = {
+  aiSummary: string;
+  developerAnalysis?: {
+    targetAudience: string;
+    ecosystemFit: string;
+  };
+  verdict?: {
+    learningValue: string;
+    futurePotential: string;
+    communityStrength: string;
+    summary: string;
+  };
+};
+
+async function buildAiAnalysis(repo: GitHubRepository, readme?: string): Promise<AiAnalysisResult> {
+  const language = repo.language ?? "general purpose";
+  const stars = repo.stargazers_count;
+  const description = repo.description ? ` ${repo.description}` : "";
+  const fallbackSummary = `A ${language} repository${description} with ${stars} stars and strong community momentum.`;
+
   if (!process.env.TOGETHER_API_KEY) {
-    const language = repo.language ?? "general purpose";
-    const stars = repo.stargazers_count;
-    const description = repo.description ? ` ${repo.description}` : "";
-    return `A ${language} repository${description} with ${stars} stars and strong community momentum.`;
+    return { aiSummary: fallbackSummary };
   }
 
   try {
     const textToAnalyze = `
 Name: ${repo.name}
 Description: ${repo.description ?? "None"}
+Language: ${repo.language ?? "None"}
+Topics: ${(repo.topics ?? []).join(", ")}
+Stars: ${repo.stargazers_count}
 Readme Excerpt: ${(readme ?? "").slice(0, 1000)}
     `;
 
     const response = await openai.chat.completions.create({
       model: "meta-llama/Llama-3-70b-chat-hf",
+      response_format: { type: "json_object" },
       messages: [
         {
           role: "system",
-          content: "You are a professional tech analyst. Write a concise, 1-sentence description summarizing this GitHub repository's main purpose, uniqueness, and ideal developer use-case. Do not mention stars or numbers. Keep it under 20 words.",
+          content: `You are a professional tech analyst. Analyze the GitHub repository and output ONLY a JSON object with the following schema:
+{
+  "aiSummary": "A concise, 1-sentence description summarizing its main purpose, uniqueness, and ideal developer use-case (under 20 words).",
+  "developerAnalysis": {
+    "targetAudience": "Who is this for? e.g., 'Beginner friendly.', 'Enterprise ready.', or 'Startups and mid-sized teams.'",
+    "ecosystemFit": "How it fits into modern workflows. e.g., 'Integrates well into modern React workflows.'"
+  },
+  "verdict": {
+    "learningValue": "e.g., 'Excellent', 'Good', 'Average'",
+    "futurePotential": "e.g., 'High', 'Moderate', 'Low'",
+    "communityStrength": "e.g., 'Very Active', 'Growing', 'Stable'",
+    "summary": "A 1-2 sentence final verdict on why developers should or should not use this."
+  }
+}`,
         },
         {
           role: "user",
           content: textToAnalyze,
         },
       ],
-      max_tokens: 60,
+      max_tokens: 300,
       temperature: 0.3,
     });
 
-    const summary = response.choices[0]?.message?.content?.trim();
-    if (summary) return summary;
+    const content = response.choices[0]?.message?.content?.trim();
+    if (content) {
+      try {
+        const parsed = JSON.parse(content) as AiAnalysisResult;
+        if (parsed.aiSummary) return parsed;
+      } catch (parseErr) {
+        console.error("Failed to parse JSON from AI", parseErr);
+      }
+    }
   } catch (err) {
     console.error("Together AI summarization failed:", err);
   }
 
-  return repo.description ?? "Open source repository with strong developer traction.";
+  return { aiSummary: repo.description ?? fallbackSummary };
 }
 
 type GitHubRepository = {
@@ -165,7 +205,7 @@ export const syncGitHubData = internalAction({
     const repos = Array.from(deduped.values());
     for (const repo of repos) {
       const readme = await fetchReadme(repo.owner.login, repo.name);
-      const aiSummary = await buildAiSummary(repo, readme);
+      const analysis = await buildAiAnalysis(repo, readme);
       const starsVal = repo.stargazers_count ?? 0;
       const forksVal = repo.forks_count ?? 0;
       const createdTime = repo.created_at ? new Date(repo.created_at).getTime() : Date.now();
@@ -186,7 +226,9 @@ export const syncGitHubData = internalAction({
         createdAt: isNaN(createdTime) ? Date.now() : createdTime,
         updatedAt: isNaN(updatedTime) ? Date.now() : updatedTime,
         trendingScore: starsVal + forksVal,
-        aiSummary,
+        aiSummary: analysis.aiSummary,
+        developerAnalysis: analysis.developerAnalysis,
+        verdict: analysis.verdict,
         category: buildCategory(repo.language ?? repo.name),
       });
     }
@@ -233,6 +275,20 @@ export const upsertRepository = internalMutation({
     updatedAt: v.number(),
     trendingScore: v.number(),
     aiSummary: v.optional(v.string()),
+    developerAnalysis: v.optional(
+      v.object({
+        targetAudience: v.string(),
+        ecosystemFit: v.string(),
+      })
+    ),
+    verdict: v.optional(
+      v.object({
+        learningValue: v.string(),
+        futurePotential: v.string(),
+        communityStrength: v.string(),
+        summary: v.string(),
+      })
+    ),
     category: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
@@ -293,6 +349,17 @@ export const getRepoDetails = query({
     const repo = await ctx.db
       .query("repositories")
       .withIndex("by_github_id", (q) => q.eq("githubId", githubId))
+      .unique();
+    return repo ?? null;
+  },
+});
+
+export const getRepoByOwnerAndName = query({
+  args: { owner: v.string(), name: v.string() },
+  handler: async (ctx, { owner, name }) => {
+    const repo = await ctx.db
+      .query("repositories")
+      .withIndex("by_owner_name", (q) => q.eq("owner", owner).eq("name", name))
       .unique();
     return repo ?? null;
   },

@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import { MarketFeed } from '../components/react/market-feed';
+---
+
+<Layout title="Market Index — GitNews" description="Live developer technology intelligence and market movements.">
+  <Navbar />
+  <MarketFeed client:load />
+</Layout>

@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import { LivePulseFeed } from '../components/react/live-pulse-feed';
+---
+
+<Layout title="Live Pulse — GitNews" description="Real-time monitoring of repositories gaining attention across the developer ecosystem.">
+  <Navbar />
+  <LivePulseFeed client:load />
+</Layout>

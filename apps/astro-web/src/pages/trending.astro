@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import { TrendingFeed } from '../components/react/trending-feed';
+---
+
+<Layout title="Trending Repositories — GitNews" description="See what the GitHub community is most excited about today.">
+  <Navbar />
+  <TrendingFeed client:load />
+</Layout>

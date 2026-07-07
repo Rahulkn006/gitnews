@@ -1,0 +1,10 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import { ReposBrowser } from '../../components/react/repos-browser';
+---
+
+<Layout title="Repository Browser — GitNews" description="Browse and filter open-source packages and frameworks.">
+  <Navbar />
+  <ReposBrowser client:load />
+</Layout>

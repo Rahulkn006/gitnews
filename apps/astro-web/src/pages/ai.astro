@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import { AIFeed } from '../components/react/ai-feed';
+---
+
+<Layout title="AI Intelligence — GitNews" description="The latest open-source LLMs, AI agents, and ML frameworks.">
+  <Navbar />
+  <AIFeed client:load />
+</Layout>

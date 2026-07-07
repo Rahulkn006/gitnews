@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import { NewsFeed } from '../components/react/news-feed';
+---
+
+<Layout title="The Chronicle — GitNews" description="Latest releases, breaking changes, and critical updates from the open-source ecosystem.">
+  <Navbar />
+  <NewsFeed client:load />
+</Layout>

@@ -1,0 +1,85 @@
+---
+import "../styles/globals.css";
+import { ThemeProvider } from "@/components/react/theme-provider";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "GitNews — AI-Powered GitHub Intelligence Directory", 
+  description = "Discover trending GitHub repositories, developer tools, machine learning framework launches, and technology news." 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark" suppress-hydration-warning>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
+    
+    <!-- Inline theme script: runs before paint to prevent FOUC -->
+    <script is:inline>
+      (function() {
+        try {
+          var theme = localStorage.getItem('theme');
+          if (theme === 'light') {
+            document.documentElement.classList.remove('dark');
+          } else if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            // System preference
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+              document.documentElement.classList.add('dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <style is:global>
+      @font-face {
+        font-family: 'Departure Mono';
+        src: url('/DepartureMono-Regular.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      :root {
+        --font-lora: 'Lora', serif;
+        --font-departure-mono: 'Departure Mono', monospace;
+        --font-geist-sans: 'Geist', sans-serif;
+        --font-geist-mono: 'Geist Mono', monospace;
+      }
+      body {
+        font-family: var(--font-geist-sans);
+      }
+      /* Fix scrolling: ensure html/body can scroll freely */
+      html, body {
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-background font-sans antialiased text-foreground">
+    <ThemeProvider client:load>
+        <!-- Navbar -->
+        <main>
+          <slot />
+        </main>
+        <!-- Footer -->
+    </ThemeProvider>
+  </body>
+</html>

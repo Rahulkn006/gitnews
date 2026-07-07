@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import { GitNewsFeed } from '../components/react/gitnews-feed';
+---
+
+<Layout>
+  <Navbar />
+  <GitNewsFeed client:load />
+</Layout>
