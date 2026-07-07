@@ -9,6 +9,7 @@ import {
   getBadge,
   badgeStyles,
 } from "@/lib/utils";
+import { RepoHoverPreview } from "./repo-hover-preview";
 
 interface RepoCardProps {
   repo: any;
@@ -95,6 +96,7 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
             {badge.label}
           </span>
         </div>
+        <RepoHoverPreview repo={repo} isVisible={hovered} />
       </article>
     );
   }
@@ -274,6 +276,7 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
 
         </div>
       </div>
+      <RepoHoverPreview repo={repo} isVisible={hovered} />
     </article>
   );
 }

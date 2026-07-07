@@ -1,0 +1,33 @@
+---
+interface Props {
+  learningValue: string;
+  futurePotential: string;
+  communityStrength: string;
+}
+
+const { learningValue, futurePotential, communityStrength } = Astro.props;
+---
+
+<section className="flex flex-col gap-4 mt-8">
+  <div className="flex items-center gap-3 border-b-2 border-stone-900 dark:border-stone-100 pb-2">
+    <span className="w-2 h-2 bg-emerald-500 rounded-sm"></span>
+    <h2 className="font-serif font-black uppercase tracking-tight text-xl text-stone-900 dark:text-white">
+      GitNews Intelligence Score
+    </h2>
+  </div>
+
+  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2">
+    <div className="flex flex-col gap-2 p-4 border border-stone-200 dark:border-stone-800 rounded-lg">
+      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-stone-500">Learning Value</span>
+      <span className="font-bold text-lg text-stone-900 dark:text-stone-100">{learningValue}</span>
+    </div>
+    <div className="flex flex-col gap-2 p-4 border border-stone-200 dark:border-stone-800 rounded-lg">
+      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-stone-500">Community Strength</span>
+      <span className="font-bold text-lg text-stone-900 dark:text-stone-100">{communityStrength}</span>
+    </div>
+    <div className="flex flex-col gap-2 p-4 border border-stone-200 dark:border-stone-800 rounded-lg">
+      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-stone-500">Future Potential</span>
+      <span className="font-bold text-lg text-emerald-600 dark:text-emerald-400">{futurePotential}</span>
+    </div>
+  </div>
+</section>

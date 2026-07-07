@@ -1,0 +1,31 @@
+---
+interface Props {
+  name: string;
+  insights: string[];
+}
+
+const { name, insights } = Astro.props;
+---
+
+<section className="flex flex-col gap-4 border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-[#111] p-6 rounded-xl">
+  <h2 className="font-serif font-black text-xl md:text-2xl tracking-tight text-stone-900 dark:text-white flex items-center gap-2">
+    <span>🔥</span> Why {name} is trending
+  </h2>
+  <ul className="flex flex-col gap-3 mt-2 pl-0">
+    {insights.length > 0 ? insights.map((insight) => (
+      <li className="flex items-start gap-3">
+        <span className="text-emerald-500 font-bold mt-1 shrink-0">•</span>
+        <span className="text-stone-700 dark:text-stone-300 leading-relaxed font-sans text-base">
+          {insight}
+        </span>
+      </li>
+    )) : (
+      <li className="flex items-start gap-3">
+        <span className="text-emerald-500 font-bold mt-1 shrink-0">•</span>
+        <span className="text-stone-700 dark:text-stone-300 leading-relaxed font-sans text-base">
+          Strong community adoption and recent activity signals.
+        </span>
+      </li>
+    )}
+  </ul>
+</section>

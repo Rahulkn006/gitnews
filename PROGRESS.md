@@ -226,3 +226,45 @@ All fixes have been verified after server restart:
 - React islands in Astro use `client:load` directive for immediate hydration
 - The `convex-client-provider.tsx` in `apps/astro-web` is a leftover from Next.js and is NOT used — the `withConvex()` HOC pattern is used instead
 - Astro dev server command: `npx astro dev --host 0.0.0.0 --port 4321` (from `apps/astro-web/`)
+
+
+# GitNews Development Progress
+
+## Phase 1: Repository Hover Intelligence Preview
+- **Goal:** Provide instant, detailed insights when a user hovers over a repository card on the main feed.
+- **Changes:**
+  - Created a React-based hover overlay component `RepoHoverPreview` (`apps/astro-web/src/components/react/repo-hover-preview.tsx`).
+  - Integrated `RepoHoverPreview` into the main `RepoCard` component.
+  - Implemented the layout using the existing GitNews aesthetic with floating cards, displaying the repository name, description, why developers watch it, stars, language, and a verdict.
+  - Ensured the UI uses instant React-state hover (no API calls during hover) and preserves the Astro SSR structure.
+
+## Phase 2: Repository Intelligence Article Page
+- **Goal:** Create a deep research page for every repository when clicked.
+- **Changes:**
+  - Created dynamic Astro route: `apps/astro-web/src/pages/repo/[owner]/[repo].astro`.
+  - Created modular intelligence components for the article layout:
+    - `RepoHeader.astro`: Displays repository title, stars, forks, language, and growth metrics.
+    - `WhyTrending.astro`: A dedicated section outlining the major reasons a repository is trending (using bullet points and newspaper style).
+    - `RepoScore.astro`: Highlights the Learning Value, Future Potential, and Community Strength.
+  - Implemented placeholders for future deep-research integrations (Ollagraph and YouTube).
+
+## Phase 3: Ollagraph Repository Research Service
+- **Goal:** Add Ollagraph as the backend intelligence engine to fetch real research for repositories without spamming API calls.
+- **Changes:**
+  - Securely saved the API Key into `apps/astro-web/.env.local`.
+  - Rebuilt `apps/astro-web/src/services/ollagraph.ts` to implement `analyzeRepository(owner, repo)`.
+  - Added a highly aggressive 24-hour in-memory cache system (via JS `Map`) to store results based on `owner/repo` keys, eliminating redundant API calls.
+  - Implemented an `AbortController` (8-second timeout) and strict error handling (`try/catch`).
+  - Built a fallback mechanism that perfectly mimics the expected payload structure using basic Convex data if the Ollagraph API times out or fails authorization.
+  - Fully wired the backend service into the frontend page at `[repo].astro`. Now, when a user clicks a repository, the server fetches from Ollagraph and populates the "Why Developers Are Watching" and "Repository Insights" sections natively.
+
+## Hotfixes & Stability Improvements
+- **Environment Variable Restoration:** Re-added `PUBLIC_CONVEX_URL` to `.env.local` after an accidental overwrite disconnected the frontend from the Convex backend (which caused an infinite "Fetching Intelligence..." spinner).
+- **React Hydration Crash Fix:** Fixed a `ReferenceError: process is not defined` bug that caused a white screen/infinite spinner. The `ollagraph.ts` service now uses a safe browser-friendly environment check (`getEnv()` with `try/catch`) so that Vite's React hydration doesn't crash when it indirectly imports the backend service in the browser context.
+
+## Current Status
+- The GitNews platform is fully stable.
+- The repository feed loads properly from Convex.
+- The hover preview popups work on the main feed.
+- Clicking any repository loads the deep-research article page.
+- The backend seamlessly queries Ollagraph (with a 24-hour cache limit) and safely falls back if the API is unavailable.

@@ -68,3 +68,17 @@ export const LEARNING_SIGNALS_DATA = [
     reason: "Infrastructure growth.",
   },
 ];
+
+import { fetchOpportunityRadar, fetchShouldLearnThis } from "./ollagraph-handlers";
+
+/**
+ * Async fetchers ready for Ollagraph integration.
+ * Will replace static data in future UI updates.
+ */
+export async function getOpportunityRadarData() {
+  return fetchOpportunityRadar();
+}
+
+export async function getShouldLearnThisData() {
+  return fetchShouldLearnThis();
+}

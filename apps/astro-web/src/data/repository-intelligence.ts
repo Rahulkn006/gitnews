@@ -37,3 +37,13 @@ export const WHY_TRENDING_DATA = [
     score: "92/100",
   }
 ];
+
+import { fetchWhyTrendingIntelligence } from "./ollagraph-handlers";
+
+/**
+ * Async fetcher ready for Ollagraph integration.
+ * Will replace static WHY_TRENDING_DATA in future UI updates.
+ */
+export async function getWhyTrendingData() {
+  return fetchWhyTrendingIntelligence();
+}

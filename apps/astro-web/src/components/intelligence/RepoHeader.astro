@@ -1,0 +1,53 @@
+---
+interface Props {
+  name: string;
+  owner: string;
+  description: string;
+  language: string;
+  stars: number;
+  forks: number;
+  weeklyGrowth?: number;
+}
+
+const { name, owner, description, language, stars, forks, weeklyGrowth = 0 } = Astro.props;
+
+function formatNumber(num: number) {
+  if (num >= 1000000) return (num / 1000000).toFixed(1) + "M";
+  if (num >= 1000) return (num / 1000).toFixed(1) + "k";
+  return num.toString();
+}
+---
+
+<header className="flex flex-col gap-6 pb-8 border-b-2 border-stone-900 dark:border-stone-100 mb-8">
+  <div className="flex flex-col gap-2">
+    <div className="flex items-center gap-2">
+      <span className="font-mono text-sm font-bold uppercase tracking-widest text-stone-500">{owner} /</span>
+    </div>
+    <h1 className="font-serif text-5xl md:text-6xl font-black tracking-tight text-stone-900 dark:text-stone-50">
+      {name}
+    </h1>
+  </div>
+  
+  <p className="text-xl md:text-2xl font-serif text-stone-600 dark:text-stone-300 leading-relaxed max-w-4xl border-l-4 border-emerald-500 pl-4">
+    {description}
+  </p>
+
+  <div className="flex flex-wrap gap-4 mt-2">
+    <div className="flex flex-col gap-1 bg-stone-100 dark:bg-stone-900/50 p-3 rounded-lg border border-stone-200 dark:border-stone-800 min-w-24">
+      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-stone-500">Language</span>
+      <span className="font-bold text-stone-900 dark:text-stone-100">{language || "General"}</span>
+    </div>
+    <div className="flex flex-col gap-1 bg-stone-100 dark:bg-stone-900/50 p-3 rounded-lg border border-stone-200 dark:border-stone-800 min-w-24">
+      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-stone-500">Stars</span>
+      <span className="font-mono font-bold text-stone-900 dark:text-stone-100">{formatNumber(stars)}</span>
+    </div>
+    <div className="flex flex-col gap-1 bg-stone-100 dark:bg-stone-900/50 p-3 rounded-lg border border-stone-200 dark:border-stone-800 min-w-24">
+      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-stone-500">Forks</span>
+      <span className="font-mono font-bold text-stone-900 dark:text-stone-100">{formatNumber(forks)}</span>
+    </div>
+    <div className="flex flex-col gap-1 bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded-lg border border-emerald-200 dark:border-emerald-800 min-w-24">
+      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-500">Growth</span>
+      <span className="font-mono font-bold text-emerald-700 dark:text-emerald-400">+{formatNumber(weeklyGrowth)}</span>
+    </div>
+  </div>
+</header>
