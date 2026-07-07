@@ -1,0 +1,94 @@
+================================================================================
+                    GitNews Project Progress Report
+================================================================================
+
+Project Name    : GitNews
+Repository      : Rahulkn006/gitnews
+Report Date     : 2026-07-06
+Prepared By     : AI Coding Assistant
+
+================================================================================
+                        TODAYS PROGRESS (2026-07-06)
+================================================================================
+
+1. PREMIUM NEWSPAPER/MAGAZINE UI DESIGN SYSTEM
+   - Redesigned repository card components (apps/web/src/components/repo-card.tsx)
+     to achieve a premium editorial, monospace-accented layout.
+   - Integrated dynamic badges: "Trending", "Launch", "New Star", and "Rising".
+   - Implemented sleek typography, custom language color indicators, and star/fork
+     formatting filters (e.g., converting 1200 stars to 1.2k).
+   - Designed special layout features:
+     * Theme-aware colors with custom CSS variables (light/dark compatible).
+     * Modern decorative elements like cut-corner boxes via .clip-cut styles.
+     * Hover glow states (.card-glow) and radial gradient background meshes.
+     * Integrated a README preview drawer/expansion for large featured cards.
+
+2. LIGHT/DARK THEME SWITCHER
+   - Integrated `next-themes` and established a clean dark-by-default environment.
+   - Built a custom ThemeProvider wrapper (apps/web/src/components/theme-provider.tsx)
+     and ThemeToggle switcher component with sun/moon icons.
+   - Refactored global styles (packages/ui/src/globals.css) with CSS variables:
+     --paper, --ink, --kicker, and --rule for beautiful newspaper surfaces.
+   - Wrapped the root layout and integrated the toggle cleanly into the navbar.
+
+3. HOME BENTO GRID & DYNAMIC SIDEBARS
+   - Designed the Homepage Bento Grid (`apps/web/src/app/page.tsx`) with clear sections:
+     * Top-level marquee/ticker showing hot GitHub projects.
+     * "Today's Picks" featuring a large main card, medium grids, and small list items.
+     * "Yesterday's Highlights" showing secondary trending history.
+   - Integrated modular sidebar panels:
+     * AiNewsBrief (apps/web/src/components/ai-news-brief.tsx) for curated AI briefs.
+     * LanguageChart (apps/web/src/components/language-chart.tsx) with custom progress bars.
+     * NewsletterCard (apps/web/src/components/newsletter-card.tsx) for user subscriptions.
+
+4. CONVEX BACKEND OPTIMIZATION & WARNING FIX
+   - Fixed the persistent Convex warning "Unknown context provider okf".
+   - Cleanly removed Polar billing component references from the configuration
+     (packages/backend/convex/convex.config.ts) and stubbed out subscription APIs
+     in packages/backend/convex/subscriptions.ts to run backend queries cleanly.
+   - Updated DB schema (packages/backend/convex/schema.ts) to define the `news` table
+     storing AI summaries and tech wire news items.
+
+================================================================================
+            JULY 2, 2026 — PROJECT START & FOUNDATION TASKS
+================================================================================
+
+1. MONOREPO INITIALIZATION & SETUP
+   - Initialized the template repository base configured under the GitNews namespace.
+   - Formatted monorepo workspaces:
+     * apps/web         -> Next.js frontend workspace
+     * packages/backend -> Convex database backend
+     * packages/ui      -> Shared components and Tailwind setup
+
+2. CORE SCHEMAS & DATABASE LAYOUT
+   - Designed the initial Convex backend database tables:
+     * `repositories`: stores name, owner, description, stars, forks, language,
+       trending score, andTogether AI summaries.
+     * `categories`: tracks sectors like AI Agents, LLM Tools, Infrastructure.
+   - Drafted queries and mutations:
+     * `github:getTrendingRepos` for main feed fetches.
+     * `news:seedNews` to populate initial magazine wire articles.
+
+3. GITHUB API SYNCRONIZATION & AI SUMMARIZATION
+   - Developed background actions (`github:syncGitHubData`) to fetch hot projects
+     directly via GitHub's API.
+   - Added Together AI neural model prompting logic to automatically summarize
+     repositories into simple developer-oriented summaries.
+
+4. INITIAL RUN CONFIGURATIONS
+   - Tested local hot-reloading configurations:
+     * Next.js web application launch commands (`bun run dev:web`).
+     * Seed and sync triggers (`npx convex run news:seedNews`).
+   - Drafted architecture documentation mapping out endpoints and running guidelines.
+
+================================================================================
+                                SUMMARY
+================================================================================
+
+From the initial setup on July 2, 2026, through today (July 6, 2026), the GitNews
+project has progressed from an empty monorepo template into a fully functional,
+premium-designed, live-syncing tech magazine. The backend successfully fetches,
+summarizes, and stores active developer hubs, while the frontend delivers a
+high-fidelity, responsive, newspaper-themed UI with robust light/dark styling.
+
+================================================================================

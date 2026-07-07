@@ -6,6 +6,9 @@ export default {
   presets: [baseConfig],
   theme: {
     extend: {
+      fontFamily: {
+        serif: ["var(--font-lora)", "Georgia", "serif"],
+      },
       animation: {
         marquee: "marquee 25s linear infinite",
         marquee2: "marquee2 25s linear infinite",

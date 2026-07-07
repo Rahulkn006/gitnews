@@ -9,8 +9,8 @@ const http = httpRouter();
 auth.addHttpRoutes(http);
 
 // Register the webhook handler at /polar/events
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-polar.registerRoutes(http as any);
+// @ts-ignore
+if (polar) (polar as any).registerRoutes(http as any);
 
 // --- Hybrid adapter WEBHOOK PATH: external backend posts results/events here ---
 http.route({

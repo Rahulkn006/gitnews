@@ -1,6 +1,7 @@
 import "@v1/ui/globals.css";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { GitNewsFooter } from "@/components/gitnews-footer";
+import { Navbar } from "@/components/navbar";
+import { ThemeProvider } from "@/components/theme-provider";
 import { Provider as AnalyticsProvider } from "@v1/analytics/client";
 import { cn } from "@v1/ui/utils";
 import { GeistMono } from "geist/font/mono";
@@ -9,16 +10,23 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { ConvexClientProvider } from "./convex-client-provider";
 
+import { Lora } from "next/font/google";
+
 const DepartureMono = localFont({
   src: "../fonts/DepartureMono-Regular.woff2",
   variable: "--font-departure-mono",
 });
 
+const lora = Lora({
+  subsets: ["latin"],
+  variable: "--font-lora",
+});
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://convex-v1.run"),
-  title: "Create v1",
+  metadataBase: new URL("https://gitnews.ai"),
+  title: "GitNews — AI-Powered GitHub Intelligence Directory",
   description:
-    "A free, open-source starter kit for your next project, built with insights from Midday.",
+    "Discover trending GitHub repositories, developer tools, machine learning framework launches, and technology news.",
 };
 
 export default function RootLayout({
@@ -30,15 +38,17 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `${DepartureMono.variable} ${GeistSans.variable} ${GeistMono.variable}`,
-          "antialiased dark",
+          `${DepartureMono.variable} ${GeistSans.variable} ${GeistMono.variable} ${lora.variable}`,
+          "antialiased",
         )}
       >
-        <ConvexClientProvider>
-          <Header />
-          {children}
-          <Footer />
-        </ConvexClientProvider>
+        <ThemeProvider>
+          <ConvexClientProvider>
+            <Navbar />
+            {children}
+            <GitNewsFooter />
+          </ConvexClientProvider>
+        </ThemeProvider>
 
         <AnalyticsProvider />
       </body>

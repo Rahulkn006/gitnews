@@ -3,6 +3,12 @@ import { internalAction, internalMutation, query, mutation } from "./_generated/
 import { v } from "convex/values";
 import { internal } from "./_generated/api";
 import type { Id } from "./_generated/dataModel";
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: process.env.TOGETHER_API_KEY,
+  baseURL: process.env.TOGETHER_BASE_URL,
+});
 
 const GITHUB_API_BASE = "https://api.github.com";
 const DEFAULT_CATEGORY = "Tools";
@@ -21,11 +27,44 @@ function normalizeTopics(topics?: string[] | null): string[] {
   return (topics ?? []).slice(0, 10).map((topic) => topic.toLowerCase());
 }
 
-function buildAiSummary(repo: GitHubRepository): string {
-  const language = repo.language ?? "general purpose";
-  const stars = repo.stargazers_count;
-  const description = repo.description ? ` ${repo.description}` : "";
-  return `A ${language} repository${description} with ${stars} stars and strong community momentum.`;
+async function buildAiSummary(repo: GitHubRepository, readme?: string): Promise<string> {
+  if (!process.env.TOGETHER_API_KEY) {
+    const language = repo.language ?? "general purpose";
+    const stars = repo.stargazers_count;
+    const description = repo.description ? ` ${repo.description}` : "";
+    return `A ${language} repository${description} with ${stars} stars and strong community momentum.`;
+  }
+
+  try {
+    const textToAnalyze = `
+Name: ${repo.name}
+Description: ${repo.description ?? "None"}
+Readme Excerpt: ${(readme ?? "").slice(0, 1000)}
+    `;
+
+    const response = await openai.chat.completions.create({
+      model: "meta-llama/Llama-3-70b-chat-hf",
+      messages: [
+        {
+          role: "system",
+          content: "You are a professional tech analyst. Write a concise, 1-sentence description summarizing this GitHub repository's main purpose, uniqueness, and ideal developer use-case. Do not mention stars or numbers. Keep it under 20 words.",
+        },
+        {
+          role: "user",
+          content: textToAnalyze,
+        },
+      ],
+      max_tokens: 60,
+      temperature: 0.3,
+    });
+
+    const summary = response.choices[0]?.message?.content?.trim();
+    if (summary) return summary;
+  } catch (err) {
+    console.error("Together AI summarization failed:", err);
+  }
+
+  return repo.description ?? "Open source repository with strong developer traction.";
 }
 
 type GitHubRepository = {
@@ -95,11 +134,15 @@ export const syncGitHubData = internalAction({
   args: {},
   handler: async (ctx) => {
     const [latest, trending, updated, starred] = await Promise.all([
-      fetchReposByEndpoint("/repositories?sort=updated&per_page=20"),
+      fetchReposByEndpoint(
+        "/search/repositories?q=stars:>10&sort=updated&order=desc&per_page=20",
+      ),
       fetchReposByEndpoint(
         "/search/repositories?q=stars:>100&sort=stars&order=desc&per_page=20",
       ),
-      fetchReposByEndpoint("/repositories?sort=updated&per_page=20"),
+      fetchReposByEndpoint(
+        "/search/repositories?q=stars:>10&sort=updated&order=desc&per_page=20",
+      ),
       fetchReposByEndpoint(
         "/search/repositories?q=stars:>1000&sort=stars&order=desc&per_page=20",
       ),
@@ -122,22 +165,28 @@ export const syncGitHubData = internalAction({
     const repos = Array.from(deduped.values());
     for (const repo of repos) {
       const readme = await fetchReadme(repo.owner.login, repo.name);
+      const aiSummary = await buildAiSummary(repo, readme);
+      const starsVal = repo.stargazers_count ?? 0;
+      const forksVal = repo.forks_count ?? 0;
+      const createdTime = repo.created_at ? new Date(repo.created_at).getTime() : Date.now();
+      const updatedTime = repo.updated_at ? new Date(repo.updated_at).getTime() : Date.now();
+
       await ctx.runMutation(internal.github.upsertRepository, {
         githubId: String(repo.id),
         name: repo.name,
         owner: repo.owner.login,
         avatar: repo.owner.avatar_url,
         description: repo.description ?? undefined,
-        stars: repo.stargazers_count,
-        forks: repo.forks_count,
+        stars: starsVal,
+        forks: forksVal,
         language: repo.language ?? undefined,
         topics: normalizeTopics(repo.topics),
         readme,
         repoUrl: repo.html_url,
-        createdAt: new Date(repo.created_at).getTime(),
-        updatedAt: new Date(repo.updated_at).getTime(),
-        trendingScore: repo.stargazers_count + repo.forks_count,
-        aiSummary: buildAiSummary(repo),
+        createdAt: isNaN(createdTime) ? Date.now() : createdTime,
+        updatedAt: isNaN(updatedTime) ? Date.now() : updatedTime,
+        trendingScore: starsVal + forksVal,
+        aiSummary,
         category: buildCategory(repo.language ?? repo.name),
       });
     }

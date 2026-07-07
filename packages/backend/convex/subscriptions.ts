@@ -1,30 +1,25 @@
-import { Polar } from "@convex-dev/polar";
-import { api, components } from "./_generated/api";
-import type { Id } from "./_generated/dataModel";
+// Subscriptions are disabled while the Polar component is not installed.
+// Re-enable this file when billing is required by reinstalling @convex-dev/polar
+// and adding it back to convex.config.ts.
 
-export const polar = new Polar(components.polar, {
-  // Provide a function the component can use to get the current user's ID and email
-  getUserInfo: async (ctx): Promise<{ userId: Id<"users">; email: string }> => {
-    const user = await ctx.runQuery(api.users.getUser);
-    if (!user) {
-      throw new Error("User not found");
-    }
-    if (!user.email) {
-      throw new Error("User email is required");
-    }
-    return {
-      userId: user._id,
-      email: user.email,
-    };
-  },
-});
+export const polar: any = null;
 
-// Export the API functions
-export const {
-  changeCurrentSubscription,
-  cancelCurrentSubscription,
-  listAllProducts,
-} = polar.api();
+export const changeCurrentSubscription = async () => {
+  throw new Error("Subscriptions are not configured.");
+};
 
-export const { generateCheckoutLink, generateCustomerPortalUrl } =
-  polar.checkoutApi();
+export const cancelCurrentSubscription = async () => {
+  throw new Error("Subscriptions are not configured.");
+};
+
+export const listAllProducts = async () => {
+  return [];
+};
+
+export const generateCheckoutLink = async () => {
+  throw new Error("Checkout is not configured.");
+};
+
+export const generateCustomerPortalUrl = async () => {
+  throw new Error("Customer portal is not configured.");
+};

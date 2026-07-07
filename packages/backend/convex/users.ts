@@ -16,7 +16,7 @@ export const getUser = query({
     if (!user) {
       return;
     }
-    const subscription = await polar.getCurrentSubscription(ctx, {
+    const subscription = await polar?.getCurrentSubscription(ctx, {
       userId: user._id,
     });
     return {

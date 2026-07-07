@@ -161,6 +161,16 @@ export default defineSchema({
     .index("by_user", ["userId"])
     .index("by_user_read", ["userId", "read"]),
 
+  news: defineTable({
+    title: v.string(),
+    source: v.string(),
+    summary: v.string(),
+    category: v.string(),
+    date: v.string(),
+    url: v.string(),
+    createdAt: v.number(),
+  }).index("by_created", ["createdAt"]),
+
   // Maintained counters so dashboard.stats is O(1) instead of scanning every row.
   counters: defineTable({
     workspaceId: v.id("workspaces"),
