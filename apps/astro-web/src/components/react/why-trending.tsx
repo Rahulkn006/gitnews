@@ -1,11 +1,12 @@
 import React from "react";
+import { Lightning } from "@phosphor-icons/react";
 import { MiniStarGraph, ContributionHeatmap } from "./analytics-visuals";
 
 export function WhyTrending({ repoName }: { repoName: string }) {
   return (
     <div className="bg-stone-50 dark:bg-stone-900/50 rounded-lg p-5 border border-stone-200 dark:border-stone-800">
       <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
-        <span className="text-emerald-500">⚡</span> Why it's trending
+        <Lightning className="w-4 h-4 text-emerald-500" weight="fill" /> Why it's trending
       </h4>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

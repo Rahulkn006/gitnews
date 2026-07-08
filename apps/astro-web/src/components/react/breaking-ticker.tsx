@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { RocketLaunch, Lightning, Brain, TrendUp, ShieldCheck } from "@phosphor-icons/react";
 
 import { withConvex } from "@/lib/convex";
 
@@ -12,11 +13,11 @@ export const BreakingTicker = withConvex(function BreakingTicker() {
   }, []);
 
   const breakingNews = [
-    "🚀 Next.js gained 2500 stars today",
-    "⚡ Major open source release detected: React 19 Beta",
-    "🤖 New AI repository trending: OpenAI / SWE-bench",
-    "📈 Vercel / v0 crosses 10k stars",
-    "🚨 Security patch released for popular Node.js package",
+    { icon: <RocketLaunch className="w-4 h-4 text-white" weight="duotone" />, text: "Next.js gained 2500 stars today" },
+    { icon: <Lightning className="w-4 h-4 text-emerald-300" weight="fill" />, text: "Major open source release detected: React 19 Beta" },
+    { icon: <Brain className="w-4 h-4 text-purple-300" weight="duotone" />, text: "New AI repository trending: OpenAI / SWE-bench" },
+    { icon: <TrendUp className="w-4 h-4 text-emerald-300" weight="bold" />, text: "Vercel / v0 crosses 10k stars" },
+    { icon: <ShieldCheck className="w-4 h-4 text-rose-300" weight="fill" />, text: "Security patch released for popular Node.js package" },
   ];
 
   if (!mounted) return null;
@@ -33,7 +34,10 @@ export const BreakingTicker = withConvex(function BreakingTicker() {
         {[...breakingNews, ...breakingNews, ...breakingNews].map((news, i) => (
           <span key={i} className="mx-8 font-mono text-sm inline-flex items-center gap-2">
             <span className="text-emerald-200">•</span>
-            {news}
+            <span className="inline-flex items-center gap-1.5">
+              {news.icon}
+              <span>{news.text}</span>
+            </span>
           </span>
         ))}
       </div>

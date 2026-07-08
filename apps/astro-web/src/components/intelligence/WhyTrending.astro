@@ -1,4 +1,6 @@
 ---
+import GitNewsIcon from "@/components/ui/GitNewsIcon.astro";
+
 interface Props {
   name: string;
   insights: string[];
@@ -9,7 +11,7 @@ const { name, insights } = Astro.props;
 
 <section className="flex flex-col gap-4 border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-[#111] p-6 rounded-xl">
   <h2 className="font-serif font-black text-xl md:text-2xl tracking-tight text-stone-900 dark:text-white flex items-center gap-2">
-    <span>🔥</span> Why {name} is trending
+    <GitNewsIcon name="trending" class="w-6 h-6 text-orange-500" weight="fill" /> Why {name} is trending
   </h2>
   <ul className="flex flex-col gap-3 mt-2 pl-0">
     {insights.length > 0 ? insights.map((insight) => (

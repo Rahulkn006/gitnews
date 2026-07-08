@@ -1,0 +1,88 @@
+---
+import GitNewsIcon from "@/components/ui/GitNewsIcon.astro";
+
+export interface Props {
+  title: string;
+  creator: string;
+  views: string;
+  timeAgo: string;
+  duration: string;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  whyWatchThis: string;
+  thumbnailUrl?: string;
+  videoUrl?: string;
+}
+
+const {
+  title,
+  creator,
+  views,
+  timeAgo,
+  duration,
+  difficulty,
+  whyWatchThis,
+  thumbnailUrl = "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=640&auto=format&fit=crop",
+  videoUrl = "#"
+} = Astro.props;
+
+const difficultyColors = {
+  Beginner: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800",
+  Intermediate: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border-blue-200 dark:border-blue-800",
+  Advanced: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400 border-purple-200 dark:border-purple-800"
+};
+---
+
+<a href={videoUrl} target="_blank" rel="noreferrer" class="group flex flex-col bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-red-500/30">
+  
+  {/* Thumbnail Container */}
+  <div class="relative w-full aspect-video bg-stone-200 dark:bg-stone-800 overflow-hidden">
+    <img src={thumbnailUrl} alt={title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" />
+    
+    {/* Glass Play Overlay */}
+    <div class="absolute inset-0 bg-stone-900/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg border border-white/30 text-white transform group-hover:scale-110 transition-transform duration-300">
+        <GitNewsIcon name="play" class="w-8 h-8" weight="fill" />
+      </div>
+    </div>
+    
+    {/* Duration Badge */}
+    <div class="absolute bottom-2 right-2 bg-stone-900/80 backdrop-blur-sm text-white text-[10px] font-mono font-bold px-1.5 py-0.5 rounded">
+      {duration}
+    </div>
+  </div>
+
+  {/* Card Content */}
+  <div class="p-5 flex flex-col flex-1 gap-3">
+    
+    {/* Header & Badges */}
+    <div class="flex items-center justify-between gap-2">
+      <span class={`px-2 py-0.5 text-[9px] font-mono font-bold uppercase tracking-widest rounded-md border ${difficultyColors[difficulty]}`}>
+        {difficulty}
+      </span>
+      <span class="text-xs text-stone-500 font-sans font-medium">
+        {views} • {timeAgo}
+      </span>
+    </div>
+
+    {/* Title & Creator */}
+    <div class="flex flex-col gap-1">
+      <h4 class="font-bold text-base text-stone-900 dark:text-white line-clamp-2 leading-tight group-hover:text-red-500 transition-colors">
+        {title}
+      </h4>
+      <p class="text-xs text-stone-600 dark:text-stone-400 font-medium">
+        {creator}
+      </p>
+    </div>
+
+    {/* AI Context: Why Watch This */}
+    <div class="mt-auto pt-3 border-t border-stone-200 dark:border-stone-800">
+      <div class="flex items-start gap-2">
+        <GitNewsIcon name="ai" class="w-4 h-4 text-red-500 shrink-0 mt-0.5" weight="fill" />
+        <p class="text-[11px] text-stone-700 dark:text-stone-300 font-sans leading-relaxed">
+          <span class="font-bold text-stone-900 dark:text-white mr-1">Why watch:</span>
+          {whyWatchThis}
+        </p>
+      </div>
+    </div>
+  </div>
+</a>

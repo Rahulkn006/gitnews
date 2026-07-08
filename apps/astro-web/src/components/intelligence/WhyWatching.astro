@@ -1,0 +1,59 @@
+---
+import GitNewsIcon from "@/components/ui/GitNewsIcon.astro";
+
+interface Props {
+  growthSignal?: string;
+  developerAdoption?: string;
+  whyItMatters?: string;
+}
+
+const { 
+  growthSignal = "+35k developers started watching this",
+  developerAdoption = "Used in production by thousands of projects",
+  whyItMatters = "Strong community adoption and recent activity signals make this a critical project to follow."
+} = Astro.props;
+---
+
+<section class="flex flex-col gap-6 mb-12">
+  <div class="flex items-center gap-3 mb-2 border-b-2 border-stone-900 dark:border-stone-100 pb-3">
+    <span class="w-3 h-3 bg-stone-900 dark:bg-white rounded-sm rotate-45"></span>
+    <h2 class="text-2xl font-serif font-black uppercase tracking-tight text-stone-900 dark:text-white">
+      Why Developers Are Watching
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    {/* Growth Signal */}
+    <div class="bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-6 rounded-xl flex flex-col gap-3 group transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-emerald-500/30">
+      <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+        <GitNewsIcon name="trending" class="w-5 h-5" weight="fill" />
+        <h3 class="font-mono text-xs font-bold uppercase tracking-widest">Growth Signal</h3>
+      </div>
+      <p class="font-sans text-stone-800 dark:text-stone-200 font-bold leading-relaxed text-sm">
+        {growthSignal}
+      </p>
+    </div>
+
+    {/* Developer Adoption */}
+    <div class="bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-6 rounded-xl flex flex-col gap-3 group transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-blue-500/30">
+      <div class="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+        <GitNewsIcon name="rocket" class="w-5 h-5" weight="fill" />
+        <h3 class="font-mono text-xs font-bold uppercase tracking-widest">Developer Adoption</h3>
+      </div>
+      <p class="font-sans text-stone-800 dark:text-stone-200 font-bold leading-relaxed text-sm">
+        {developerAdoption}
+      </p>
+    </div>
+
+    {/* Why It Matters */}
+    <div class="bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-6 rounded-xl flex flex-col gap-3 group transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-purple-500/30">
+      <div class="flex items-center gap-2 text-purple-600 dark:text-purple-400">
+        <GitNewsIcon name="ai" class="w-5 h-5" weight="fill" />
+        <h3 class="font-mono text-xs font-bold uppercase tracking-widest">Why It Matters</h3>
+      </div>
+      <p class="font-sans text-stone-800 dark:text-stone-200 font-bold leading-relaxed text-sm">
+        {whyItMatters}
+      </p>
+    </div>
+  </div>
+</section>

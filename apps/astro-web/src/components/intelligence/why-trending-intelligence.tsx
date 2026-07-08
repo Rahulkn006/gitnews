@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
+import { Fire } from "@phosphor-icons/react";
 import { WHY_TRENDING_DATA } from "@/data/repository-intelligence";
 
 export function WhyTrendingIntelligence() {
   return (
     <div className="flex flex-col gap-0 border-t-2 border-black dark:border-white pt-2">
       <h3 className="font-serif font-black uppercase text-sm tracking-tight text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-        <span>🔥</span> Why Trending
+        <Fire className="w-4 h-4 text-orange-500" weight="fill" /> Why Trending
       </h3>
       
       <div className="flex flex-col gap-5">

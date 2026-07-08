@@ -1,4 +1,5 @@
 import React from "react";
+import { Fire, Star, TrendUp, GitFork, Users } from "@phosphor-icons/react";
 import {
   getLanguageColor,
   formatNumber,
@@ -53,7 +54,7 @@ export function CompactRepoNewsCard({ repo }: CompactRepoNewsCardProps) {
                   <span className={`${gitNewsScore > 85 ? 'text-orange-500' : 'text-emerald-500'}`}>
                     {gitNewsScore}
                   </span>
-                  {gitNewsScore > 85 && <span>🔥</span>}
+                  {gitNewsScore > 85 && <Fire className="w-5 h-5 text-orange-500" weight="fill" />}
                 </div>
                 <span className="text-slate-400 dark:text-slate-500 text-[9px] uppercase tracking-widest font-bold">Score</span>
               </div>
@@ -70,18 +71,18 @@ export function CompactRepoNewsCard({ repo }: CompactRepoNewsCardProps) {
 
           <div className="flex flex-wrap items-center gap-4 text-[10px] md:text-[11px] font-mono text-slate-500 mt-4">
             <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 font-bold">
-              ⭐ {formatNumber(stars)}
+              <Star className="w-3.5 h-3.5" weight="fill" /> {formatNumber(stars)}
             </span>
             {growth > 0 && (
               <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-bold">
-                📈 +{formatNumber(growth)} this week
+                <TrendUp className="w-3.5 h-3.5" weight="bold" /> +{formatNumber(growth)} this week
               </span>
             )}
             <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-              🍴 {formatNumber(forks)}
+              <GitFork className="w-3.5 h-3.5" weight="duotone" /> {formatNumber(forks)}
             </span>
             <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
-              🧑 {formatNumber(contributors)}+
+              <Users className="w-3.5 h-3.5" weight="duotone" /> {formatNumber(contributors)}+
             </span>
             <span className="ml-auto text-slate-400">
               {timeAgo(repo.updatedAt || repo.lastUpdated)}

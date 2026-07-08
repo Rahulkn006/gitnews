@@ -1,0 +1,23 @@
+---
+// Central reusable icon system for GitNews
+import { Fire, Brain, PlayCircle, Star, TrendUp, ShieldCheck, Lightning, RocketLaunch, GitFork, Users } from '@phosphor-icons/react';
+
+export interface Props {
+  name: 'trending' | 'ai' | 'play' | 'star' | 'growth' | 'security' | 'active' | 'rocket' | 'fork' | 'users';
+  class?: string;
+  weight?: 'regular' | 'bold' | 'fill' | 'duotone' | 'light' | 'thin';
+}
+
+const { name, class: className = "w-5 h-5", weight = "duotone" } = Astro.props;
+---
+
+{name === 'trending' && <Fire className={className} weight={weight} />}
+{name === 'ai' && <Brain className={className} weight={weight} />}
+{name === 'play' && <PlayCircle className={className} weight={weight} />}
+{name === 'star' && <Star className={className} weight={weight} />}
+{name === 'growth' && <TrendUp className={className} weight={weight} />}
+{name === 'security' && <ShieldCheck className={className} weight={weight} />}
+{name === 'active' && <Lightning className={className} weight={weight} />}
+{name === 'rocket' && <RocketLaunch className={className} weight={weight} />}
+{name === 'fork' && <GitFork className={className} weight={weight} />}
+{name === 'users' && <Users className={className} weight={weight} />}

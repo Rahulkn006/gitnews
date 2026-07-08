@@ -1,0 +1,101 @@
+---
+interface Props {
+  overview?: string;
+  coreFeatures?: string[];
+  bestUseCases?: string;
+  learningDifficulty?: string;
+  futurePotential?: string;
+  alternatives?: string[];
+}
+
+const {
+  overview = "A modern toolkit designed to streamline development workflows and optimize production performance.",
+  coreFeatures = ["Fast compilation", "Type safety", "Zero-config setup"],
+  bestUseCases = "Ideal for enterprise architectures scaling to millions of users.",
+  learningDifficulty = "Intermediate",
+  futurePotential = "Growing",
+  alternatives = ["React", "Vue", "Angular"]
+} = Astro.props;
+---
+
+<section class="flex flex-col gap-6 mb-12">
+  <div class="flex items-center gap-3 mb-2 border-b-2 border-stone-900 dark:border-stone-100 pb-3">
+    <span class="w-3 h-3 bg-stone-900 dark:bg-white rounded-sm rotate-45"></span>
+    <h2 class="text-2xl font-serif font-black uppercase tracking-tight text-stone-900 dark:text-white">
+      Repository Intelligence Grid
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+    {/* Repository Overview - Span 4 */}
+    <div class="md:col-span-4 bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-6 rounded-xl flex flex-col gap-3">
+      <h3 class="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Repository Overview</h3>
+      <p class="font-sans text-stone-700 dark:text-stone-300 leading-relaxed text-sm">
+        {overview}
+      </p>
+    </div>
+
+    {/* Learning Difficulty - Span 2 */}
+    <div class="md:col-span-2 bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-6 rounded-xl flex flex-col gap-3">
+      <h3 class="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Learning Curve</h3>
+      <div class="flex-1 flex items-center justify-center">
+        <span class={`text-xl font-black uppercase font-sans tracking-tight ${
+          learningDifficulty.toLowerCase().includes('hard') || learningDifficulty.toLowerCase().includes('advanced') ? 'text-red-500' :
+          learningDifficulty.toLowerCase().includes('easy') || learningDifficulty.toLowerCase().includes('beginner') ? 'text-emerald-500' :
+          'text-orange-500'
+        }`}>
+          {learningDifficulty}
+        </span>
+      </div>
+    </div>
+
+    {/* Core Features - Span 3 */}
+    <div class="md:col-span-3 bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-6 rounded-xl flex flex-col gap-3">
+      <h3 class="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Core Features</h3>
+      <ul class="flex flex-col gap-2">
+        {coreFeatures.map(feature => (
+          <li class="flex items-start gap-2 text-sm text-stone-700 dark:text-stone-300">
+            <span class="text-emerald-500 font-bold">•</span>
+            {feature}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Best Use Cases - Span 3 */}
+    <div class="md:col-span-3 bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-6 rounded-xl flex flex-col gap-3">
+      <h3 class="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Best Use Cases</h3>
+      <p class="font-sans text-stone-700 dark:text-stone-300 leading-relaxed text-sm">
+        {bestUseCases}
+      </p>
+    </div>
+
+    {/* Future Potential - Span 3 */}
+    <div class="md:col-span-3 bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-6 rounded-xl flex flex-col gap-3">
+      <h3 class="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Future Potential</h3>
+      <div class="flex-1 flex items-center justify-center">
+        <span class={`text-xl font-black uppercase font-sans tracking-tight ${
+          futurePotential.toLowerCase().includes('growing') || futurePotential.toLowerCase().includes('strong') ? 'text-emerald-500' :
+          futurePotential.toLowerCase().includes('declin') ? 'text-red-500' :
+          'text-blue-500'
+        }`}>
+          {futurePotential}
+        </span>
+      </div>
+    </div>
+
+    {/* Alternatives - Span 3 */}
+    <div class="md:col-span-3 bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-6 rounded-xl flex flex-col gap-3">
+      <h3 class="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Alternatives</h3>
+      <div class="flex flex-wrap gap-2">
+        {alternatives.length > 0 ? alternatives.map(alt => (
+          <span class="px-3 py-1 bg-stone-200 dark:bg-stone-800 text-stone-800 dark:text-stone-200 rounded-md text-xs font-mono font-bold">
+            {alt}
+          </span>
+        )) : (
+          <span class="text-sm text-stone-500">No major alternatives mapped.</span>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
+import { Fire } from "@phosphor-icons/react";
 import {
   getLanguageColor,
   generateGradient,
@@ -78,10 +79,11 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
   if (size === "small") {
     // Basic small card fallback
     return (
-      <article
+      <a
+        href={`/repo/${repo.owner}/${repo.name}`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="group relative flex flex-col justify-between border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#111] p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-md rounded-xl"
+        className="group relative flex flex-col justify-between border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#111] p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:z-[100] z-10 rounded-xl"
       >
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
@@ -97,7 +99,7 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
           </span>
         </div>
         <RepoHoverPreview repo={repo} isVisible={hovered} />
-      </article>
+      </a>
     );
   }
 
@@ -105,13 +107,13 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
     <article
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`group relative flex flex-col justify-between overflow-hidden border bg-white dark:bg-[#111] transition-all duration-500 hover:shadow-xl rounded-xl ${
+      className={`group relative flex flex-col justify-between border bg-white dark:bg-[#111] transition-all duration-500 hover:shadow-xl hover:z-[100] z-10 rounded-xl ${
         hovered ? "border-emerald-500/50 dark:border-emerald-500/50 shadow-emerald-500/10" : "border-stone-200 dark:border-stone-800"
       } p-6 md:p-8 col-span-full`}
     >
       {/* Top Gradient Bar */}
       <div
-        className={`absolute inset-x-0 top-0 h-1.5 transition-all duration-500 ${hovered ? 'opacity-100 h-2' : 'opacity-80'}`}
+        className={`absolute inset-x-0 top-0 h-1.5 rounded-t-xl transition-all duration-500 ${hovered ? 'opacity-100 h-2' : 'opacity-80'}`}
         style={{ background: generateGradient(repo.name) }}
       />
 
@@ -148,16 +150,16 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
           </div>
         </div>
 
-        <div className="flex flex-col items-end gap-2 shrink-0">
+        <div className="flex flex-col items-end shrink-0 pl-3 md:pl-4 mt-2 md:mt-0 ml-auto">
           <span className={`rounded border px-2 py-0.5 text-[10px] font-mono font-bold ${badgeStyles[badge.tone]}`}>
             {badge.label}
           </span>
-          <div className="flex items-center gap-1 font-black text-sm md:text-base font-sans tracking-tight">
-            <span className="text-slate-400 dark:text-slate-500 text-[10px] uppercase tracking-widest font-bold">GitNews Score</span>
+          <div className="flex items-center gap-1.5 font-black text-sm sm:text-base md:text-lg lg:text-xl font-sans tracking-tight">
+            <span className="text-[9px] md:text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest font-bold mr-1">GITNEWS SCORE</span>
             <span className={`${gitNewsScore > 85 ? 'text-orange-500' : 'text-emerald-500'}`}>
               {gitNewsScore}
             </span>
-            {gitNewsScore > 85 && <span>🔥</span>}
+            {gitNewsScore > 85 && <Fire className="w-4 h-4 md:w-5 md:h-5 text-orange-500" weight="fill" />}
           </div>
         </div>
       </header>
@@ -165,9 +167,7 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
       {/* 2. MAIN (AI Generated Headline) */}
       <div className={`${isLarge ? "mb-6" : "mb-5"}`}>
         <a 
-          href={repo.url || repo.repoUrl || `https://github.com/${repo.owner}/${repo.name}`}
-          target="_blank"
-          rel="noreferrer"
+          href={`/repo/${repo.owner}/${repo.name}`}
           className="block"
         >
           <h2 className={`font-serif font-black text-slate-900 dark:text-white transition-colors group-hover:text-emerald-600 dark:group-hover:text-emerald-400 leading-tight ${
@@ -276,7 +276,6 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
 
         </div>
       </div>
-      <RepoHoverPreview repo={repo} isVisible={hovered} />
     </article>
   );
 }

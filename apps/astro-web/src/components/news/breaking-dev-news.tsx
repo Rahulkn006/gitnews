@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { ShieldCheck } from "@phosphor-icons/react";
 import { DEVELOPER_NEWS_DATA } from "@/data/developer-news";
 
 export function BreakingDevNews() {
@@ -62,7 +63,7 @@ export function BreakingDevNews() {
       {/* SECTION 3: SECURITY RADAR */}
       <div className="flex flex-col gap-0 border-t-2 border-black dark:border-white pt-2">
         <h3 className="font-serif font-black uppercase text-sm tracking-tight text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-          <span className="text-rose-500">🛡</span> Security Radar
+          <ShieldCheck className="w-4 h-4 text-rose-500" weight="fill" /> Security Radar
         </h3>
         <div className="flex flex-col gap-2">
           {data.securityWatch.map((sec) => (

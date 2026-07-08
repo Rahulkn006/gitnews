@@ -5,8 +5,11 @@ import { ConvexHttpClient } from "convex/browser";
 import { api } from "@v1/backend/convex/_generated/api";
 
 import RepoHeader from "@/components/intelligence/RepoHeader.astro";
-import WhyTrending from "@/components/intelligence/WhyTrending.astro";
-import RepoScore from "@/components/intelligence/RepoScore.astro";
+import WhyWatching from "@/components/intelligence/WhyWatching.astro";
+import IntelligenceGrid from "@/components/intelligence/IntelligenceGrid.astro";
+import DeveloperActivity from "@/components/intelligence/DeveloperActivity.astro";
+import OllagraphDeepResearch from "@/components/intelligence/OllagraphDeepResearch.astro";
+import YoutubeLearningHub from "@/components/intelligence/YoutubeLearningHub.astro";
 import { ollagraph } from "@/services/ollagraph";
 
 // Use "repo" from params since file is [repo].astro
@@ -29,24 +32,15 @@ const analysis = await ollagraph.analyzeRepository(owner, name);
 const title = `${repo.name} by ${repo.owner} - GitNews Analysis`;
 const description = analysis.summary || repo.description || `In-depth developer analysis for ${owner}/${name}`;
 
-const insights = [
-  analysis.whyTrending,
-  analysis.developerAdoption,
-  analysis.whatItDoes
-].filter(Boolean);
-
-// We will pass the verdict and alternatives to RepoScore if needed, 
-// but currently RepoScore takes learningValue, futurePotential, communityStrength.
-// We'll derive them from Ollagraph or fallback to existing repo data.
-const learningValue = analysis.learningDifficulty || repo.verdict?.learningValue || "High";
-const futurePotential = analysis.futurePotential || repo.verdict?.futurePotential || "Strong";
-const communityStrength = analysis.verdict || repo.verdict?.communityStrength || "Active";
+const learningValue = analysis.learningDifficulty || repo.verdict?.learningValue || "Intermediate";
+const futurePotential = analysis.futurePotential || repo.verdict?.futurePotential || "Growing";
 ---
 
 <Layout title={title} description={description}>
-  <div className="min-h-screen bg-white text-stone-900 dark:bg-[#0a0a0a] dark:text-stone-200 font-sans selection:bg-emerald-500 selection:text-white pt-10 pb-20">
-    <div className="max-w-4xl mx-auto px-4 md:px-8">
-      <a href="/" className="inline-flex items-center gap-2 font-mono text-sm uppercase tracking-widest text-stone-500 hover:text-emerald-500 transition-colors mb-8">
+  <div class="min-h-screen bg-white text-stone-900 dark:bg-[#0a0a0a] dark:text-stone-200 font-sans selection:bg-emerald-500 selection:text-white pt-10 pb-20">
+    <div class="max-w-[1500px] mx-auto px-4 md:px-8">
+      
+      <a href="/" class="inline-flex items-center gap-2 font-mono text-sm uppercase tracking-widest text-stone-500 hover:text-emerald-500 transition-colors mb-8">
         <span>←</span> Back to Feed
       </a>
       
@@ -60,63 +54,36 @@ const communityStrength = analysis.verdict || repo.verdict?.communityStrength ||
         weeklyGrowth={Math.floor(repo.forks * 0.1)} 
       />
 
-      <WhyTrending name={repo.name} insights={insights} />
-
-      <RepoScore 
-        learningValue={learningValue} 
-        futurePotential={futurePotential} 
-        communityStrength={communityStrength} 
-      />
-
-      {/* 4. Repository Insights */}
-      <section className="flex flex-col gap-4 mt-12 border-t-2 border-stone-900 dark:border-stone-100 pt-8">
-        <h2 className="font-serif font-black uppercase tracking-tight text-xl text-stone-900 dark:text-white">
-          Repository Insights
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-          <div className="bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-5 rounded-lg">
-            <h3 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Best Use Cases</h3>
-            <p className="font-sans text-sm text-stone-700 dark:text-stone-300 leading-relaxed">
-              {analysis.bestUseCases || repo.developerAnalysis?.ecosystemFit || "Excellent for modern development workflows and scalable architectures."}
-            </p>
-          </div>
-          <div className="bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-5 rounded-lg">
-            <h3 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Who Should Learn It</h3>
-            <p className="font-sans text-sm text-stone-700 dark:text-stone-300 leading-relaxed">
-              {analysis.learningDifficulty ? `Difficulty: ${analysis.learningDifficulty}` : (repo.developerAnalysis?.targetAudience || "Developers looking to adopt robust, community-backed open source technology.")}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Future AI Research Placeholder */}
-      <section className="flex flex-col gap-6 mt-16">
-        <div className="flex items-center gap-3 mb-2">
-          <span className="w-2 h-2 bg-purple-500 rounded-sm"></span>
-          <h2 className="font-serif font-black uppercase tracking-tight text-xl text-stone-900 dark:text-white">
-            Deep Research (Coming Soon)
-          </h2>
-        </div>
+      {/* 2-Column Responsive Layout */}
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] xl:grid-cols-[1fr_340px] gap-8 xl:gap-12 items-start mt-12">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="flex flex-col gap-3 p-6 border-2 border-dashed border-stone-300 dark:border-stone-700 rounded-xl bg-stone-50/50 dark:bg-[#111]/50 relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent z-0"></div>
-            <h3 className="font-serif font-black text-lg relative z-10">Ollagraph Intelligence</h3>
-            <p className="text-sm font-sans text-stone-500 relative z-10">
-              Future integration will automatically crawl HackerNews and Reddit to map out the developer sentiment for this repository.
-            </p>
-          </div>
+        {/* Main Content Area (70%) */}
+        <div class="flex flex-col gap-8 min-w-0">
+          <WhyWatching 
+            growthSignal={analysis.whyTrending || "+35k developers started watching this"}
+            developerAdoption={analysis.developerAdoption || "Used in production by thousands of projects"}
+            whyItMatters={analysis.whatItDoes || "Strong community adoption and recent activity signals make this a critical project to follow."}
+          />
+
+          <IntelligenceGrid 
+            overview={analysis.summary || repo.description}
+            bestUseCases={analysis.bestUseCases || repo.developerAnalysis?.ecosystemFit}
+            learningDifficulty={learningValue}
+            futurePotential={futurePotential}
+          />
+
+          <OllagraphDeepResearch />
           
-          <div className="flex flex-col gap-3 p-6 border-2 border-dashed border-stone-300 dark:border-stone-700 rounded-xl bg-stone-50/50 dark:bg-[#111]/50 relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent z-0"></div>
-            <h3 className="font-serif font-black text-lg relative z-10">YouTube Learning Hub</h3>
-            <p className="text-sm font-sans text-stone-500 relative z-10">
-              Future integration will aggregate the best video tutorials and crash courses directly inside this terminal.
-            </p>
-          </div>
+          <YoutubeLearningHub />
         </div>
-      </section>
-      
+
+        {/* Sticky Sidebar Area (30%) */}
+        <div class="sticky top-24 self-start flex flex-col gap-8 w-full max-h-[calc(100vh-7rem)] overflow-y-auto">
+          <DeveloperActivity />
+        </div>
+
+      </div>
+
     </div>
   </div>
 </Layout>
