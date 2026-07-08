@@ -7,7 +7,7 @@ import { api } from "@v1/backend/convex/_generated/api";
 import RepoHeader from "@/components/intelligence/RepoHeader.astro";
 import WhyWatching from "@/components/intelligence/WhyWatching.astro";
 import IntelligenceGrid from "@/components/intelligence/IntelligenceGrid.astro";
-import DeveloperActivity from "@/components/intelligence/DeveloperActivity.astro";
+import RepoResearchSidebar from "@/components/intelligence/RepoResearchSidebar.astro";
 import OllagraphDeepResearch from "@/components/intelligence/OllagraphDeepResearch.astro";
 import YoutubeLearningHub from "@/components/intelligence/YoutubeLearningHub.astro";
 import { ollagraph } from "@/services/ollagraph";
@@ -55,7 +55,7 @@ const futurePotential = analysis.futurePotential || repo.verdict?.futurePotentia
       />
 
       {/* 2-Column Responsive Layout */}
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] xl:grid-cols-[1fr_340px] gap-8 xl:gap-12 items-start mt-12">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] xl:grid-cols-[1fr_340px] gap-8 xl:gap-12 items-start mt-12 mb-16">
         
         {/* Main Content Area (70%) */}
         <div class="flex flex-col gap-8 min-w-0">
@@ -73,16 +73,21 @@ const futurePotential = analysis.futurePotential || repo.verdict?.futurePotentia
           />
 
           <OllagraphDeepResearch />
-          
-          <YoutubeLearningHub />
         </div>
 
         {/* Sticky Sidebar Area (30%) */}
         <div class="sticky top-24 self-start flex flex-col gap-8 w-full max-h-[calc(100vh-7rem)] overflow-y-auto">
-          <DeveloperActivity />
+          <RepoResearchSidebar 
+            repoName={repo.name}
+            analysis={analysis}
+            score={repo.trendingScore || 99}
+          />
         </div>
 
       </div>
+
+      {/* Full Width YouTube Learning Hub */}
+      <YoutubeLearningHub repoName={repo.name} owner={repo.owner} language={repo.language} />
 
     </div>
   </div>

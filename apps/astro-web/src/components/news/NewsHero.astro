@@ -1,0 +1,40 @@
+---
+import GitNewsIcon from "@/components/ui/GitNewsIcon.astro";
+
+interface Props {
+  totalScanned: number;
+}
+
+const { totalScanned } = Astro.props;
+---
+
+<header className="mb-12 border-b border-stone-300 dark:border-stone-800 pb-10 text-center">
+  <div class="flex items-center justify-center gap-3 mb-6">
+    <GitNewsIcon name="ai" class="w-8 h-8 text-emerald-500" weight="fill" />
+    <h1 class="font-serif text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white uppercase">
+      AI Intelligence Briefing
+    </h1>
+  </div>
+  
+  <p class="text-slate-500 dark:text-slate-400 text-lg md:text-xl font-serif max-w-3xl mx-auto mb-8">
+    Tracking latest AI models, open source releases, developer tools, research breakthroughs and AI startups.
+  </p>
+  
+  <div class="flex flex-wrap items-center justify-center gap-4 text-xs font-mono uppercase tracking-widest font-bold">
+    <span class="flex items-center gap-2 bg-stone-100 dark:bg-stone-900 px-3 py-1.5 rounded-full border border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300">
+      <GitNewsIcon name="trending" class="w-3.5 h-3.5 text-orange-500" /> {totalScanned} News Scanned
+    </span>
+    
+    <span class="flex items-center gap-2 bg-emerald-50 dark:bg-emerald-950/30 px-3 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-900/50 text-emerald-700 dark:text-emerald-400">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+      </span>
+      Live Updates
+    </span>
+    
+    <span class="flex items-center gap-2 bg-stone-100 dark:bg-stone-900 px-3 py-1.5 rounded-full border border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300">
+      Trending: AI Agents, Coding Assistants
+    </span>
+  </div>
+</header>

@@ -1,0 +1,25 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Navbar from '@/components/Navbar.astro';
+---
+
+<Layout title="GitHub Market Index — GitNews" description="GitHub market index and analytics.">
+  <Navbar />
+  
+  <div class="w-full min-h-[calc(100vh-64px)] bg-stone-50 text-slate-900 dark:bg-[#0a0a0a] dark:text-slate-200 flex flex-col items-center justify-center p-8">
+    <div class="text-center max-w-lg">
+      <div class="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
+      </div>
+      <h1 class="text-4xl font-serif font-black tracking-tighter mb-4 text-slate-900 dark:text-white">GitHub Market Index</h1>
+      <p class="text-stone-500 dark:text-stone-400 text-lg mb-8">Tracking the top movers and most valuable technologies on GitHub.</p>
+      
+      <span class="inline-flex items-center gap-2 px-4 py-2 bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-300 rounded-full text-sm font-mono font-bold uppercase tracking-widest border border-stone-200 dark:border-stone-800">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Coming Soon
+      </span>
+    </div>
+  </div>
+</Layout>

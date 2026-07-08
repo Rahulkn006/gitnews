@@ -2,55 +2,31 @@
 // Section 5: YouTube Learning Hub
 import GitNewsIcon from "@/components/ui/GitNewsIcon.astro";
 import YoutubeCard from "./YoutubeCard.astro";
+import { youtubeService } from "@/services/youtube";
 
-// Mock data for the cards to demonstrate the premium UI before API integration
-const videos = [
-  {
-    title: "Complete Crash Course for Beginners (2026)",
-    creator: "Fireship",
-    views: "1.2M views",
-    timeAgo: "2 weeks ago",
-    duration: "14:20",
-    difficulty: "Beginner" as const,
-    whyWatchThis: "A fast-paced, high-level overview perfect for getting your local environment setup and understanding core concepts.",
-    thumbnailUrl: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=640&auto=format&fit=crop"
-  },
-  {
-    title: "Building a Fullstack App from Scratch",
-    creator: "Traversy Media",
-    views: "840K views",
-    timeAgo: "1 month ago",
-    duration: "1:45:00",
-    difficulty: "Intermediate" as const,
-    whyWatchThis: "Detailed project walkthrough showing practical patterns for state management and API integration.",
-    thumbnailUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=640&auto=format&fit=crop"
-  },
-  {
-    title: "Advanced Architecture and Scaling Patterns",
-    creator: "Theo - t3.gg",
-    views: "450K views",
-    timeAgo: "3 months ago",
-    duration: "32:15",
-    difficulty: "Advanced" as const,
-    whyWatchThis: "Deep dive into performance optimizations, edge computing, and resolving common bottlenecks at scale.",
-    thumbnailUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=640&auto=format&fit=crop"
-  }
-];
+interface Props {
+  repoName: string;
+  owner: string;
+  language?: string;
+}
+
+const { repoName, owner, language } = Astro.props;
+
+// Fetch real videos or use mock fallback internally
+const allVideos = await youtubeService.getLearningVideos(repoName, owner, language);
+const videos = allVideos.slice(0, 10);
 ---
 
-<section class="flex flex-col gap-6 mb-12">
-  <div class="flex items-center gap-3 mb-2 border-b-2 border-stone-900 dark:border-stone-100 pb-3">
+<section class="flex flex-col gap-6 mt-8 mb-12">
+  <div class="flex items-center gap-3 mb-2 border-b border-stone-200 dark:border-stone-800 pb-4">
     <GitNewsIcon name="play" class="w-6 h-6 text-red-500" weight="fill" />
     <h2 class="text-2xl font-serif font-black uppercase tracking-tight text-stone-900 dark:text-white">
       YouTube Learning Hub
     </h2>
-    <span class="px-2 py-0.5 bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 text-[9px] font-mono font-bold uppercase tracking-widest rounded-md border border-red-200 dark:border-red-800 ml-2">
-      Coming Soon
-    </span>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    {videos.map(video => (
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    {videos.map((video: any) => (
       <YoutubeCard {...video} />
     ))}
   </div>

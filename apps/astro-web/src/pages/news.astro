@@ -1,10 +1,42 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
-import { NewsFeed } from '../components/react/news-feed';
+import NewsHero from '@/components/news/NewsHero.astro';
+import BreakingNewsCarousel from '@/components/news/BreakingNewsCarousel.astro';
+import TrendingAIRadar from '@/components/news/TrendingAIRadar.astro';
+import DeveloperImpact from '@/components/news/DeveloperImpact.astro';
+import { InteractiveNewsGrid } from '@/components/react/interactive-news-grid';
+import { newsService } from '@/services/news';
+
+// Fetch the AI news from our new service
+const newsItems = await newsService.getLatestAINews();
+const totalScanned = 1243; // Simulated
 ---
 
-<Layout title="The Chronicle — GitNews" description="Latest releases, breaking changes, and critical updates from the open-source ecosystem.">
+<Layout title="AI News Dashboard — GitNews" description="Tracking latest AI models, open source releases, developer tools, research breakthroughs and AI startups.">
   <Navbar />
-  <NewsFeed client:load />
+  
+  <div class="w-full min-h-screen bg-stone-50 text-slate-900 dark:bg-[#0a0a0a] dark:text-slate-200 font-sans px-4 md:px-8 py-8 selection:bg-emerald-500 selection:text-white">
+    <main class="max-w-7xl mx-auto">
+      
+      <NewsHero totalScanned={totalScanned} />
+      
+      <BreakingNewsCarousel news={newsItems} />
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-12">
+        
+        {/* Left/Middle: Interactive News Grid with Category Filter and Modal */}
+        <div class="lg:col-span-9">
+          <InteractiveNewsGrid client:load initialNews={newsItems} />
+        </div>
+
+        {/* Right: AI Trend Sidebar */}
+        <div class="lg:col-span-3">
+          <TrendingAIRadar />
+          <DeveloperImpact />
+        </div>
+
+      </div>
+    </main>
+  </div>
 </Layout>

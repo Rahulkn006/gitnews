@@ -1,0 +1,42 @@
+---
+import type { AINewsItem } from "@/services/news";
+
+interface Props {
+  article: AINewsItem;
+  featured?: boolean;
+}
+
+const { article, featured = false } = Astro.props;
+---
+
+<a href={article.url} class={`block group ${featured ? '' : 'flex flex-col md:flex-row gap-6 items-start'} p-4 -m-4 hover:bg-stone-100 dark:hover:bg-stone-900/50 rounded-xl transition-colors`}>
+  
+  <div class={`relative overflow-hidden rounded-lg bg-stone-200 dark:bg-stone-800 ${featured ? 'w-full h-64 md:h-80 mb-6' : 'w-full md:w-48 h-48 md:h-32 shrink-0'}`}>
+    <img 
+      src={article.image} 
+      alt={article.title}
+      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+    />
+    <div class="absolute top-3 left-3">
+      <span class="px-2.5 py-1 bg-black/80 backdrop-blur text-white text-[10px] font-mono font-bold uppercase tracking-widest rounded shadow-sm">
+        {article.category}
+      </span>
+    </div>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-center">
+    <div class="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest text-slate-500 mb-3">
+      <span class="text-stone-900 dark:text-stone-300">{article.source}</span>
+      <span class="w-1 h-1 rounded-full bg-stone-300 dark:bg-stone-700"></span>
+      <span>{article.publishedAt}</span>
+    </div>
+
+    <h3 class={`${featured ? 'text-2xl md:text-4xl' : 'text-xl'} font-serif font-black tracking-tight text-slate-900 dark:text-white mb-3 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-tight`}>
+      {article.title}
+    </h3>
+
+    <p class={`${featured ? 'text-base md:text-lg' : 'text-sm'} text-stone-600 dark:text-stone-400 leading-relaxed font-sans`}>
+      {article.summary}
+    </p>
+  </div>
+</a>

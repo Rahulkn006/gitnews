@@ -1,13 +1,44 @@
 import { type Repository } from "../data/repositories";
 
 const CACHE_TTL = 15 * 60 * 1000; // 15 minutes
-let cachedTrending: { data: Repository[]; timestamp: number } | null = null;
-let cachedMarket: { data: Repository[]; timestamp: number } | null = null;
+const cache = new Map<string, { data: any; timestamp: number }>();
 
-// Get a random growth number for demo purposes until we have historical data
-function generateGrowth(stars: number) {
-  const percentage = 0.01 + Math.random() * 0.05; // 1% to 6% weekly growth
-  return Math.floor(stars * percentage);
+function getGitHubToken() {
+  let token;
+  try { token = (import.meta as any).env?.GITHUB_TOKEN; } catch (e) {}
+  if (!token && typeof process !== "undefined") token = process.env.GITHUB_TOKEN;
+  return token;
+}
+
+function getHeaders() {
+  const token = getGitHubToken();
+  const headers: HeadersInit = {
+    'Accept': 'application/vnd.github.v3+json',
+    'User-Agent': 'GitNews-App'
+  };
+  if (token) headers['Authorization'] = `token ${token}`;
+  return headers;
+}
+
+export async function fetchGitHubAPI(endpoint: string) {
+  const cacheKey = `gh_api_${endpoint}`;
+  const cached = cache.get(cacheKey);
+
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.data;
+  }
+
+  try {
+    const res = await fetch(`https://api.github.com${endpoint}`, { headers: getHeaders() });
+    if (!res.ok) throw new Error(`GitHub API error on ${endpoint}: ${res.statusText}`);
+    const data = await res.json();
+    cache.set(cacheKey, { data, timestamp: Date.now() });
+    return data;
+  } catch (error) {
+    console.error(`[GitHub] Failed to fetch ${endpoint}:`, error);
+    if (cached) return cached.data;
+    return null; // Handle null in caller
+  }
 }
 
 function mapGithubRepo(item: any, index: number): Repository {
@@ -24,87 +55,55 @@ function mapGithubRepo(item: any, index: number): Repository {
     language: item.language || "Unknown",
     topics: item.topics || [],
     lastUpdated: item.updated_at,
-    weeklyGrowth: generateGrowth(item.stargazers_count),
+    weeklyGrowth: Math.floor(item.stargazers_count * (0.01 + Math.random() * 0.05)),
     url: item.html_url,
   };
 }
 
 export async function fetchLiveTrendingRepos(): Promise<Repository[]> {
-  if (cachedTrending && Date.now() - cachedTrending.timestamp < CACHE_TTL) {
-    console.log("[GitHub] Returning cached trending repos");
-    return cachedTrending.data;
+  const date = new Date();
+  date.setDate(date.getDate() - 30);
+  const dateString = date.toISOString().split('T')[0];
+  const query = `created:>${dateString}`;
+  
+  const data = await fetchGitHubAPI(`/search/repositories?q=${query}&sort=stars&order=desc&per_page=20`);
+  if (data && data.items) {
+    return data.items.map(mapGithubRepo);
   }
-
-  try {
-    console.log("[GitHub] Fetching live trending repos...");
-    // Fetch repos created in the last 30 days, sorted by stars
-    const date = new Date();
-    date.setDate(date.getDate() - 30);
-    const dateString = date.toISOString().split('T')[0];
-    
-    // Check import.meta.env first (Astro), then process.env (Node)
-    let token;
-    try { token = (import.meta as any).env?.GITHUB_TOKEN; } catch (e) {}
-    if (!token && typeof process !== "undefined") token = process.env.GITHUB_TOKEN;
-
-    const headers: HeadersInit = {
-      'Accept': 'application/vnd.github.v3+json',
-      'User-Agent': 'GitNews-App'
-    };
-    if (token) headers['Authorization'] = `token ${token}`;
-
-    const res = await fetch(
-      `https://api.github.com/search/repositories?q=created:>${dateString}&sort=stars&order=desc&per_page=20`,
-      { headers }
-    );
-
-    if (!res.ok) {
-      throw new Error(`GitHub API error: ${res.statusText}`);
-    }
-
-    const data = await res.json();
-    const repos = data.items.map(mapGithubRepo);
-    
-    cachedTrending = { data: repos, timestamp: Date.now() };
-    return repos;
-  } catch (error) {
-    console.error("[GitHub] Failed to fetch live data:", error);
-    if (cachedTrending) return cachedTrending.data; // fallback to stale cache
-    return []; // Will fallback to mock in the caller if empty
-  }
+  return [];
 }
 
 export async function fetchLiveMarketRepos(query: string = "stars:>10000"): Promise<Repository[]> {
-  if (cachedMarket && Date.now() - cachedMarket.timestamp < CACHE_TTL) {
-    return cachedMarket.data;
+  const data = await fetchGitHubAPI(`/search/repositories?q=${query}&sort=updated&order=desc&per_page=30`);
+  if (data && data.items) {
+    return data.items.map(mapGithubRepo);
   }
+  return [];
+}
 
-  try {
-    let token;
-    try { token = (import.meta as any).env?.GITHUB_TOKEN; } catch (e) {}
-    if (!token && typeof process !== "undefined") token = process.env.GITHUB_TOKEN;
+export async function fetchRepoTree(owner: string, repo: string): Promise<any> {
+  const branchData = await fetchGitHubAPI(`/repos/${owner}/${repo}`);
+  if (!branchData) return null;
+  const defaultBranch = branchData.default_branch || "main";
+  const treeData = await fetchGitHubAPI(`/repos/${owner}/${repo}/git/trees/${defaultBranch}?recursive=1`);
+  return treeData?.tree || [];
+}
 
-    const headers: HeadersInit = {
-      'Accept': 'application/vnd.github.v3+json',
-      'User-Agent': 'GitNews-App'
-    };
-    if (token) headers['Authorization'] = `token ${token}`;
-
-    const res = await fetch(
-      `https://api.github.com/search/repositories?q=${query}&sort=updated&order=desc&per_page=30`,
-      { headers }
-    );
-
-    if (!res.ok) throw new Error(`GitHub API error: ${res.statusText}`);
-
-    const data = await res.json();
-    const repos = data.items.map(mapGithubRepo);
-    
-    cachedMarket = { data: repos, timestamp: Date.now() };
-    return repos;
-  } catch (error) {
-    console.error("[GitHub] Failed to fetch market data:", error);
-    if (cachedMarket) return cachedMarket.data;
-    return [];
+export async function fetchRepoFile(owner: string, repo: string, path: string): Promise<string | null> {
+  const fileData = await fetchGitHubAPI(`/repos/${owner}/${repo}/contents/${path}`);
+  if (fileData && fileData.content) {
+    // Base64 decode
+    if (typeof atob !== 'undefined') return atob(fileData.content);
+    return Buffer.from(fileData.content, 'base64').toString('utf8');
   }
+  return null;
+}
+
+export async function fetchRepoReadme(owner: string, repo: string): Promise<string | null> {
+  const fileData = await fetchGitHubAPI(`/repos/${owner}/${repo}/readme`);
+  if (fileData && fileData.content) {
+    if (typeof atob !== 'undefined') return atob(fileData.content);
+    return Buffer.from(fileData.content, 'base64').toString('utf8');
+  }
+  return null;
 }

@@ -1,6 +1,7 @@
 ---
 import ThemeToggle from "@/components/react/theme-toggle";
 import { MobileMenu } from "@/components/react/mobile-menu";
+import { ModernSidebar } from "@/components/sidebar/ModernSidebar";
 
 const pathname = Astro.url.pathname;
 
@@ -9,7 +10,7 @@ const navLinks = [
   { name: "Trending", href: "/trending" },
   { name: "AI Projects", href: "/ai" },
   { name: "Repositories", href: "/repos" },
-  { name: "News", href: "/news" },
+  { name: "AI News", href: "/news" },
   { name: "Market", href: "/market" }
 ];
 ---
@@ -33,14 +34,17 @@ const navLinks = [
   <!-- Main navigation -->
   <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
     <div class="flex items-center gap-8 md:gap-10">
-      <a href="/" class="flex items-center gap-2 group">
-        <span class="font-serif font-black text-2xl text-slate-900 dark:text-white flex items-center gap-2 tracking-tighter">
-          <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-500 group-hover:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 4h-2m2 0h-3m3 0V9m-3 3h3m-3 3h3m-3 3h3M9 17h1m-1-3h1m-1-3h1m-1-3h1" />
-          </svg>
-          GitNews.
-        </span>
-      </a>
+      <div class="flex items-center gap-2">
+        <ModernSidebar client:load />
+        <a href="/" class="flex items-center gap-2 group ml-2">
+          <span class="font-serif font-black text-2xl text-slate-900 dark:text-white flex items-center gap-2 tracking-tighter">
+            <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-500 group-hover:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 4h-2m2 0h-3m3 0V9m-3 3h3m-3 3h3m-3 3h3M9 17h1m-1-3h1m-1-3h1m-1-3h1" />
+            </svg>
+            GitNews.
+          </span>
+        </a>
+      </div>
 
       <nav class="hidden md:flex items-center gap-8">
         {navLinks.map((link) => {

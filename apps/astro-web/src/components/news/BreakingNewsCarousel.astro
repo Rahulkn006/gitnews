@@ -1,0 +1,58 @@
+---
+import type { AINewsItem } from "@/services/news";
+
+interface Props {
+  news: AINewsItem[];
+}
+
+const { news } = Astro.props;
+---
+
+<div class="mb-16">
+  <h2 class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-6 flex items-center gap-3">
+    <span class="w-2.5 h-2.5 bg-red-500 animate-pulse rounded-full" />
+    BREAKING DEVELOPMENTS
+  </h2>
+  
+  <div class="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
+    {news.map(article => (
+      <a href={article.url} class="snap-start shrink-0 w-72 md:w-80 group hover:-translate-y-1 transition-transform duration-300">
+        <div class="relative overflow-hidden rounded-xl bg-stone-200 dark:bg-stone-800 h-48 mb-4">
+          <img 
+            src={article.image} 
+            alt={article.title}
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute top-3 left-3">
+            <span class="px-2 py-1 bg-white/90 dark:bg-black/90 backdrop-blur text-stone-900 dark:text-white text-[9px] font-mono font-bold uppercase tracking-widest rounded shadow-sm">
+              {article.category}
+            </span>
+          </div>
+        </div>
+        
+        <h3 class="font-serif font-black text-lg text-slate-900 dark:text-white leading-tight mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-3">
+          {article.title}
+        </h3>
+        
+        <div class="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-widest text-slate-500">
+          <span class="text-stone-900 dark:text-stone-300">{article.source}</span>
+          <span class="w-1 h-1 rounded-full bg-stone-300 dark:bg-stone-700"></span>
+          <span>{article.publishedAt}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+</style>
