@@ -1,27 +1,36 @@
 "use client";
 
-import { useState } from "react";
-import { useQuery } from "convex/react";
-import { api } from "@v1/backend/convex/_generated/api";
 import { RepoCard } from "@/components/repo-card";
 import { SearchFilter } from "@/components/search-filter";
 import { mockRepositories } from "@/data/repositories";
+import { api } from "@v1/backend/convex/_generated/api";
+import { useQuery } from "convex/react";
+import { useState } from "react";
 
 export default function ReposPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("All");
 
   const dbRepos = useQuery(api.github.getTrendingRepos);
-  const repositories = dbRepos && dbRepos.length > 0 ? dbRepos : mockRepositories;
+  const repositories =
+    dbRepos && dbRepos.length > 0 ? dbRepos : mockRepositories;
 
-  const filters = ["All", "AI Agents", "LLM Tools", "Machine Learning", "Developer Tools"];
+  const filters = [
+    "All",
+    "AI Agents",
+    "LLM Tools",
+    "Machine Learning",
+    "Developer Tools",
+  ];
 
+  // biome-ignore lint/suspicious/noExplicitAny: mock data compatibility
   const filteredRepos = repositories.filter((repo: any) => {
     const descriptionText = repo.aiSummary || repo.description || "";
     const matchesSearch =
       repo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       descriptionText.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (repo.owner && repo.owner.toLowerCase().includes(searchQuery.toLowerCase()));
+      (repo.owner &&
+        repo.owner.toLowerCase().includes(searchQuery.toLowerCase()));
 
     const matchesCategory =
       selectedFilter === "All" || repo.category === selectedFilter;
@@ -53,7 +62,10 @@ export default function ReposPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredRepos.length > 0 ? (
-          filteredRepos.map((repo: any) => <RepoCard key={repo._id || repo.id} repo={repo} />)
+          // biome-ignore lint/suspicious/noExplicitAny: mock data compatibility
+          filteredRepos.map((repo: any) => (
+            <RepoCard key={repo._id || repo.id} repo={repo} />
+          ))
         ) : (
           <div className="col-span-full py-12 text-center text-xs font-mono text-muted-foreground">
             No matching repositories found.

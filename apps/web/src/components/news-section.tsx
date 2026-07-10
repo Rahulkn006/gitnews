@@ -1,10 +1,10 @@
 "use client";
 
-import { useQuery } from "convex/react";
+import { mapConvexNews } from "@/lib/data-mapper";
 import { api } from "@v1/backend/convex/_generated/api";
+import { useQuery } from "convex/react";
 import Link from "next/link";
 import { NewsCard } from "./news-card";
-import { mapConvexNews } from "@/lib/data-mapper";
 
 export function NewsSection() {
   const dbNews = useQuery(api.news.getNews);
@@ -33,14 +33,21 @@ export function NewsSection() {
         <div className="text-foreground font-bold tracking-widest uppercase">
           GITNEWS INTELLIGENCE REPORT
         </div>
-        <Link href="/news" className="hover:text-primary transition-colors flex items-center gap-1">
+        <Link
+          href="/news"
+          className="hover:text-primary transition-colors flex items-center gap-1"
+        >
           VIEW WIRE FEED →
         </Link>
       </div>
 
       <div className="flex flex-col">
         {newsArticles.map((article: any, index: number) => (
-          <NewsCard key={article._id || article.id} article={article} isLead={index === 0} />
+          <NewsCard
+            key={article._id || article.id}
+            article={article}
+            isLead={index === 0}
+          />
         ))}
       </div>
 
@@ -51,6 +58,7 @@ export function NewsSection() {
         <div className="relative flex overflow-x-hidden w-full">
           <div className="flex items-center space-x-12 animate-marquee whitespace-nowrap">
             {[...tickerItems, ...tickerItems].map((item, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: simple static ticker array
               <span key={i}>{item}</span>
             ))}
           </div>
