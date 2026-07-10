@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "convex/react";
-import { api } from "@v1/backend/convex/_generated/api";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 import { RepoCard } from "./repo-card";
 import { mapConvexRepo } from "@/lib/data-mapper";
 import { withConvex } from "@/lib/convex";
@@ -128,7 +128,7 @@ const DEV_RECOMMENDATIONS = [
 ];
 
 export const AIFeed = withConvex(function AIFeed() {
-  const dbRepos = useQuery(api.github.getReposByCategory, { category: "AI" });
+  const { data: dbRepos } = useSWR('http://localhost:3001/api/repositories?category=AI', fetcher);
   const [isTimeout, setIsTimeout] = useState(false);
 
   useEffect(() => {

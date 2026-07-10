@@ -1,13 +1,13 @@
-import { useQuery } from "convex/react";
-import { api } from "@v1/backend/convex/_generated/api";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 import { RepoCard } from "./repo-card";
 import { mapConvexRepo } from "@/lib/data-mapper";
 import { withConvex } from "@/lib/convex";
 
 export const TrendingFeed = withConvex(function TrendingFeed() {
-  const dbTrending = useQuery(api.github.getTrendingRepos);
-  const dbFeatured = useQuery(api.github.getFeaturedRepos);
-  const dbLatest = useQuery(api.github.getLatestRepos);
+  const { data: dbTrending } = useSWR('http://localhost:3001/api/repositories', fetcher);
+  const { data: dbFeatured } = useSWR('http://localhost:3001/api/repositories?type=featured', fetcher);
+  const { data: dbLatest } = useSWR('http://localhost:3001/api/repositories?type=latest', fetcher);
 
   if (dbTrending === undefined || dbFeatured === undefined || dbLatest === undefined) {
     return (

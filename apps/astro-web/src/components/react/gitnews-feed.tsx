@@ -1,16 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useQuery } from "convex/react";
+import { useQuery, ConvexProvider, ConvexReactClient } from "convex/react";
 import { api } from "@v1/backend/convex/_generated/api";
 
 import { RepoCard } from "./repo-card";
-import { mapConvexRepo } from "@/lib/data-mapper";
 import { BreakingTicker } from "./breaking-ticker";
 import { GithubPulse } from "./github-pulse";
 import { GithubMarket } from "./github-market";
 import { CompactRepoNewsCard } from "./compact-repo-news-card";
-import { withConvex } from "@/lib/convex";
 import { GithubMarketIndex } from "../intelligence/github-market-index";
 import { DeveloperSignals } from "../intelligence/developer-signals";
 import { CategoryLeaderboard } from "../intelligence/category-leaderboard";
@@ -20,7 +18,17 @@ import { ShouldLearnThis } from "../intelligence/should-learn-this";
 import { OpportunityRadar } from "../intelligence/opportunity-radar";
 import { LearningSignals } from "../intelligence/learning-signals";
 
-export const GitNewsFeed = withConvex(function GitNewsFeed() {
+const convex = new ConvexReactClient(import.meta.env.PUBLIC_CONVEX_URL || "");
+
+export function GitNewsFeed() {
+  return (
+    <ConvexProvider client={convex}>
+      <GitNewsFeedInner />
+    </ConvexProvider>
+  );
+}
+
+function GitNewsFeedInner() {
   const [currentDate, setCurrentDate] = useState("");
 
   useEffect(() => {
@@ -29,11 +37,11 @@ export const GitNewsFeed = withConvex(function GitNewsFeed() {
       setCurrentDate(now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + " - " + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
     };
     updateDate();
-    const interval = setInterval(updateDate, 60000); // Update every minute
+    const interval = setInterval(updateDate, 60000);
     return () => clearInterval(interval);
   }, []);
 
-  const dbRepos = useQuery(api.github.getTrendingRepos);
+  const dbRepos = useQuery(api.github.getAllRepos);
 
   if (dbRepos === undefined) {
     return (
@@ -46,11 +54,13 @@ export const GitNewsFeed = withConvex(function GitNewsFeed() {
     );
   }
 
-  const repositories = dbRepos.map(mapConvexRepo);
+  // Map Convex _id to id so RepoCard works
+  const repositories = (dbRepos || []).map(r => ({ ...r, id: r._id, weeklyGrowth: r.growth7d }));
   
   // Sorts
   const sortedByStars = [...repositories].sort((a: any, b: any) => (b.stars ?? 0) - (a.stars ?? 0));
-  const sortedByGrowth = [...repositories].sort((a: any, b: any) => (b.weeklyGrowth ?? 0) - (a.weeklyGrowth ?? 0));
+  const sortedByGrowth = [...repositories].sort((a: any, b: any) => (b.growth24h ?? 0) - (a.growth24h ?? 0));
+  const sortedByRising = [...repositories].sort((a: any, b: any) => (b.starsPerDay ?? 0) - (a.starsPerDay ?? 0));
 
   // Segmentation
   const featuredStories = sortedByStars.slice(0, 2);
@@ -59,7 +69,7 @@ export const GitNewsFeed = withConvex(function GitNewsFeed() {
   const leftRepos = sortedByGrowth.filter(r => !featuredIds.has(r.id)).slice(0, 6);
   const leftIds = new Set(leftRepos.map(r => r.id));
 
-  const rightRepos = sortedByStars.filter(r => !featuredIds.has(r.id) && !leftIds.has(r.id)).slice(0, 6);
+  const rightRepos = sortedByRising.filter(r => !featuredIds.has(r.id) && !leftIds.has(r.id)).slice(0, 6);
   const rightIds = new Set(rightRepos.map(r => r.id));
 
   const feedRepos = sortedByStars.filter(r => !featuredIds.has(r.id) && !leftIds.has(r.id) && !rightIds.has(r.id));
@@ -101,7 +111,7 @@ export const GitNewsFeed = withConvex(function GitNewsFeed() {
       <div className="max-w-[1500px] mx-auto px-4 md:px-6 lg:px-8 py-10">
         
         {/* Main Content Area: 3-Column Newspaper Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr_300px] xl:grid-cols-[280px_1fr_340px] gap-8 xl:gap-12 pb-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr_300px] xl:grid-cols-[280px_1fr_340px] gap-8 xl:gap-12 mb-16 items-start">
           
           {/* LEFT COLUMN: Fastest Growing Repos & Market */}
           <aside className="w-full flex flex-col gap-8">
@@ -130,21 +140,21 @@ export const GitNewsFeed = withConvex(function GitNewsFeed() {
             </div>
 
             {/* Breaking Developer News */}
-            <BreakingDevNews />
+            <BreakingDevNews repositories={repositories} />
 
             {/* Should I Learn This */}
             <div className="mt-8">
-              <ShouldLearnThis />
+              <ShouldLearnThis repositories={repositories} />
             </div>
 
             {/* Developer Opportunity Radar */}
             <div className="mt-8">
-              <OpportunityRadar />
+              <OpportunityRadar repositories={repositories} />
             </div>
 
             {/* Learning Signals */}
             <div className="mt-8">
-              <LearningSignals />
+              <LearningSignals repositories={repositories} />
             </div>
           </aside>
 
@@ -166,16 +176,17 @@ export const GitNewsFeed = withConvex(function GitNewsFeed() {
               </div>
             </section>
 
-            {/* Compact Newspaper Feed */}
-            <section>
-              <div className="flex items-center gap-3 mb-6 border-t border-stone-200 dark:border-stone-800 pt-6">
-                <span className="w-2 h-2 bg-emerald-500 rounded-sm"></span>
-                <h2 className="text-xl font-serif font-black uppercase tracking-tight text-slate-900 dark:text-white">
-                  Trending Feed
+            {/* Trending Repositories Vertical Feed */}
+            <section className="border-t-2 border-b-2 border-black dark:border-white pt-8 pb-8">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="w-3 h-3 bg-emerald-500 rounded-sm"></span>
+                <h2 className="text-2xl font-serif font-black uppercase tracking-tight text-slate-900 dark:text-white">
+                  Trending Repositories
                 </h2>
               </div>
+              
               <div className="flex flex-col gap-4">
-                {(feedRepos.length > 0 ? feedRepos : sortedByStars).map((repo, i) => (
+                {(feedRepos.length > 0 ? feedRepos : sortedByStars).slice(0, 15).map((repo, i) => (
                   <CompactRepoNewsCard key={repo.id || i} repo={repo} />
                 ))}
               </div>
@@ -236,19 +247,20 @@ export const GitNewsFeed = withConvex(function GitNewsFeed() {
               <GithubMarketIndex repositories={repositories} />
               
               {/* Developer Signals */}
-              <DeveloperSignals />
+              <DeveloperSignals repositories={repositories} />
               
               {/* Category Leaderboard */}
-              <CategoryLeaderboard />
+              <CategoryLeaderboard repositories={repositories} />
               
               {/* Why Trending Intelligence */}
-              <WhyTrendingIntelligence />
+              <WhyTrendingIntelligence repositories={repositories} />
             </div>
 
           </aside>
           
         </div>
+
       </div>
     </div>
   );
-});
+}

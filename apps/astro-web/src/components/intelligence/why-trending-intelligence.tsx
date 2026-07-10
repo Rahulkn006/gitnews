@@ -4,7 +4,33 @@ import React from "react";
 import { Fire } from "@phosphor-icons/react";
 import { WHY_TRENDING_DATA } from "@/data/repository-intelligence";
 
-export function WhyTrendingIntelligence() {
+interface WhyTrendingIntelligenceProps {
+  repositories?: any[];
+}
+
+export function WhyTrendingIntelligence({ repositories = [] }: WhyTrendingIntelligenceProps) {
+  if (!repositories.length) return null;
+
+  // Filter repos that have AI verdicts and are trending
+  const trendingRepos = repositories
+    .filter(r => r.aiSummary || r.description || (r.verdict && r.verdict.summary))
+    .sort((a, b) => (b.growth24h || 0) - (a.growth24h || 0))
+    .slice(0, 6)
+    .map(r => ({
+      id: r.id,
+      name: r.name,
+      score: r.gitnewsScore ? Math.round(r.gitnewsScore) : "HOT",
+      headline: r.aiSummary || r.description || "Gaining traction in the developer community.",
+      reasons: [
+        r.verdict?.learningValue ? `Learning Value: ${r.verdict.learningValue}` : "High developer interest.",
+        r.verdict?.futurePotential ? `Future Potential: ${r.verdict.futurePotential}` : "Strong community growth.",
+        `Gained +${r.growth24h || 0} stars today.`
+      ],
+      verdict: r.verdict?.summary || r.aiSummary || "Strong signals indicating rapid adoption across the developer community."
+    }));
+
+  if (trendingRepos.length === 0) return null;
+
   return (
     <div className="flex flex-col gap-0 border-t-2 border-black dark:border-white pt-2">
       <h3 className="font-serif font-black uppercase text-sm tracking-tight text-slate-900 dark:text-white mb-4 flex items-center gap-2">
@@ -12,7 +38,7 @@ export function WhyTrendingIntelligence() {
       </h3>
       
       <div className="flex flex-col gap-5">
-        {WHY_TRENDING_DATA.map((item) => (
+        {trendingRepos.map((item) => (
           <div key={item.id} className="flex flex-col gap-3 pb-5 border-b border-stone-200 dark:border-stone-800 last:border-0 last:pb-0">
             
             <div className="flex items-center justify-between">

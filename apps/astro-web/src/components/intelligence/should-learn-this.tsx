@@ -3,7 +3,34 @@
 import React from "react";
 import { SHOULD_LEARN_DATA } from "@/data/learning-intelligence";
 
-export function ShouldLearnThis() {
+interface ShouldLearnThisProps {
+  repositories?: any[];
+}
+
+export function ShouldLearnThis({ repositories = [] }: ShouldLearnThisProps) {
+  if (!repositories.length) return null;
+
+  // Filter repos that have an explicit learningValue in verdict
+  const learningRepos = repositories
+    .filter(r => r.verdict && r.verdict.learningValue)
+    .sort((a, b) => (b.growth24h || 0) - (a.growth24h || 0))
+    .slice(0, 3)
+    .map((r, idx) => {
+      const isHigh = ["Excellent", "High", "Very High"].includes(r.verdict.learningValue);
+      return {
+        id: r.id,
+        icon: idx === 0 ? "🌟" : (idx === 1 ? "🧠" : "⚙️"),
+        name: r.name,
+        verdict: r.verdict.learningValue,
+        verdictColor: isHigh ? "text-emerald-600 border-emerald-600 bg-emerald-50" : "text-amber-600 border-amber-600 bg-amber-50",
+        reason: r.aiSummary || r.verdict.summary || "High developer interest and adoption.",
+        difficulty: "Varies", // Could be AI generated but hardcoded for now
+        futureScore: isHigh ? 5 : 4
+      };
+    });
+
+  if (learningRepos.length === 0) return null;
+
   return (
     <div className="flex flex-col gap-0 border-t-2 border-black dark:border-white pt-2">
       <h3 className="font-serif font-black uppercase text-sm tracking-tight text-slate-900 dark:text-white mb-3">
@@ -11,7 +38,7 @@ export function ShouldLearnThis() {
       </h3>
       
       <div className="flex flex-col gap-4">
-        {SHOULD_LEARN_DATA.map((item) => (
+        {learningRepos.map((item) => (
           <div key={item.id} className="flex flex-col gap-3 pb-4 border-b border-stone-200 dark:border-stone-800 last:border-0 last:pb-0">
             
             <div className="flex items-center gap-2">

@@ -1,6 +1,7 @@
 ---
 import "../styles/globals.css";
 import { ThemeProvider } from "@/components/react/theme-provider";
+import Footer from "@/components/Footer.astro";
 
 interface Props {
   title?: string;
@@ -75,11 +76,10 @@ const {
   </head>
   <body class="min-h-screen bg-background font-sans antialiased text-foreground">
     <ThemeProvider client:load>
-        <!-- Navbar -->
         <main>
           <slot />
         </main>
-        <!-- Footer -->
+        <Footer />
     </ThemeProvider>
   </body>
 </html>

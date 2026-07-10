@@ -1,11 +1,11 @@
-import { useQuery } from "convex/react";
-import { api } from "@v1/backend/convex/_generated/api";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 import { NewsCard } from "./news-card";
 import { mapConvexNews } from "@/lib/data-mapper";
 import { withConvex } from "@/lib/convex";
 
 export const NewsFeed = withConvex(function NewsFeed() {
-  const dbNews = useQuery(api.news.getNews);
+  const { data: dbNews } = useSWR('http://localhost:3001/api/news', fetcher);
 
   if (dbNews === undefined) {
     return (

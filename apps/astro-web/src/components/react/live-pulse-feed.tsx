@@ -1,14 +1,14 @@
-import { LiveSignal } from "@/data/liveSignals";
+import type { LiveSignal } from "@/data/liveSignals";
 import { useEffect, useState } from "react";
-import { useQuery } from "convex/react";
-import { api } from "@v1/backend/convex/_generated/api";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 import { mapLiveSignal } from "@/lib/data-mapper";
 import { withConvex } from "@/lib/convex";
 
 export const LivePulseFeed = withConvex(function LivePulseFeed() {
   const [signals, setSignals] = useState<LiveSignal[]>([]);
   const [timeFilter, setTimeFilter] = useState<"Last hour" | "Today" | "This week">("Today");
-  const dbRepos = useQuery(api.github.getLatestRepos);
+  const { data: dbRepos } = useSWR('http://localhost:3001/api/repositories?type=latest', fetcher);
 
   useEffect(() => {
     if (dbRepos === undefined) return;

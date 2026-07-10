@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Repository {
+  id           String   @id @default(cuid())
+  githubId     String   @unique
+  name         String
+  owner        String
+  fullName     String   @unique
+  description  String?
+  language     String?
+  stars        Int
+  forks        Int
+  url          String
+  readme       String?
+  lastActivity DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  analysis     RepositoryAnalysis?
+  newsItems    NewsItem[]
+}
+
+model RepositoryAnalysis {
+  id            String   @id @default(cuid())
+  repositoryId  String   @unique
+  summary       String
+  whyTrending   String?
+  learningValue String?
+  features      String?
+  useCases      String?
+  pros          String?
+  limitations   String?
+  generatedAt   DateTime @default(now())
+
+  repository    Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id              String   @id @default(cuid())
+  name            String   @unique
+  description     String?
+  repositoryCount Int      @default(0)
+}
+
+model NewsItem {
+  id                String   @id @default(cuid())
+  title             String
+  content           String
+  source            String?
+  relatedRepository String?
+  createdAt         DateTime @default(now())
+
+  repository        Repository? @relation(fields: [relatedRepository], references: [id])
+}
+
+model Cache {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  expiresAt DateTime
+}

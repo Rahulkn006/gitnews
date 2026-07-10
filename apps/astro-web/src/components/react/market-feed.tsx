@@ -1,14 +1,14 @@
 "use client";
 
-import { useQuery } from "convex/react";
-import { api } from "@v1/backend/convex/_generated/api";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 import { mapConvexRepo } from "@/lib/data-mapper";
 import { withConvex } from "@/lib/convex";
 import { GithubMarketIndex } from "../intelligence/github-market-index";
 import { BreakingTicker } from "./breaking-ticker";
 
 export const MarketFeed = withConvex(function MarketFeed() {
-  const dbRepos = useQuery(api.github.getTrendingRepos);
+  const { data: dbRepos } = useSWR('http://localhost:3001/api/repositories', fetcher);
 
   if (dbRepos === undefined) {
     return (

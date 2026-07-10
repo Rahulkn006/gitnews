@@ -3,7 +3,70 @@
 import React from "react";
 import { DEVELOPER_SIGNALS_DATA } from "@/data/intelligence";
 
-export function DeveloperSignals() {
+interface DeveloperSignalsProps {
+  repositories?: any[];
+}
+
+export function DeveloperSignals({ repositories = [] }: DeveloperSignalsProps) {
+  // Generate dynamic signals from repositories
+  const signals = [];
+
+  if (repositories.length > 0) {
+    // 1. Language momentum
+    const langs = repositories.reduce((acc, r) => {
+      if (r.language) acc[r.language] = (acc[r.language] || 0) + (r.growth24h || 1);
+      return acc;
+    }, {});
+    const topLang = Object.entries(langs).sort((a: any, b: any) => b[1] - a[1])[0];
+    if (topLang) {
+      signals.push({
+        id: 1,
+        icon: "🚀",
+        category: `${topLang[0]} Momentum`,
+        insight: `Surge in ${topLang[0]} repositories trending today, indicating strong ecosystem growth.`,
+        impactScore: Math.min(95, Math.round(50 + (topLang[1] as number) / 10)),
+        status: "ACCELERATING",
+        statusColor: "text-emerald-500"
+      });
+    }
+
+    // 2. Fastest moving repo
+    const topMover = [...repositories].sort((a, b) => (b.growth24h || 0) - (a.growth24h || 0))[0];
+    if (topMover && topMover.growth24h > 5) {
+      signals.push({
+        id: 2,
+        icon: "📈",
+        category: "Breakout Project",
+        insight: `${topMover.name} is experiencing rapid adoption with +${topMover.growth24h} stars in 24h.`,
+        impactScore: Math.min(100, Math.round(60 + topMover.growth24h / 5)),
+        status: "VIRAL",
+        statusColor: "text-purple-500"
+      });
+    }
+    
+    // 3. Category Shift
+    const categories = repositories.reduce((acc, r) => {
+      if (r.category) acc[r.category] = (acc[r.category] || 0) + 1;
+      return acc;
+    }, {});
+    const topCat = Object.entries(categories).sort((a: any, b: any) => b[1] - a[1])[0];
+    if (topCat) {
+      signals.push({
+        id: 3,
+        icon: "🔭",
+        category: "Sector Focus",
+        insight: `Developer attention heavily focused on ${topCat[0]} with ${topCat[1]} projects trending.`,
+        impactScore: Math.min(90, Math.round(40 + (topCat[1] as number) * 5)),
+        status: "HIGH ATTENTION",
+        statusColor: "text-amber-500"
+      });
+    }
+  }
+
+  if (signals.length === 0) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col gap-0 border-t-2 border-black dark:border-white pt-2">
       <h3 className="font-serif font-black uppercase text-lg tracking-tight text-slate-900 dark:text-white mb-4">
@@ -11,7 +74,7 @@ export function DeveloperSignals() {
       </h3>
       
       <div className="flex flex-col gap-5">
-        {DEVELOPER_SIGNALS_DATA.map((signal) => (
+        {signals.map((signal) => (
           <div key={signal.id} className="flex flex-col gap-3 pb-5 border-b border-stone-200 dark:border-stone-800 last:border-0 last:pb-0">
             
             <div className="flex items-center gap-2">

@@ -8,8 +8,9 @@ import RepoHeader from "@/components/intelligence/RepoHeader.astro";
 import WhyWatching from "@/components/intelligence/WhyWatching.astro";
 import IntelligenceGrid from "@/components/intelligence/IntelligenceGrid.astro";
 import RepoResearchSidebar from "@/components/intelligence/RepoResearchSidebar.astro";
-import OllagraphDeepResearch from "@/components/intelligence/OllagraphDeepResearch.astro";
+import OllagraphDeepResearchClient from "@/components/react/OllagraphDeepResearchClient";
 import YoutubeLearningHub from "@/components/intelligence/YoutubeLearningHub.astro";
+import SimilarReposSidebar from "@/components/react/SimilarReposSidebar";
 import { ollagraph } from "@/services/ollagraph";
 
 // Use "repo" from params since file is [repo].astro
@@ -72,7 +73,7 @@ const futurePotential = analysis.futurePotential || repo.verdict?.futurePotentia
             futurePotential={futurePotential}
           />
 
-          <OllagraphDeepResearch />
+          <OllagraphDeepResearchClient client:load owner={owner} repo={name} />
         </div>
 
         {/* Sticky Sidebar Area (30%) */}
@@ -82,6 +83,7 @@ const futurePotential = analysis.futurePotential || repo.verdict?.futurePotentia
             analysis={analysis}
             score={repo.trendingScore || 99}
           />
+          <SimilarReposSidebar client:load owner={owner} repo={name} />
         </div>
 
       </div>

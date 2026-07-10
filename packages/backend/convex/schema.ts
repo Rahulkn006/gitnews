@@ -92,6 +92,21 @@ export default defineSchema({
     description: v.optional(v.string()),
   }).index("by_slug", ["slug"]),
 
+  repositorySnapshots: defineTable({
+    repoId: v.string(), // GitHub ID
+    owner: v.string(),
+    name: v.string(),
+    stars: v.number(),
+    forks: v.number(),
+    watchers: v.number(),
+    contributors: v.number(),
+    topics: v.array(v.string()),
+    language: v.optional(v.string()),
+    timestamp: v.number(),
+  })
+    .index("by_repo_id", ["repoId"])
+    .index("by_timestamp", ["timestamp"]),
+
   repositories: defineTable({
     githubId: v.string(),
     name: v.string(),
@@ -107,6 +122,11 @@ export default defineSchema({
     createdAt: v.number(),
     updatedAt: v.number(),
     trendingScore: v.number(),
+    growth24h: v.optional(v.number()),
+    growth7d: v.optional(v.number()),
+    starsPerDay: v.optional(v.number()),
+    velocityScore: v.optional(v.number()),
+    gitnewsScore: v.optional(v.number()),
     aiSummary: v.optional(v.string()),
     developerAnalysis: v.optional(
       v.object({
@@ -123,11 +143,17 @@ export default defineSchema({
       })
     ),
     category: v.optional(v.string()),
+    primaryCategory: v.optional(v.string()),
+    categories: v.optional(v.array(v.string())),
+    tags: v.optional(v.array(v.string())),
+    categoryUpdatedAt: v.optional(v.number()),
   })
     .index("by_github_id", ["githubId"])
     .index("by_updated", ["updatedAt"])
     .index("by_stars", ["stars"])
     .index("by_trending", ["trendingScore"])
+    .index("by_growth24h", ["growth24h"])
+    .index("by_gitnewsScore", ["gitnewsScore"])
     .index("by_category", ["category"])
     .index("by_owner_name", ["owner", "name"]),
 

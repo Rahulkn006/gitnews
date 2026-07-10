@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "Create a deploy-ready script that seeds sample data on first deployment.",
+    "Add Convex environment variables for TOGETHER_API_KEY and TOGETHER_BASE_URL.",
+    "Add a PUBLIC_CONVEX_URL environment variable in Cloudflare Pages.",
+    "Run npx convex run github:scheduleGitHubSync after setting environment variables.",
+    "Add error boundaries and loading skeletons to React islands.",
+    "Implement missing routes: /analyze, /discover, /olla/*, /learning/*, /market/*, /space/*.",
+    "Add footer component to Astro layout.",
+    "Add SEO meta tags per page.",
+    "Replace mock data with real data from Convex and APIs.",
+    "Set up a Convex cron job for recurring GitHub sync every hour."
+  ]
+}

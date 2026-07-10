@@ -1,9 +1,9 @@
-import { useQuery } from "convex/react";
-import { api } from "@v1/backend/convex/_generated/api";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 import { withConvex } from "@/lib/convex";
 
 export const RepoAnalysis = withConvex(function RepoAnalysis({ owner, name }: { owner: string; name: string }) {
-  const repo = useQuery(api.github.getRepoByOwnerAndName, { owner, name });
+  const { data: repo } = useSWR(`http://localhost:3001/api/repositories/${owner}/${name}`, fetcher);
 
   if (repo === undefined) {
     return (

@@ -1,13 +1,13 @@
 import React from "react";
-import { useQuery } from "convex/react";
-import { api } from "@v1/backend/convex/_generated/api";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 import { mapConvexNews } from "@/lib/data-mapper";
 import { WhyTrending } from "./why-trending";
 import { MiniStarGraph } from "./analytics-visuals";
 import { withConvex } from "@/lib/convex";
 
 export const RepoArticlePage = withConvex(function RepoArticlePage({ owner, name }: { owner: string; name: string }) {
-  const dbNews = useQuery(api.news.getNews);
+  const { data: dbNews } = useSWR('http://localhost:3001/api/news', fetcher);
   
   if (dbNews === undefined) {
     return (

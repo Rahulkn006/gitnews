@@ -394,3 +394,46 @@ Replaced placeholder emojis and static elements with a premium, centralized SVG 
 - **`LottieAnimation.tsx` (New):** A robust client-side React Island for playing `.json` Lottie files without hydration mismatches.
 - **`YoutubeCard.astro` (New):** Built a premium, glassmorphic YouTube learning card featuring thumbnails, custom play buttons, and AI-context badges.
 - **`RepoHeader.astro` & `WhyWatching.astro` (Upgraded):** Refactored to completely replace legacy text emojis with scalable, themed SVG assets via `GitNewsIcon`.
+
+---
+
+## 13. Convex to Node.js/Postgres Migration (Phase 1)
+Created foundational Node.js + Express backend to eventually replace Convex Cloud.
+
+**Files Created:**
+- `apps/backend/package.json` & setup
+- `apps/backend/src/server.ts`
+- `apps/backend/src/database/prisma.ts`
+- `apps/backend/prisma/schema.prisma`
+- `apps/backend/src/routes/github.routes.ts`, `ai.routes.ts`
+- `apps/backend/src/services/github.service.ts`, `together.service.ts`, `ollagraph.service.ts`
+- `apps/backend/src/scheduler/githubSync.ts`
+
+**Important Decisions:**
+- **Auth**: Kept as public platform, auth migration deferred.
+- **Real-time**: Deferred Socket.IO; proceeding with REST APIs first.
+
+**Status**: Phase 1 complete. Convex backend is still running. UI and frontend remain unchanged.
+
+---
+
+## 14. Convex to Node.js/Postgres Migration (Phase 2)
+Ported existing Convex business logic into self-hosted backend services.
+
+**Migrated Functions:**
+- `syncGitHubData` -> `GitHubService.syncGitHubData()`
+- `getTrendingRepos` -> `GitHubService.getTrendingRepos()`
+- `getRepoByOwnerAndName` -> `GitHubService.getRepoByOwnerAndName()`
+- `buildAiAnalysis` -> `TogetherService.buildAiAnalysis()`
+
+**Created Services:**
+- `github.service.ts`: Handles GitHub API connection, fetching repositories, trending calculations, and syncing to Postgres via Prisma.
+- `together.service.ts`: Handles AI summary generation and repository analysis using the Together AI platform.
+- `repositories.routes.ts`: Exposes REST endpoints (`/api/repositories/trending`, `/api/repositories/:owner/:repo`) with output formats matching Convex.
+
+**Pending Tasks:**
+- Connect the frontend (`useQuery` hooks) to the new backend REST API (Phase 6).
+- Setup the PostgreSQL database with `prisma db push` or migrations and seed data (Phase 3).
+
+**Status**: Phase 2 complete. Frontend is not connected yet, Convex remains the active backend.
+
