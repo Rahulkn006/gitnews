@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useQuery } from "convex/react";
-import { api } from "../../../../packages/backend/convex/_generated/api";
+import { api } from "@v1/backend/convex/_generated/api";
 import { RepoCard } from "./repo-card";
 import { mapConvexRepo } from "@/lib/data-mapper";
 import { withConvex } from "@/lib/convex";
