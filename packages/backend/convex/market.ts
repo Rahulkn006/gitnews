@@ -42,8 +42,8 @@ export const getMarketOverview = query({
     repos.forEach(r => {
       if (r.category && typeof r.growth24h === 'number') {
         if (!catGrowth[r.category]) catGrowth[r.category] = { sum: 0, count: 0 };
-        catGrowth[r.category].sum += r.growth24h;
-        catGrowth[r.category].count++;
+        catGrowth[r.category]!.sum += r.growth24h;
+        catGrowth[r.category]!.count++;
       }
     });
     let topCategory = "N/A";

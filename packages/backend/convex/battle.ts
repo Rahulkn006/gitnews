@@ -15,7 +15,7 @@ export const compareRepositories = action({
     repoAId: v.id("repositories"),
     repoBId: v.id("repositories"),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     const repoA = await ctx.runQuery(internal.battle.getRepoDetails, { id: args.repoAId });
     const repoB = await ctx.runQuery(internal.battle.getRepoDetails, { id: args.repoBId });
 

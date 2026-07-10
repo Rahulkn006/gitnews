@@ -322,14 +322,14 @@ export const upsertRepository = internalMutation({
       .collect();
 
     // Find closest snapshot to 24h ago
-    let snap24h = pastSnapshots.reduce((prev, curr) => {
+    let snap24h = pastSnapshots.length > 0 ? pastSnapshots.reduce((prev, curr) => {
       return (Math.abs(curr.timestamp - dayAgo) < Math.abs(prev.timestamp - dayAgo) ? curr : prev);
-    }, pastSnapshots[0]);
+    }) : undefined;
 
     // Find closest snapshot to 7d ago
-    let snap7d = pastSnapshots.reduce((prev, curr) => {
+    let snap7d = pastSnapshots.length > 0 ? pastSnapshots.reduce((prev, curr) => {
       return (Math.abs(curr.timestamp - weekAgo) < Math.abs(prev.timestamp - weekAgo) ? curr : prev);
-    }, pastSnapshots[0]);
+    }) : undefined;
 
     const growth24h = snap24h ? Math.max(0, args.stars - snap24h.stars) : 0;
     const forkGrowth24h = snap24h ? Math.max(0, args.forks - snap24h.forks) : 0;

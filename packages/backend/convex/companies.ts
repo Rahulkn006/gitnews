@@ -72,7 +72,7 @@ export const listCompanies = query({
     const companies = Array.from(companiesMap.values())
       .filter(c => ELITE_COMPANIES[c.id] !== undefined)
       .map(c => {
-        const eliteMeta = ELITE_COMPANIES[c.id];
+        const eliteMeta = ELITE_COMPANIES[c.id]!;
         
         // Sort repos to find top repos
         const sortedRepos = [...c.repos].sort((a, b) => (b.stars || 0) - (a.stars || 0));
@@ -151,8 +151,8 @@ export const getCompanyDetails = query({
       repos.push(...filtered);
     }
     
-    const name = repos[0].owner;
-    const avatar = repos[0].avatar;
+    const name = repos[0]!.owner;
+    const avatar = repos[0]!.avatar;
     
     let totalStars = 0;
     let totalForks = 0;
@@ -211,24 +211,24 @@ export const getCompanyDetails = query({
       let categorized = false;
       
       if (t.includes("ai") || t.includes("machine-learning") || t.includes("llm") || d.includes("ai ")) {
-        dna["AI & Machine Learning"].push(r);
+        dna["AI & Machine Learning"]!.push(r);
         categorized = true;
       }
       if (t.includes("developer-tools") || t.includes("cli") || d.includes("tool")) {
-        dna["Developer Tools"].push(r);
+        dna["Developer Tools"]!.push(r);
         categorized = true;
       }
       if (t.includes("cloud") || t.includes("infrastructure") || t.includes("kubernetes") || t.includes("docker")) {
-        dna["Cloud & Infrastructure"].push(r);
+        dna["Cloud & Infrastructure"]!.push(r);
         categorized = true;
       }
       if (t.includes("frontend") || t.includes("react") || t.includes("vue") || t.includes("web")) {
-        dna["Frontend & Web"].push(r);
+        dna["Frontend & Web"]!.push(r);
         categorized = true;
       }
       
-      if (!categorized && dna["Other Core Projects"].length < 5) {
-        dna["Other Core Projects"].push(r);
+      if (!categorized && dna["Other Core Projects"]!.length < 5) {
+        dna["Other Core Projects"]!.push(r);
       }
     }
     
