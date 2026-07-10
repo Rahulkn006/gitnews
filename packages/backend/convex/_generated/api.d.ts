@@ -38,6 +38,7 @@ import type * as passwordProviders from "../passwordProviders.js";
 import type * as seed from "../seed.js";
 import type * as sessions from "../sessions.js";
 import type * as subscriptions from "../subscriptions.js";
+import type * as trending from "../trending.js";
 import type * as usage from "../usage.js";
 import type * as users from "../users.js";
 import type * as utils_validators from "../utils/validators.js";
@@ -87,6 +88,7 @@ declare const fullApi: ApiFromModules<{
   seed: typeof seed;
   sessions: typeof sessions;
   subscriptions: typeof subscriptions;
+  trending: typeof trending;
   usage: typeof usage;
   users: typeof users;
   "utils/validators": typeof utils_validators;
