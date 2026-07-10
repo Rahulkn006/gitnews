@@ -30,6 +30,7 @@ import type * as githubSeed from "../githubSeed.js";
 import type * as http from "../http.js";
 import type * as init from "../init.js";
 import type * as jobs from "../jobs.js";
+import type * as market from "../market.js";
 import type * as news from "../news.js";
 import type * as notifications from "../notifications.js";
 import type * as orgs from "../orgs.js";
@@ -78,6 +79,7 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   init: typeof init;
   jobs: typeof jobs;
+  market: typeof market;
   news: typeof news;
   notifications: typeof notifications;
   orgs: typeof orgs;

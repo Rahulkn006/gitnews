@@ -20,8 +20,8 @@ function SidebarItem({ icon: Icon, label, href = "#", active = false }: SidebarI
       href={href}
       className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all ${
         active 
-          ? 'bg-emerald-500/10 text-emerald-500 font-bold' 
-          : 'text-stone-400 hover:text-stone-100 hover:bg-stone-800/50'
+          ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 font-bold border border-emerald-100 dark:border-transparent' 
+          : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800/50 border border-transparent'
       }`}
     >
       <Icon weight={active ? "fill" : "duotone"} className="w-5 h-5 shrink-0" />
@@ -34,10 +34,10 @@ function SidebarSection({ title, icon: TitleIcon, children, defaultOpen = true }
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="mb-2 border-b border-stone-800/50 pb-2 last:border-0">
+    <div className="mb-2 border-b border-stone-200 dark:border-stone-800/50 pb-2 last:border-0">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-3 py-2 text-stone-400 hover:text-stone-200 transition-colors group"
+        className="w-full flex items-center justify-between px-3 py-2 text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 transition-colors group"
       >
         <div className="flex items-center gap-2">
           {TitleIcon && <TitleIcon weight="duotone" className="w-4 h-4 text-emerald-500" />}
@@ -109,20 +109,20 @@ export function ModernSidebar() {
       {/* Sidebar Drawer - Solid Background, No Blur Overlay */}
       <div 
         ref={sidebarRef}
-        className={`fixed top-0 left-0 h-[100vh] z-[9999] w-[320px] bg-[#050505] border-r border-stone-800 shadow-2xl flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed top-0 left-0 h-[100vh] z-[9999] w-[320px] bg-white dark:bg-[#050505] border-r border-stone-200 dark:border-stone-800 shadow-2xl flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Header */}
-        <div className="h-[120px] flex flex-col justify-center px-6 border-b border-stone-800 shrink-0 relative">
+        <div className="h-[120px] flex flex-col justify-center px-6 border-b border-stone-200 dark:border-stone-800 shrink-0 relative">
           <button 
             onClick={() => setIsOpen(false)}
-            className="absolute top-6 right-6 p-1.5 rounded-md text-stone-500 hover:text-white hover:bg-stone-800 transition-colors"
+            className="absolute top-6 right-6 p-1.5 rounded-md text-stone-400 dark:text-stone-500 hover:text-stone-900 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
           >
             <X weight="bold" className="w-5 h-5" />
           </button>
           <div>
-            <div className="font-serif font-black text-2xl text-white tracking-tighter flex items-center gap-2">
+            <div className="font-serif font-black text-2xl text-stone-900 dark:text-white tracking-tighter flex items-center gap-2">
               <svg className="w-6 h-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 4h-2m2 0h-3m3 0V9m-3 3h3m-3 3h3m-3 3h3M9 17h1m-1-3h1m-1-3h1m-1-3h1" />
               </svg>
@@ -164,23 +164,23 @@ export function ModernSidebar() {
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-stone-800 shrink-0">
+        <div className="p-4 border-t border-stone-200 dark:border-stone-800 shrink-0">
           <div className="flex items-center justify-between px-3">
-            <div className="flex items-center gap-1.5 text-stone-500">
-              <button className="p-1.5 rounded-md hover:bg-stone-800 hover:text-white transition-colors" title="Light Theme">
+            <div className="flex items-center gap-1.5 text-stone-400 dark:text-stone-500">
+              <button className="p-1.5 rounded-md hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-white transition-colors" title="Light Theme">
                 <Sun className="w-4 h-4" />
               </button>
-              <button className="p-1.5 rounded-md hover:bg-stone-800 hover:text-white transition-colors" title="Dark Theme">
+              <button className="p-1.5 rounded-md hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-white transition-colors" title="Dark Theme">
                 <Moon className="w-4 h-4" />
               </button>
-              <button className="p-1.5 rounded-md hover:bg-stone-800 hover:text-white transition-colors" title="System Theme">
+              <button className="p-1.5 rounded-md hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-white transition-colors" title="System Theme">
                 <Monitor className="w-4 h-4" />
               </button>
             </div>
             
             <a 
               href="https://github.com/gitnews" 
-              className="text-[10px] font-mono font-bold tracking-widest uppercase text-stone-500 hover:text-white transition-colors"
+              className="text-[10px] font-mono font-bold tracking-widest uppercase text-stone-400 dark:text-stone-500 hover:text-stone-900 dark:hover:text-white transition-colors"
             >
               v3.0.0
             </a>
