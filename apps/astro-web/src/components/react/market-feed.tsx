@@ -3,6 +3,7 @@
 import { useQuery } from "convex/react";
 import { api } from "@v1/backend/convex/_generated/api";
 import { withConvex } from "@/lib/convex";
+import { BackNavigation } from "./back-navigation";
 
 export const MarketFeed = withConvex(function MarketFeed() {
   const overview = useQuery(api.market.getMarketOverview);
@@ -26,7 +27,11 @@ export const MarketFeed = withConvex(function MarketFeed() {
   return (
     <div className="w-full min-h-screen bg-white text-slate-900 dark:bg-black dark:text-emerald-500 font-sans selection:bg-emerald-500 selection:text-white">
       <div className="max-w-[1500px] mx-auto px-4 md:px-6 lg:px-8 py-10 w-full font-mono">
-        
+        {/* Back Navigation */}
+        <div className="mb-6">
+          <BackNavigation />
+        </div>
+
         {/* Header */}
         <header className="mb-10 border-b-2 border-slate-900 dark:border-emerald-500 pb-6 flex flex-col md:flex-row justify-between items-end gap-4">
           <div>

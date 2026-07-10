@@ -2,6 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import Navbar from '@/components/Navbar.astro';
 import { CompanyGallery } from '@/components/react/CompanyGallery';
+import { BackNavigation } from '@/components/react/back-navigation';
 ---
 
 <Layout title="Company Engineering Index — GitNews" description="Explore the engineering DNA behind the world's most influential open-source companies.">
@@ -9,6 +10,9 @@ import { CompanyGallery } from '@/components/react/CompanyGallery';
   
   <div class="w-full min-h-[calc(100vh-64px)] bg-stone-50 text-slate-900 dark:bg-[#0a0a0a] dark:text-slate-200">
     <main class="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20">
+      <div class="mb-8">
+        <BackNavigation />
+      </div>
       
       <div class="mb-16 text-center max-w-3xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
         <span class="text-[10px] font-mono text-emerald-500 font-bold uppercase tracking-widest block mb-4">

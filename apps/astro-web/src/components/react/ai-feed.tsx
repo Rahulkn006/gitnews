@@ -9,6 +9,8 @@ import {
   Fire, Lightbulb, TrendUp, CheckCircle, Code, Star
 } from "@phosphor-icons/react";
 
+import { BackNavigation } from "./back-navigation";
+
 // Mock Fallback Data
 const MOCK_AI_REPOS = [
   {
@@ -156,6 +158,9 @@ export const AIFeed = withConvex(function AIFeed() {
       {/* Hero Section */}
       <div className="w-full border-b border-stone-200 dark:border-stone-800 bg-white dark:bg-[#050505] py-12 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
+          <div className="mb-6">
+            <BackNavigation />
+          </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-black tracking-tight text-slate-900 dark:text-white mb-4 flex items-center gap-4">
             AI PROJECT INTELLIGENCE
           </h1>

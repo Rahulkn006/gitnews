@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@v1/backend/convex/_generated/api";
 import { RepoCard } from "./repo-card";
+import { BackNavigation } from "./back-navigation";
 import { mapConvexRepo } from "@/lib/data-mapper";
 import { withConvex } from "@/lib/convex";
 
@@ -50,12 +51,7 @@ export const TrendingFeed = withConvex(function TrendingFeed() {
         
         {/* Back Navigation */}
         <div className="mb-8">
-          <a
-            href="/"
-            className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors uppercase tracking-widest"
-          >
-            ← Back To Home
-          </a>
+          <BackNavigation className="mb-8" />
         </div>
 
         {/* Header */}
@@ -161,9 +157,9 @@ export const TrendingFeed = withConvex(function TrendingFeed() {
              <div className="w-16 h-16 bg-stone-100 dark:bg-stone-900 rounded-full flex items-center justify-center mx-auto mb-4">
                <span className="text-2xl">🔍</span>
              </div>
-             <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No trending repositories found</h3>
+             <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">No trending repositories found.</h3>
              <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto">
-               We couldn't find any repositories matching your current filter criteria. Try selecting a different category or time range.
+               Repository sync required.
              </p>
              <button
                 onClick={() => { setCategory("All"); setTime("all"); }}

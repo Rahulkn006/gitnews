@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useQuery, useAction } from "convex/react";
 import { api } from "@v1/backend/convex/_generated/api";
 import { withConvex } from "@/lib/convex";
+import { BackNavigation } from "./back-navigation";
 
 function RepoAutocomplete({ 
   label, 
@@ -136,6 +137,9 @@ const RepoBattleComponent = () => {
 
   return (
     <main className="max-w-6xl mx-auto px-4 md:px-8 py-12">
+      <div className="mb-8">
+        <BackNavigation />
+      </div>
       <div className="mb-12 text-center max-w-2xl mx-auto">
         <span className="text-[10px] font-mono text-emerald-500 font-bold uppercase tracking-widest block mb-2">
           Olla AI Intelligence

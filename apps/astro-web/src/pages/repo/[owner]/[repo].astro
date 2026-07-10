@@ -11,6 +11,7 @@ import RepoResearchSidebar from "@/components/intelligence/RepoResearchSidebar.a
 import OllagraphDeepResearchClient from "@/components/react/OllagraphDeepResearchClient";
 import YoutubeLearningHub from "@/components/intelligence/YoutubeLearningHub.astro";
 import SimilarReposSidebar from "@/components/react/SimilarReposSidebar";
+import { BackNavigation } from "@/components/react/back-navigation";
 import { ollagraph } from "@/services/ollagraph";
 
 // Use "repo" from params since file is [repo].astro
@@ -41,10 +42,7 @@ const futurePotential = analysis.futurePotential || repo.verdict?.futurePotentia
   <div class="min-h-screen bg-white text-stone-900 dark:bg-[#0a0a0a] dark:text-stone-200 font-sans selection:bg-emerald-500 selection:text-white pt-10 pb-20">
     <div class="max-w-[1500px] mx-auto px-4 md:px-8">
       
-      <a href="/" class="inline-flex items-center gap-2 font-mono text-sm uppercase tracking-widest text-stone-500 hover:text-emerald-500 transition-colors mb-8">
-        <span>←</span> Back to Feed
-      </a>
-      
+      <BackNavigation label="Back to Feed" className="mb-8" />
       <RepoHeader 
         name={repo.name} 
         owner={repo.owner} 
