@@ -233,3 +233,107 @@ warn - If this is content and not a class, replace it with `ease-&lsqb;cubic-bez
 22:21:14 [watch] .vercel/output/static/repositories/index.html
 22:21:16 [watch] .vercel/output/static/news/index.html
 22:21:16 [watch] .vercel/output/static/index.html
+22:25:59 Configuration file updated. Restarting...
+22:25:59 [types] Generated 1ms
+22:25:59 [vite] Port 4321 is in use, trying another one...
+22:25:59 [vite] Port 4322 is in use, trying another one...
+22:26:21 [watch] .vercel/output/static/index.html
+22:26:21 [watch] .vercel/output/static/ai/index.html
+22:26:21 [watch] .vercel/output/static/ai-projects/index.html
+22:26:21 [watch] .vercel/output/static/analyze/index.html
+22:26:21 [watch] .vercel/output/static/discover/index.html
+22:26:21 [watch] .vercel/output/static/learning/interview/index.html
+22:26:21 [watch] .vercel/output/static/learning/projects/index.html
+22:26:21 [watch] .vercel/output/static/learning/similar/index.html
+22:26:21 [watch] .vercel/output/static/live/index.html
+22:26:21 [watch] .vercel/output/static/market/index.html
+22:26:21 [watch] .vercel/output/static/market/open-source/index.html
+22:26:21 [watch] .vercel/output/static/market/releases/index.html
+22:26:21 [watch] .vercel/output/static/market/signals/index.html
+22:26:21 [watch] .vercel/output/static/news/index.html
+22:26:21 [watch] .vercel/output/static/olla/company-index/index.html
+22:26:21 [watch] .vercel/output/static/olla/compare/index.html
+22:26:21 [watch] .vercel/output/static/olla/company-repos/index.html
+22:26:21 [watch] .vercel/output/static/olla/saved/index.html
+22:26:21 [watch] .vercel/output/static/repos/index.html
+22:26:21 [watch] .vercel/output/static/repositories/index.html
+22:26:21 [watch] .vercel/output/static/space/profile/index.html
+22:26:21 [watch] .vercel/output/static/space/settings/index.html
+22:26:21 [watch] .vercel/output/static/trending/index.html
+22:26:33 [watch] .vercel/output/static/ai/index.html
+22:26:33 [watch] .vercel/output/static/analyze/index.html
+22:26:33 [watch] .vercel/output/static/discover/index.html
+22:26:36 [watch] .vercel/output/static/learning/interview/index.html
+22:26:36 [watch] .vercel/output/static/learning/projects/index.html
+22:26:36 [watch] .vercel/output/static/learning/similar/index.html
+22:26:36 [watch] .vercel/output/static/market/index.html
+22:26:36 [watch] .vercel/output/static/market/open-source/index.html
+22:26:36 [watch] .vercel/output/static/market/releases/index.html
+22:26:36 [watch] .vercel/output/static/market/signals/index.html
+22:26:36 [watch] .vercel/output/static/olla/company-repos/index.html
+22:26:36 [watch] .vercel/output/static/olla/saved/index.html
+22:26:36 [watch] .vercel/output/static/repos/index.html
+22:26:36 [watch] .vercel/output/static/space/profile/index.html
+22:26:36 [watch] .vercel/output/static/space/settings/index.html
+22:26:36 [watch] .vercel/output/static/ai-projects/index.html
+22:26:36 [watch] .vercel/output/static/live/index.html
+22:26:36 [watch] .vercel/output/static/market/index.html
+22:26:36 [watch] .vercel/output/static/olla/company-index/index.html
+22:26:36 [watch] .vercel/output/static/olla/compare/index.html
+22:26:36 [watch] .vercel/output/static/trending/index.html
+22:26:36 [watch] .vercel/output/static/repositories/index.html
+22:26:38 [watch] .vercel/output/static/news/index.html
+22:26:38 [watch] .vercel/output/static/index.html
+22:27:09 Configuration file updated. Restarting...
+[astro] Unable to load your Astro config
+
+22:27:09 [ERROR] [config] Missing "./serverless" specifier in "@astrojs/vercel" package
+  Stack trace:
+    at e (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:46042:25)
+    [...] See full stack trace in the browser, or rerun with --verbose.
+
+22:27:09 [ERROR] Continuing with previous valid configuration
+
+22:27:38 Configuration file updated. Restarting...
+22:27:38 [WARN] The currently selected adapter `@astrojs/vercel` is not compatible with the image service "Sharp".
+22:27:38 [types] Generated 4ms
+22:27:38 [vite] Port 4321 is in use, trying another one...
+22:27:38 [vite] Port 4322 is in use, trying another one...
+22:27:58 [watch] .vercel/output/static/index.html
+22:27:58 [watch] .vercel/output/static/ai/index.html
+22:27:58 [watch] .vercel/output/static/ai-projects/index.html
+22:27:58 [watch] .vercel/output/static/discover/index.html
+22:27:58 [watch] .vercel/output/static/analyze/index.html
+22:27:58 [watch] .vercel/output/static/live/index.html
+22:27:58 [watch] .vercel/output/static/news/index.html
+22:27:58 [watch] .vercel/output/static/market/index.html
+22:27:58 [watch] .vercel/output/static/repos/index.html
+22:27:58 [watch] .vercel/output/static/repositories/index.html
+22:27:58 [watch] .vercel/output/static/trending/index.html
+22:27:58 [watch] .vercel/output/static/learning/interview/index.html
+22:27:58 [watch] .vercel/output/static/learning/projects/index.html
+22:27:58 [watch] .vercel/output/static/learning/similar/index.html
+22:27:58 [watch] .vercel/output/static/olla/company-index/index.html
+22:27:58 [watch] .vercel/output/static/olla/company-repos/index.html
+22:27:58 [watch] .vercel/output/static/olla/compare/index.html
+22:27:58 [watch] .vercel/output/static/olla/saved/index.html
+22:27:58 [watch] .vercel/output/static/market/open-source/index.html
+22:27:58 [watch] .vercel/output/static/market/releases/index.html
+22:27:58 [watch] .vercel/output/static/market/signals/index.html
+22:27:58 [watch] .vercel/output/static/space/profile/index.html
+22:27:58 [watch] .vercel/output/static/space/settings/index.html
+22:28:23 Configuration file updated. Restarting...
+[astro] Unable to load your Astro config
+
+22:28:23 [ERROR] [config] Failed to resolve entry for package "@astrojs/vercel". The package may have incorrect main/module/exports specified in its package.json: Missing "." specifier in "@astrojs/vercel" package
+  Stack trace:
+    at /home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/astro.config.mjs
+    [...] See full stack trace in the browser, or rerun with --verbose.
+
+22:28:23 [ERROR] Continuing with previous valid configuration
+
+22:28:32 Configuration file updated. Restarting...
+22:28:32 [types] Generated 4ms
+22:28:32 [vite] Port 4321 is in use, trying another one...
+22:28:32 [vite] Port 4322 is in use, trying another one...
+22:28:32 [vite] Port 4323 is in use, trying another one...
