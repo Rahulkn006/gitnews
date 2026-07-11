@@ -1,4 +1,4 @@
-export const getApiUrl = () => import.meta.env.PUBLIC_API_URL || "http://localhost:3001";
+export const getApiUrl = () => (typeof import.meta !== "undefined" && import.meta.env ? import.meta.env.PUBLIC_API_URL : undefined) || "https://brass-pointed-scsi-fold.trycloudflare.com";
 
 export const fetcher = async (url: string) => {
   const apiUrl = getApiUrl();
