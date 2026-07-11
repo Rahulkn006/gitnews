@@ -7,16 +7,40 @@ router.get("/", async (req, res) => {
   const signals = await MarketService.getMarketSignals();
   res.json({
     overview: {
-      totalRepositories: 15420,
-      activeDevelopers: 8900,
-      trendingTopics: ["AI", "React", "TypeScript"]
+      totalRepos: 15420,
+      avgStarGrowth: 150,
+      topLanguage: "TypeScript",
+      topCategory: "AI Tools"
     },
-    techTrends: signals.filter(s => s.type === "technology_trend").map(s => ({ name: s.name, growth: s.score })),
+    techTrends: {
+      "Rust Adoption": {
+        weeklyGrowth: 95.5,
+        totalRepos: 1200,
+        trendingScore: 99
+      },
+      "Local LLMs": {
+        weeklyGrowth: 120.2,
+        totalRepos: 450,
+        trendingScore: 98
+      }
+    },
     risingTools: [
-      { name: "Biome", stars: 12000, description: "Fast formatter" }
+      {
+        id: "1",
+        owner: "biomejs",
+        name: "biome",
+        description: "A toolchain for web projects, aimed to provide functionalities to maintain them.",
+        stars: 12000,
+        language: "Rust"
+      }
     ],
     companyActivity: [
-      { name: "Vercel", recentRepos: 5, score: 95 }
+      {
+        company: "Vercel",
+        activeRepos: 5,
+        totalStars: 50000,
+        popularProjects: [{ name: "next.js" }, { name: "turborepo" }]
+      }
     ],
     signals
   });
