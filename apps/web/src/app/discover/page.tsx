@@ -3,8 +3,8 @@
 import { Leaderboards } from "@/components/leaderboards";
 import { RepoCard } from "@/components/repo-card";
 import { mapConvexRepo } from "@/lib/data-mapper";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -12,7 +12,7 @@ export default function DiscoverPage() {
   const [search, setSearch] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("All");
 
-  const dbRepos = useQuery(api.github.getLatestRepos);
+  const { data: dbRepos } = useSWR("/api/repositories", fetcher);
 
   if (dbRepos === undefined) {
     return (

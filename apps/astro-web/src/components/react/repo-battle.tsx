@@ -1,6 +1,5 @@
-import { withConvex } from "@/lib/convex";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useAction, useQuery } from "convex/react";
+import useSWR from "swr";
+import { fetcher } from "@/lib/api";
 import { useEffect, useRef, useState } from "react";
 import { BackNavigation } from "./back-navigation";
 
@@ -115,8 +114,7 @@ const RepoBattleComponent = () => {
   const [battleResult, setBattleResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const dbRepos = useQuery(api.github.getAllRepos) || [];
-  const compareRepositories = useAction(api.battle.compareRepositories);
+  const { data: allRepos = [] } = useSWR("/api/repositories", fetcher);
 
   const handleQuickCompare = (
     ownerA: string,
@@ -124,13 +122,13 @@ const RepoBattleComponent = () => {
     ownerB: string,
     nameB: string,
   ) => {
-    const rA = dbRepos.find(
-      (r) =>
+    const rA = allRepos.find(
+      (r: any) =>
         r.owner.toLowerCase() === ownerA.toLowerCase() &&
         r.name.toLowerCase() === nameA.toLowerCase(),
     );
-    const rB = dbRepos.find(
-      (r) =>
+    const rB = allRepos.find(
+      (r: any) =>
         r.owner.toLowerCase() === ownerB.toLowerCase() &&
         r.name.toLowerCase() === nameB.toLowerCase(),
     );
@@ -150,10 +148,10 @@ const RepoBattleComponent = () => {
     setBattleResult(null);
 
     try {
-      const result = await compareRepositories({
-        repoAId: repoA._id,
-        repoBId: repoB._id,
-      });
+      const result = await fetch("/api/battle/compare", {
+        method: "POST",
+        body: JSON.stringify({ repoAId: repoA._id, repoBId: repoB._id }),
+      }).then((res) => res.json());
       setBattleResult(result);
     } catch (e: any) {
       setError(
@@ -188,7 +186,7 @@ const RepoBattleComponent = () => {
             label="Repository A"
             value={repoA}
             onChange={setRepoA}
-            repos={dbRepos}
+            repos={allRepos}
           />
 
           <div className="flex-shrink-0 mt-4 md:mt-0 font-black font-serif italic text-2xl text-stone-300 dark:text-stone-700">
@@ -199,7 +197,7 @@ const RepoBattleComponent = () => {
             label="Repository B"
             value={repoB}
             onChange={setRepoB}
-            repos={dbRepos}
+            repos={allRepos}
           />
         </div>
 
@@ -637,4 +635,4 @@ function MetricRow({
   );
 }
 
-export const RepoBattle = withConvex(RepoBattleComponent);
+export const RepoBattle = RepoBattleComponent;

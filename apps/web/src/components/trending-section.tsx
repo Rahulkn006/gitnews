@@ -1,13 +1,13 @@
 "use client";
 
 import { mapConvexRepo } from "@/lib/data-mapper";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 import Link from "next/link";
 import { RepoCard } from "./repo-card";
 
 export function TrendingSection() {
-  const dbRepos = useQuery(api.github.getTrendingRepos);
+  const { data: dbRepos } = useSWR("http://localhost:3001/api/repositories", fetcher);
 
   if (dbRepos === undefined) {
     return (

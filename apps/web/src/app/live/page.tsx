@@ -2,14 +2,14 @@
 
 import type { LiveSignal } from "@/data/liveSignals";
 import { mapLiveSignal } from "@/lib/data-mapper";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function LivePulsePage() {
   const [signals, setSignals] = useState<LiveSignal[]>([]);
-  const dbRepos = useQuery(api.github.getLatestRepos);
+  const { data: dbRepos } = useSWR("/api/repositories", fetcher);
 
   useEffect(() => {
     if (dbRepos === undefined) return;

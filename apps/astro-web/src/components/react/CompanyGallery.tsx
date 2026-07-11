@@ -1,12 +1,10 @@
-import { withConvex } from "@/lib/convex";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
-import { useState } from "react";
+import useSWR from "swr";
+import { fetcher } from "@/lib/api";
 
 function CompanyGalleryComponent() {
-  const companies = useQuery(api.companies.listCompanies);
+  const { data: companies, isLoading } = useSWR("/api/companies", fetcher);
 
-  if (companies === undefined) {
+  if (isLoading || !companies) {
     return (
       <div className="flex flex-col items-center justify-center py-24">
         <div className="w-12 h-12 rounded-full border-4 border-emerald-500/20 border-t-emerald-500 animate-spin mb-6"></div>
@@ -19,7 +17,7 @@ function CompanyGalleryComponent() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {companies.map((company) => (
+      {companies.map((company: any) => (
         <a
           key={company.id}
           href={`/olla/company-index/${company.name.toLowerCase()}`}
@@ -153,4 +151,4 @@ function CompanyGalleryComponent() {
   );
 }
 
-export const CompanyGallery = withConvex(CompanyGalleryComponent);
+export const CompanyGallery = CompanyGalleryComponent;

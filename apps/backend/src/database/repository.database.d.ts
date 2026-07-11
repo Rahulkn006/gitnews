@@ -1,0 +1,105 @@
+export declare class RepositoryDatabase {
+    static upsertRepository(data: any): Promise<{
+        id: string;
+        githubId: string;
+        name: string;
+        owner: string;
+        fullName: string;
+        description: string | null;
+        language: string | null;
+        topics: string | null;
+        stars: number;
+        forks: number;
+        contributors: number;
+        url: string;
+        readme: string | null;
+        lastActivity: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        trendingScore: number;
+        growth24h: number;
+        gitnewsScore: number;
+    }>;
+    static getTrendingRepositories(): Promise<{
+        id: string;
+        githubId: string;
+        name: string;
+        owner: string;
+        fullName: string;
+        description: string | null;
+        language: string | null;
+        topics: string | null;
+        stars: number;
+        forks: number;
+        contributors: number;
+        url: string;
+        readme: string | null;
+        lastActivity: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        trendingScore: number;
+        growth24h: number;
+        gitnewsScore: number;
+    }[]>;
+    static getRepositoryByOwnerAndName(owner: string, name: string): Promise<({
+        analysis: {
+            id: string;
+            repositoryId: string;
+            summary: string;
+            whyTrending: string | null;
+            learningValue: string | null;
+            features: string | null;
+            useCases: string | null;
+            pros: string | null;
+            limitations: string | null;
+            techStack: string | null;
+            difficultyLevel: string | null;
+            codeIntelligence: string | null;
+            scores: string | null;
+            deepResearch: string | null;
+            generatedAt: Date;
+        } | null;
+    } & {
+        id: string;
+        githubId: string;
+        name: string;
+        owner: string;
+        fullName: string;
+        description: string | null;
+        language: string | null;
+        topics: string | null;
+        stars: number;
+        forks: number;
+        contributors: number;
+        url: string;
+        readme: string | null;
+        lastActivity: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        trendingScore: number;
+        growth24h: number;
+        gitnewsScore: number;
+    }) | null>;
+    static getSimilarRepositories(language: string, currentRepoId: string): Promise<{
+        id: string;
+        githubId: string;
+        name: string;
+        owner: string;
+        fullName: string;
+        description: string | null;
+        language: string | null;
+        topics: string | null;
+        stars: number;
+        forks: number;
+        contributors: number;
+        url: string;
+        readme: string | null;
+        lastActivity: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        trendingScore: number;
+        growth24h: number;
+        gitnewsScore: number;
+    }[]>;
+}
+//# sourceMappingURL=repository.database.d.ts.map

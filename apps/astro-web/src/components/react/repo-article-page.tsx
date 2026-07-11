@@ -1,4 +1,4 @@
-import { withConvex } from "@/lib/convex";
+
 import { mapConvexNews } from "@/lib/data-mapper";
 import { fetcher } from "@/lib/fetcher";
 import React from "react";
@@ -6,7 +6,7 @@ import useSWR from "swr";
 import { MiniStarGraph } from "./analytics-visuals";
 import { WhyTrending } from "./why-trending";
 
-export const RepoArticlePage = withConvex(function RepoArticlePage({
+export function RepoArticlePage({
   owner,
   name,
 }: { owner: string; name: string }) {
@@ -196,4 +196,4 @@ export const RepoArticlePage = withConvex(function RepoArticlePage({
       </main>
     </div>
   );
-});
+}

@@ -1,13 +1,10 @@
-import { withConvex } from "@/lib/convex";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import useSWR from "swr";
+import { fetcher } from "@/lib/api";
 
-function CompanyDetailComponent({ companyName }: { companyName: string }) {
-  const details = useQuery(api.companies.getCompanyDetails, {
-    owner: companyName,
-  });
+export function CompanyDetail({ companyName }: { companyName: string }) {
+  const { data: details, isLoading } = useSWR(`/api/companies/${companyName}`, fetcher);
 
-  if (details === undefined) {
+  if (isLoading || details === undefined) {
     return (
       <div className="flex flex-col items-center justify-center py-32">
         <div className="w-12 h-12 rounded-full border-4 border-emerald-500/20 border-t-emerald-500 animate-spin mb-6"></div>
@@ -257,5 +254,3 @@ function CompanyDetailComponent({ companyName }: { companyName: string }) {
     </div>
   );
 }
-
-export const CompanyDetail = withConvex(CompanyDetailComponent);

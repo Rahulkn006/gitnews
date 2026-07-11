@@ -1,8 +1,8 @@
 "use client";
 
 import { mapConvexRepo } from "@/lib/data-mapper";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -11,7 +11,7 @@ export default function AnalyzePage() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<any>(null);
 
-  const dbRepos = useQuery(api.github.getLatestRepos);
+  const { data: dbRepos } = useSWR("/api/repositories", fetcher);
 
   const handleAnalyze = (e: React.FormEvent) => {
     e.preventDefault();

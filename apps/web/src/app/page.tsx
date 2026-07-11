@@ -5,14 +5,14 @@ import { CompactRepoNewsCard } from "@/components/compact-repo-news-card";
 import { GithubPulse } from "@/components/github-pulse";
 import { RepoCard } from "@/components/repo-card";
 import { mapConvexNews, mapConvexRepo } from "@/lib/data-mapper";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 import Link from "next/link";
 
 export default function Page() {
-  // Fetch real data from Convex queries
-  const dbRepos = useQuery(api.github.getTrendingRepos);
-  const dbNews = useQuery(api.news.getNews);
+  // Fetch real data from API
+  const { data: dbRepos } = useSWR("http://localhost:3001/api/repositories", fetcher);
+  const { data: dbNews } = useSWR("http://localhost:3001/api/news", fetcher);
 
   // Show loading state if data hasn't loaded yet
   if (dbRepos === undefined || dbNews === undefined) {

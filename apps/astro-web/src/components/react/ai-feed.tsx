@@ -1,4 +1,4 @@
-import { withConvex } from "@/lib/convex";
+
 import { mapConvexRepo } from "@/lib/data-mapper";
 import { fetcher } from "@/lib/fetcher";
 import {
@@ -178,7 +178,7 @@ const DEV_RECOMMENDATIONS = [
   },
 ];
 
-export const AIFeed = withConvex(function AIFeed() {
+export function AIFeed() {
   const { data: dbRepos } = useSWR(
     "http://localhost:3001/api/repositories?category=AI",
     fetcher,
@@ -348,4 +348,4 @@ export const AIFeed = withConvex(function AIFeed() {
       </main>
     </div>
   );
-});
+}

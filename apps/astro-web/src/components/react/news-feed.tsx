@@ -1,10 +1,10 @@
-import { withConvex } from "@/lib/convex";
+
 import { mapConvexNews } from "@/lib/data-mapper";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 import { NewsCard } from "./news-card";
 
-export const NewsFeed = withConvex(function NewsFeed() {
+export function NewsFeed() {
   const { data: dbNews } = useSWR("http://localhost:3001/api/news", fetcher);
 
   if (dbNews === undefined) {
@@ -67,4 +67,4 @@ export const NewsFeed = withConvex(function NewsFeed() {
       </main>
     </div>
   );
-});
+}

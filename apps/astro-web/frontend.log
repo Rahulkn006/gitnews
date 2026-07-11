@@ -1,0 +1,99 @@
+
+> astro-web@0.0.1 dev
+> astro dev
+
+12:40:53 [WARN] The currently selected adapter `@astrojs/cloudflare` is not compatible with the image service "Sharp".
+12:40:53 [types] Generated 2ms
+
+ astro  v4.16.19 ready in 2479 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+12:40:53 watching for file changes...
+Browserslist: browsers data (caniuse-lite) is 17 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+warn - The class `ease-[cubic-bezier(0.16,1,0.3,1)]` is ambiguous and matches multiple utilities.
+warn - If this is content and not a class, replace it with `ease-&lsqb;cubic-bezier(0.16,1,0.3,1)&rsqb;` to silence this warning.
+12:56:32 [200] / 207ms
+[YouTube] Fetching real learning videos for codecrafters-io/build-your-own-x...
+12:56:49 [200] /repo/codecrafters-io/build-your-own-x 16821ms
+[Ollagraph] Constructing deep analysis for codecrafters-io/build-your-own-x...
+[GitHub] Failed to fetch /repos/codecrafters-io/build-your-own-x: Error: GitHub API error on /repos/codecrafters-io/build-your-own-x: Unauthorized
+    at Module.fetchGitHubAPI (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/services/github.ts:35:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Promise.all (index 0)
+    at async OllagraphClient.analyzeRepository (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/services/ollagraph.ts:16:52)
+    at async Module.GET (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/pages/api/ollagraph/research.ts:17:22)
+    at async renderEndpoint (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/runtime/server/endpoint.js:34:18)
+    at async lastNext (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/render-context.js:139:23)
+    at async callMiddleware (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/middleware/callMiddleware.js:11:10)
+    at async RenderContext.render (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/render-context.js:178:22)
+    at async handleRoute (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/route.js:135:16)
+    at async run (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/request.js:40:14)
+    at async runWithErrorHandling (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/controller.js:64:5)
+    at async handleRequest (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/request.js:34:3)
+[GitHub] Failed to fetch /repos/codecrafters-io/build-your-own-x: Error: GitHub API error on /repos/codecrafters-io/build-your-own-x: Unauthorized
+    at fetchGitHubAPI (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/services/github.ts:35:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Module.fetchRepoTree (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/services/github.ts:91:22)
+    at async Promise.all (index 2)
+    at async OllagraphClient.analyzeRepository (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/services/ollagraph.ts:16:52)
+    at async Module.GET (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/pages/api/ollagraph/research.ts:17:22)
+    at async renderEndpoint (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/runtime/server/endpoint.js:34:18)
+    at async lastNext (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/render-context.js:139:23)
+    at async callMiddleware (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/middleware/callMiddleware.js:11:10)
+    at async RenderContext.render (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/render-context.js:178:22)
+    at async handleRoute (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/route.js:135:16)
+    at async run (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/request.js:40:14)
+    at async runWithErrorHandling (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/controller.js:64:5)
+    at async handleRequest (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/request.js:34:3)
+[GitHub] Failed to fetch /repos/codecrafters-io/build-your-own-x/contents/package.json: Error: GitHub API error on /repos/codecrafters-io/build-your-own-x/contents/package.json: Unauthorized
+    at fetchGitHubAPI (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/services/github.ts:35:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Module.fetchRepoFile (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/services/github.ts:101:20)
+    at async Promise.all (index 3)
+    at async OllagraphClient.analyzeRepository (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/services/ollagraph.ts:16:52)
+    at async Module.GET (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/pages/api/ollagraph/research.ts:17:22)
+    at async renderEndpoint (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/runtime/server/endpoint.js:34:18)
+    at async lastNext (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/render-context.js:139:23)
+    at async callMiddleware (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/middleware/callMiddleware.js:11:10)
+    at async RenderContext.render (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/render-context.js:178:22)
+    at async handleRoute (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/route.js:135:16)
+    at async run (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/request.js:40:14)
+    at async runWithErrorHandling (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/controller.js:64:5)
+    at async handleRequest (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/request.js:34:3)
+[GitHub] Failed to fetch /repos/codecrafters-io/build-your-own-x/readme: Error: GitHub API error on /repos/codecrafters-io/build-your-own-x/readme: Unauthorized
+    at fetchGitHubAPI (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/services/github.ts:35:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Module.fetchRepoReadme (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/services/github.ts:112:20)
+    at async Promise.all (index 1)
+    at async OllagraphClient.analyzeRepository (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/services/ollagraph.ts:16:52)
+    at async Module.GET (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/pages/api/ollagraph/research.ts:17:22)
+    at async renderEndpoint (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/runtime/server/endpoint.js:34:18)
+    at async lastNext (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/render-context.js:139:23)
+    at async callMiddleware (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/middleware/callMiddleware.js:11:10)
+    at async RenderContext.render (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/render-context.js:178:22)
+    at async handleRoute (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/route.js:135:16)
+    at async run (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/request.js:40:14)
+    at async runWithErrorHandling (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/controller.js:64:5)
+    at async handleRequest (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/request.js:34:3)
+[Ollagraph] Failed to fetch analysis for codecrafters-io/build-your-own-x. Using fallback. Error: Could not fetch repo data
+    at OllagraphClient.analyzeRepository (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/services/ollagraph.ts:23:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Module.GET (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/src/pages/api/ollagraph/research.ts:17:22)
+    at async renderEndpoint (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/runtime/server/endpoint.js:34:18)
+    at async lastNext (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/render-context.js:139:23)
+    at async callMiddleware (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/middleware/callMiddleware.js:11:10)
+    at async RenderContext.render (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/core/render-context.js:178:22)
+    at async handleRoute (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/route.js:135:16)
+    at async run (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/request.js:40:14)
+    at async runWithErrorHandling (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/controller.js:64:5)
+    at async handleRequest (file:///home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/astro/dist/vite-plugin-astro-server/request.js:34:3)
+12:56:53 [200] /api/ollagraph/research 1125ms
+12:57:06 [200] / 27ms
+12:57:16 [200] /ai 8ms
+12:57:31 [200] / 18ms
+12:58:44 [200] /olla/company-index 10ms

@@ -1,10 +1,7 @@
 import type { NewsItem } from "@/data/news";
 import type { Repository } from "@/data/repositories";
-import type { Id } from "@v1/backend/convex/_generated/dataModel";
-
-type ConvexRepository = {
-  _id: Id<"repositories">;
-  _creationTime: number;
+type ApiRepository = {
+  id: string;
   githubId: string;
   name: string;
   owner: string;
@@ -16,31 +13,30 @@ type ConvexRepository = {
   topics: string[];
   readme?: string;
   repoUrl: string;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: string | number | Date;
+  updatedAt: string | number | Date;
   trendingScore: number;
   aiSummary?: string;
   category?: string;
 };
 
-type ConvexNews = {
-  _id: Id<"news">;
-  _creationTime: number;
+type ApiNews = {
+  id: string;
   title: string;
   source: string;
   summary: string;
   category: string;
   date: string;
   url: string;
-  createdAt: number;
+  createdAt: string | number | Date;
 };
 
 export function mapConvexRepo(
-  repo: ConvexRepository,
+  repo: ApiRepository,
   index: number,
 ): Repository {
   return {
-    id: repo._id,
+    id: repo.id,
     rank: index + 1,
     name: repo.name,
     owner: repo.owner,
@@ -58,7 +54,7 @@ export function mapConvexRepo(
   };
 }
 
-export function mapConvexNews(newsItem: ConvexNews): NewsItem {
+export function mapConvexNews(newsItem: ApiNews): NewsItem {
   let dateString = newsItem.date;
   if (!dateString.includes("T")) {
     dateString = new Date(newsItem.createdAt).toISOString();
@@ -99,7 +95,7 @@ export function mapConvexNews(newsItem: ConvexNews): NewsItem {
 import type { LiveSignal } from "@/data/liveSignals";
 
 export function mapLiveSignal(
-  repo: ConvexRepository,
+  repo: ApiRepository,
   index: number,
 ): LiveSignal {
   const sourcesOptions = [
@@ -117,7 +113,7 @@ export function mapLiveSignal(
   ];
 
   return {
-    id: repo._id,
+    id: repo.id,
     repository: `${repo.owner}/${repo.name}`,
     ownerAvatar: repo.avatar || "https://github.com/github.png",
     mentionsToday: Math.floor(repo.forks * 0.5) + index * 10,

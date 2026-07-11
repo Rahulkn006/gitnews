@@ -1,13 +1,13 @@
 "use client";
 
 import { mapConvexNews } from "@/lib/data-mapper";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 import Link from "next/link";
 import { NewsCard } from "./news-card";
 
 export function NewsSection() {
-  const dbNews = useQuery(api.news.getNews);
+  const { data: dbNews } = useSWR("http://localhost:3001/api/news", fetcher);
 
   if (dbNews === undefined) {
     return (

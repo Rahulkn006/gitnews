@@ -1,23 +1,18 @@
 "use client";
 
-import { withConvex } from "@/lib/convex";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import useSWR from "swr";
+import { fetcher } from "@/lib/api";
 import { BackNavigation } from "./back-navigation";
 
-export const MarketFeed = withConvex(function MarketFeed() {
-  const overview = useQuery(api.market.getMarketOverview);
-  const techTrends = useQuery(api.market.getTechnologyTrends);
-  const risingTools = useQuery(api.market.getRisingTools);
-  const companyActivity = useQuery(api.market.getCompanyActivity);
+export function MarketFeed() {
+  const { data, isLoading } = useSWR("/api/market", fetcher);
 
-  const isLoading =
-    overview === undefined ||
-    techTrends === undefined ||
-    risingTools === undefined ||
-    companyActivity === undefined;
+  const overview = data?.overview;
+  const techTrends = data?.techTrends;
+  const risingTools = data?.risingTools;
+  const companyActivity = data?.companyActivity;
 
-  if (isLoading) {
+  if (isLoading || !data) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-stone-50 dark:bg-black">
         <div className="animate-pulse flex flex-col items-center gap-4">
@@ -242,4 +237,4 @@ export const MarketFeed = withConvex(function MarketFeed() {
       </div>
     </div>
   );
-});
+}

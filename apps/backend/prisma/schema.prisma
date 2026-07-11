@@ -15,31 +15,95 @@ model Repository {
   fullName     String   @unique
   description  String?
   language     String?
+  topics       String?  // JSON string of topics
   stars        Int
   forks        Int
+  contributors Int      @default(0)
   url          String
   readme       String?
   lastActivity DateTime?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  
+  // Market & growth
+  trendingScore Float    @default(0)
+  growth24h     Int      @default(0)
+  gitnewsScore  Float    @default(0)
 
-  analysis     RepositoryAnalysis?
-  newsItems    NewsItem[]
+  analysis         AIAnalysis?
+  newsItems        NewsItem[]
+  youtubeResources YouTubeResource[]
+  trendingHistory  TrendingHistory[]
 }
 
-model RepositoryAnalysis {
-  id            String   @id @default(cuid())
-  repositoryId  String   @unique
-  summary       String
-  whyTrending   String?
-  learningValue String?
-  features      String?
-  useCases      String?
-  pros          String?
-  limitations   String?
-  generatedAt   DateTime @default(now())
+model AIAnalysis {
+  id               String   @id @default(cuid())
+  repositoryId     String   @unique
+  summary          String
+  whyTrending      String?
+  learningValue    String?
+  features         String?
+  useCases         String?
+  pros             String?
+  limitations      String?
+  techStack        String?  // JSON array
+  difficultyLevel  String?
+  codeIntelligence String?  // JSON object
+  scores           String?  // JSON object
+  deepResearch     String?  // JSON object
+  generatedAt      DateTime @default(now())
 
   repository    Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+}
+
+model Company {
+  id              String   @id @default(cuid())
+  name            String   @unique
+  githubOrg       String   @unique
+  logo            String?
+  description     String?
+  engineeringScore Float   @default(0)
+  totalStars      Int      @default(0)
+  mainLanguages   String?  // JSON array
+  technologies    String?  // JSON array
+  topRepositories String?  // JSON array of repo fullNames
+  openSourceImpact String?
+  updatedAt       DateTime @updatedAt
+}
+
+model TrendingHistory {
+  id           String   @id @default(cuid())
+  repositoryId String
+  rank         Int
+  starsAdded   Int
+  recordedAt   DateTime @default(now())
+  category     String?
+
+  repository   Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+}
+
+model YouTubeResource {
+  id           String   @id @default(cuid())
+  repositoryId String
+  videoId      String
+  title        String
+  channel      String
+  thumbnail    String
+  views        Int      @default(0)
+  publishedAt  DateTime
+  type         String   // tutorial, explanation, etc.
+  createdAt    DateTime @default(now())
+
+  repository   Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+}
+
+model MarketSignal {
+  id          String   @id @default(cuid())
+  type        String   // technology_trend, ai_market_movement, language_popularity
+  name        String
+  score       Float
+  metadata    String?  // JSON string
+  recordedAt  DateTime @default(now())
 }
 
 model Category {

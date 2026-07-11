@@ -3,13 +3,13 @@
 import { NewsCard } from "@/components/news-card";
 import { RepoCard } from "@/components/repo-card";
 import { mapConvexNews, mapConvexRepo } from "@/lib/data-mapper";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 import Link from "next/link";
 
 export default function AIPage() {
-  const dbRepos = useQuery(api.github.getReposByCategory, { category: "AI" });
-  const dbNews = useQuery(api.news.getNews);
+  const { data: dbRepos } = useSWR("/api/repositories?category=AI", fetcher);
+  const { data: dbNews } = useSWR("http://localhost:3001/api/news", fetcher);
 
   if (dbRepos === undefined || dbNews === undefined) {
     return (

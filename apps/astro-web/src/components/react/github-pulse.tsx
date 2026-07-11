@@ -44,9 +44,9 @@ const MOCK_EVENTS: PulseEvent[] = [
   },
 ];
 
-import { withConvex } from "@/lib/convex";
 
-export const GithubPulse = withConvex(function GithubPulse() {
+
+export function GithubPulse() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-2 mb-2">
@@ -85,4 +85,4 @@ export const GithubPulse = withConvex(function GithubPulse() {
       </div>
     </div>
   );
-});
+}

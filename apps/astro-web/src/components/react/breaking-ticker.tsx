@@ -9,11 +9,11 @@ import {
 } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 
-import { withConvex } from "@/lib/convex";
+
 import { type AINewsItem, newsService } from "@/services/news";
 import { NewsDetailModal } from "./news-detail-modal";
 
-export const BreakingTicker = withConvex(function BreakingTicker() {
+export function BreakingTicker() {
   const [mounted, setMounted] = useState(false);
   const [liveNews, setLiveNews] = useState<AINewsItem[]>([]);
   const [selectedArticle, setSelectedArticle] = useState<AINewsItem | null>(
@@ -127,4 +127,4 @@ export const BreakingTicker = withConvex(function BreakingTicker() {
       )}
     </>
   );
-});
+}

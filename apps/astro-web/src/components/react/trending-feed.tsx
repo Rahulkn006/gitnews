@@ -1,9 +1,7 @@
 "use client";
 
-import { withConvex } from "@/lib/convex";
-import { mapConvexRepo } from "@/lib/data-mapper";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import useSWR from "swr";
+import { fetcher } from "@/lib/api";
 import React, { useState } from "react";
 import { BackNavigation } from "./back-navigation";
 import { RepoCard } from "./repo-card";
@@ -32,18 +30,17 @@ const SORT_OPTIONS = [
   { id: "updated", label: "Recently Updated" },
 ];
 
-export const TrendingFeed = withConvex(function TrendingFeed() {
+export function TrendingFeed() {
   const [time, setTime] = useState<string>("week");
   const [category, setCategory] = useState<string>("All");
   const [sort, setSort] = useState<string>("score");
 
-  const dbTrending = useQuery(api.trending.getTrendingRepositories, {
-    timeFilter: time === "all" ? undefined : time,
-    category: category === "All" ? undefined : category,
-    sort: sort,
-  });
+  const { data: repos, isLoading } = useSWR(
+    `/api/repositories?time=${time}&category=${category}&sort=${sort}`,
+    fetcher
+  );
 
-  const stats = useQuery(api.trending.getTrendingStats);
+  const { data: stats } = useSWR("/api/trending/stats", fetcher);
 
   return (
     <div className="w-full min-h-screen bg-stone-50 text-slate-900 dark:bg-[#0a0a0a] dark:text-slate-200 font-sans px-4 md:px-8 py-8 selection:bg-emerald-500 selection:text-white">
@@ -154,7 +151,7 @@ export const TrendingFeed = withConvex(function TrendingFeed() {
         </div>
 
         {/* Feed Content */}
-        {dbTrending === undefined ? (
+        {isLoading || !repos ? (
           // Loading Skeleton
           <div className="flex flex-col gap-6">
             {[1, 2, 3, 4, 5].map((i) => (
@@ -171,7 +168,7 @@ export const TrendingFeed = withConvex(function TrendingFeed() {
               </div>
             ))}
           </div>
-        ) : dbTrending.length === 0 ? (
+        ) : repos.length === 0 ? (
           // Empty State
           <div className="py-20 text-center border border-dashed border-stone-300 dark:border-stone-800 rounded-xl">
             <div className="w-16 h-16 bg-stone-100 dark:bg-stone-900 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -196,7 +193,7 @@ export const TrendingFeed = withConvex(function TrendingFeed() {
         ) : (
           // Success State
           <div className="flex flex-col gap-6">
-            {dbTrending.map(mapConvexRepo).map((repo) => (
+            {repos.map((repo: any) => (
               <RepoCard key={repo.id} repo={repo} size="medium" />
             ))}
           </div>
@@ -204,4 +201,4 @@ export const TrendingFeed = withConvex(function TrendingFeed() {
       </main>
     </div>
   );
-});
+}

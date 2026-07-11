@@ -1,12 +1,10 @@
 "use client";
 
-import { api } from "@v1/backend/convex/_generated/api";
+import { useState } from "react";
+import { useFormStatus } from "react-dom";
 import { Button } from "@v1/ui/button";
 import { Icons } from "@v1/ui/icons";
 import { Input } from "@v1/ui/input";
-import { useAction } from "convex/react";
-import { useState } from "react";
-import { useFormStatus } from "react-dom";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -25,7 +23,6 @@ type Props = {
 };
 
 export function SubscribeForm({ group, placeholder, className }: Props) {
-  const subscribe = useAction(api.web.subscribe);
   const [isSubmitted, setSubmitted] = useState(false);
 
   return (
@@ -53,10 +50,16 @@ export function SubscribeForm({ group, placeholder, className }: Props) {
             className="flex flex-col gap-4"
             action={async (formData) => {
               setSubmitted(true);
-              await subscribe({
-                email: formData.get("email") as string,
-                userGroup: group,
-              });
+              await fetch("http://localhost:3001/api/subscribe", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  email: formData.get("email") as string,
+                  userGroup: group,
+                }),
+              }).catch(() => console.error("Subscribe failed"));
 
               setTimeout(() => {
                 setSubmitted(false);

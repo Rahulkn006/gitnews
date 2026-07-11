@@ -2,14 +2,14 @@
 
 import { RepoCard } from "@/components/repo-card";
 import { mapConvexRepo } from "@/lib/data-mapper";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 import Link from "next/link";
 
 export default function TrendingPage() {
-  const dbTrending = useQuery(api.github.getTrendingRepos);
-  const dbFeatured = useQuery(api.github.getFeaturedRepos);
-  const dbLatest = useQuery(api.github.getLatestRepos);
+  const { data: dbTrending } = useSWR("http://localhost:3001/api/repositories", fetcher);
+  const { data: dbFeatured } = useSWR("/api/repositories?featured=true", fetcher);
+  const { data: dbLatest } = useSWR("/api/repositories", fetcher);
 
   if (
     dbTrending === undefined ||

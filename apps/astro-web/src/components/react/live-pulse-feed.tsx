@@ -1,11 +1,11 @@
 import type { LiveSignal } from "@/data/liveSignals";
-import { withConvex } from "@/lib/convex";
+
 import { mapLiveSignal } from "@/lib/data-mapper";
 import { fetcher } from "@/lib/fetcher";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-export const LivePulseFeed = withConvex(function LivePulseFeed() {
+export function LivePulseFeed() {
   const [signals, setSignals] = useState<LiveSignal[]>([]);
   const [timeFilter, setTimeFilter] = useState<
     "Last hour" | "Today" | "This week"
@@ -196,4 +196,4 @@ export const LivePulseFeed = withConvex(function LivePulseFeed() {
       </main>
     </div>
   );
-});
+}

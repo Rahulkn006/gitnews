@@ -1,8 +1,8 @@
-import { withConvex } from "@/lib/convex";
+
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 
-export const RepoAnalysis = withConvex(function RepoAnalysis({
+export function RepoAnalysis({
   owner,
   name,
 }: { owner: string; name: string }) {
@@ -312,4 +312,4 @@ export const RepoAnalysis = withConvex(function RepoAnalysis({
       </main>
     </div>
   );
-});
+}

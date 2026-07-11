@@ -57,6 +57,16 @@ export class GitHubService {
 
     return response.json() as Promise<T>;
   }
+  
+  static async fetchGitHubAPI(endpoint: string): Promise<any> {
+    try {
+      const data = await this.fetchJson<any>(`${GITHUB_API_BASE}${endpoint}`);
+      return data;
+    } catch (e) {
+      console.error(`fetchGitHubAPI failed for ${endpoint}:`, e);
+      return null;
+    }
+  }
 
   static async fetchReadme(
     owner: string,
@@ -71,6 +81,24 @@ export class GitHubService {
     } catch {
       return undefined;
     }
+  }
+
+  static async fetchRepoTree(owner: string, repo: string): Promise<any> {
+    const branchData = await this.fetchGitHubAPI(`/repos/${owner}/${repo}`);
+    if (!branchData) return null;
+    const defaultBranch = branchData.default_branch || "main";
+    const treeData = await this.fetchGitHubAPI(
+      `/repos/${owner}/${repo}/git/trees/${defaultBranch}?recursive=1`
+    );
+    return treeData?.tree || [];
+  }
+
+  static async fetchRepoFile(owner: string, repo: string, path: string): Promise<string | null> {
+    const fileData = await this.fetchGitHubAPI(`/repos/${owner}/${repo}/contents/${path}`);
+    if (fileData && fileData.content) {
+      return Buffer.from(fileData.content, "base64").toString("utf8");
+    }
+    return null;
   }
 
   static async fetchReposByEndpoint(
@@ -168,6 +196,30 @@ export class GitHubService {
   }
 
   static async getRepoByOwnerAndName(owner: string, name: string) {
-    return RepositoryDatabase.getRepositoryByOwnerAndName(owner, name);
+    let repo = await RepositoryDatabase.getRepositoryByOwnerAndName(owner, name);
+    if (!repo) {
+      const githubRepo = await this.fetchGitHubAPI(`/repos/${owner}/${name}`);
+      if (!githubRepo) return null;
+      
+      const readme = await this.fetchReadme(owner, name);
+      const repoData = {
+        githubId: String(githubRepo.id),
+        name: githubRepo.name,
+        owner: githubRepo.owner.login,
+        fullName: githubRepo.full_name,
+        description: githubRepo.description ?? null,
+        language: githubRepo.language ?? null,
+        stars: githubRepo.stargazers_count ?? 0,
+        forks: githubRepo.forks_count ?? 0,
+        url: githubRepo.html_url,
+        readme: readme ?? null,
+        createdAt: githubRepo.created_at ? new Date(githubRepo.created_at) : new Date(),
+        updatedAt: githubRepo.updated_at ? new Date(githubRepo.updated_at) : new Date(),
+      };
+      
+      await RepositoryDatabase.upsertRepository(repoData);
+      repo = await RepositoryDatabase.getRepositoryByOwnerAndName(githubRepo.owner.login, githubRepo.name);
+    }
+    return repo;
   }
 }

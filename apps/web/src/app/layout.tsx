@@ -8,8 +8,6 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { ConvexClientProvider } from "./convex-client-provider";
-
 import { Lora } from "next/font/google";
 
 const DepartureMono = localFont({
@@ -43,11 +41,9 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider>
-          <ConvexClientProvider>
-            <Navbar />
-            {children}
-            <GitNewsFooter />
-          </ConvexClientProvider>
+          <Navbar />
+          {children}
+          <GitNewsFooter />
         </ThemeProvider>
 
         <AnalyticsProvider />

@@ -1,0 +1,36 @@
+
+> backend@1.0.0 dev
+> tsx watch src/server.ts
+
+◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+Scheduler initialized
+Backend server running on http://lo12:44:50 PM [12:44:50 PM [tsx] change in ./src/routes/repositories.routes.ts R12:44:55 PM [tsx] Process didn't exit in 5s. Force killing...
+12:54:37 PM [tsx] change in ./src/services/github.service.ts Process hasn't exited. Killing process...
+[DEBUG] Fetching /:owner/:repo -> owner=facebook, repo=react
+[DEBUG] getRepoByOwnerAndName returned: null
+12:54:37 PM [tsx] change in ./src/services/github.service.ts Restarting...
+c◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+Scheduler initialized
+Backend server running on http://localhost:3001
+[DEBUG] Fetching /:owner/:repo -> owner=facebook, repo=react
+[DEBUG] getRepoByOwnerAndName returned: react
+[Ollagraph] Constructing deep analysis for facebook/react...
+[Ollima] Local Ollama unavailable, falling back to Ollima API...
+[Ollagraph] Ollama unavailable, falling back to Together AI...
+[DEBUG] Fetching /:owner/:repo -> owner=codecrafters-io, repo=build-your-own-x
+[DEBUG] getRepoByOwnerAndName returned: build-your-own-x
+[Ollagraph] Constructing deep analysis for codecrafters-io/build-your-own-x...
+fetchGitHubAPI failed for /repos/codecrafters-io/build-your-own-x/contents/package.json: Error: GitHub API request failed: 404 Not Found
+    at Function.fetchJson (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/services/github.service.ts:53:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Function.fetchGitHubAPI (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/services/github.service.ts:63:20)
+    at async Function.fetchRepoFile (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/services/github.service.ts:97:22)
+    at async Promise.all (index 3)
+    at async OllagraphClient.analyzeRepository (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/services/intelligence/ollagraph.service.ts:73:52)
+    at async <anonymous> (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/routes/repositories.routes.ts:60:33)
+[Ollima] Local Ollama unavailable, falling back to Ollima API...
+[Ollagraph] Ollama unavailable, falling back to Together AI...
+Running GitHub Sync Job
+Starting GitHub Sync...
+GitHub Sync Complete.
+GitHub Sync completed successfully

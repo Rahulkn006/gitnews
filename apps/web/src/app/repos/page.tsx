@@ -3,15 +3,15 @@
 import { RepoCard } from "@/components/repo-card";
 import { SearchFilter } from "@/components/search-filter";
 import { mockRepositories } from "@/data/repositories";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 import { useState } from "react";
 
 export default function ReposPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("All");
 
-  const dbRepos = useQuery(api.github.getTrendingRepos);
+  const { data: dbRepos } = useSWR("http://localhost:3001/api/repositories", fetcher);
   const repositories =
     dbRepos && dbRepos.length > 0 ? dbRepos : mockRepositories;
 

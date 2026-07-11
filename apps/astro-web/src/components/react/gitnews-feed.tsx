@@ -1,7 +1,7 @@
 "use client";
 
-import { api } from "@v1/backend/convex/_generated/api";
-import { ConvexProvider, ConvexReactClient, useQuery } from "convex/react";
+import useSWR from "swr";
+import { fetcher } from "@/lib/api";
 import { useEffect, useState } from "react";
 
 import { CategoryLeaderboard } from "../intelligence/category-leaderboard";
@@ -18,17 +18,10 @@ import { GithubMarket } from "./github-market";
 import { GithubPulse } from "./github-pulse";
 import { RepoCard } from "./repo-card";
 
-const convex = new ConvexReactClient(import.meta.env.PUBLIC_CONVEX_URL || "");
-
 export function GitNewsFeed() {
-  return (
-    <ConvexProvider client={convex}>
-      <GitNewsFeedInner />
-    </ConvexProvider>
-  );
-}
+  const { data: newsItems, isLoading: loadingNews } = useSWR("/api/news", fetcher);
+  const { data: dbRepos, isLoading: loadingRepos } = useSWR("/api/repositories", fetcher);
 
-function GitNewsFeedInner() {
   const [currentDate, setCurrentDate] = useState("");
 
   useEffect(() => {
@@ -53,9 +46,7 @@ function GitNewsFeedInner() {
     return () => clearInterval(interval);
   }, []);
 
-  const dbRepos = useQuery(api.github.getAllRepos);
-
-  if (dbRepos === undefined) {
+  if (loadingNews || loadingRepos || newsItems === undefined || dbRepos === undefined) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-stone-50 dark:bg-[#0a0a0a]">
         <div className="animate-pulse flex flex-col items-center gap-4">

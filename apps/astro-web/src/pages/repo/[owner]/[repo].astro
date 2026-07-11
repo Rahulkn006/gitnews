@@ -1,8 +1,7 @@
 ---
 export const prerender = false;
 import Layout from "@/layouts/Layout.astro";
-import { api } from "@v1/backend/convex/_generated/api";
-import { ConvexHttpClient } from "convex/browser";
+import { fetcher } from "@/lib/fetcher";
 
 import IntelligenceGrid from "@/components/intelligence/IntelligenceGrid.astro";
 import RepoHeader from "@/components/intelligence/RepoHeader.astro";
@@ -12,8 +11,6 @@ import YoutubeLearningHub from "@/components/intelligence/YoutubeLearningHub.ast
 import OllagraphDeepResearchClient from "@/components/react/OllagraphDeepResearchClient";
 import SimilarReposSidebar from "@/components/react/SimilarReposSidebar";
 import { BackNavigation } from "@/components/react/back-navigation";
-import { ollagraph } from "@/services/ollagraph";
-
 // Use "repo" from params since file is [repo].astro
 const { owner, repo: name } = Astro.params;
 
@@ -21,18 +18,29 @@ if (!owner || !name) {
   return Astro.redirect("/");
 }
 
-const convex = new ConvexHttpClient(import.meta.env.PUBLIC_CONVEX_URL);
-const repo = await convex.query(api.github.getRepoByOwnerAndName, {
-  owner,
-  name,
-});
+let repo;
+try {
+  const res = await fetch(`http://localhost:3001/api/repositories/${owner}/${name}`);
+  if (res.ok) {
+    repo = await res.json();
+  }
+} catch (e) {
+  console.error(e);
+}
 
 if (!repo) {
   return Astro.redirect("/");
 }
 
-// Fetch deep research from Ollagraph Intelligence
-const analysis = await ollagraph.analyzeRepository(owner, name);
+let analysis: any = {};
+try {
+  const analysisRes = await fetch(`http://localhost:3001/api/repositories/${owner}/${name}/analysis`);
+  if (analysisRes.ok) {
+    analysis = await analysisRes.json();
+  }
+} catch (e) {
+  console.error("Failed to fetch analysis", e);
+}
 
 const title = `${repo.name} by ${repo.owner} - GitNews Analysis`;
 const description =
@@ -74,7 +82,7 @@ const futurePotential =
 
           <IntelligenceGrid 
             overview={analysis.summary || repo.description}
-            bestUseCases={analysis.bestUseCases || repo.developerAnalysis?.ecosystemFit}
+            bestUseCases={analysis.useCases || repo.developerAnalysis?.ecosystemFit}
             learningDifficulty={learningValue}
             futurePotential={futurePotential}
           />

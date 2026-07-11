@@ -1,18 +1,21 @@
-import { withConvex } from "@/lib/convex";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useAction, useQuery } from "convex/react";
+import useSWR from "swr";
+import { fetcher } from "@/lib/api";
 import { useEffect, useState } from "react";
 import { RepoCard } from "./repo-card";
 import { SearchFilter } from "./search-filter";
 
-export const ReposBrowser = withConvex(function ReposBrowser() {
+export function ReposBrowser() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [sortBy, setSortBy] = useState("Trending");
   const [isFetchingJIT, setIsFetchingJIT] = useState(false);
 
-  const dbRepos = useQuery(api.github.getAllRepos);
-  const fetchTopicOnDemand = useAction(api.github.fetchTopicOnDemand);
+  const { data: dbRepos } = useSWR("/api/repositories", fetcher);
+  
+  const fetchTopicOnDemand = async (args: { topic: string }) => {
+    // Mock for now or implement in REST API later
+    console.log("Fetching topic", args.topic);
+  };
   const repositories = dbRepos && dbRepos.length > 0 ? dbRepos : [];
 
   const filters = [
@@ -187,4 +190,4 @@ export const ReposBrowser = withConvex(function ReposBrowser() {
       </div>
     </main>
   );
-});
+}

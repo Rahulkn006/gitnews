@@ -3,8 +3,8 @@
 import { MiniStarGraph } from "@/components/analytics-visuals";
 import { WhyTrending } from "@/components/why-trending";
 import { mapConvexNews } from "@/lib/data-mapper";
-import { api } from "@v1/backend/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React from "react";
@@ -16,7 +16,7 @@ export default function RepoArticlePage() {
 
   // Ideally we would fetch the specific repo here.
   // For now, we'll fetch news and find the matching one, or use fallback mock data.
-  const dbNews = useQuery(api.news.getNews);
+  const { data: dbNews } = useSWR("http://localhost:3001/api/news", fetcher);
 
   if (dbNews === undefined) {
     return (
