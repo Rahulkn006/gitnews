@@ -1,5 +1,5 @@
 export const fetcher = async (url: string) => {
-  const apiUrl = import.meta.env.PUBLIC_API_URL || "http://localhost:3001";
+  const apiUrl = import.meta.env.PUBLIC_API_URL || "https://naturals-suppliers-socks-careers.trycloudflare.com";
   const res = await fetch(`${apiUrl}${url}`);
   if (!res.ok) {
     const error = new Error("An error occurred while fetching the data.");
