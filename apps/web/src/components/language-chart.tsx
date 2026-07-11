@@ -49,8 +49,12 @@ export function LanguageChart({ languages }: LanguageChartProps) {
         {languages.map(([lang, count]) => (
           <div key={lang} className="group flex items-center gap-3">
             <div className="flex w-20 items-center gap-2">
-              <span className={`h-2 w-2 rounded-full ${getLanguageColor(lang)}`} />
-              <span className="truncate font-mono text-[10px] text-foreground">{lang}</span>
+              <span
+                className={`h-2 w-2 rounded-full ${getLanguageColor(lang)}`}
+              />
+              <span className="truncate font-mono text-[10px] text-foreground">
+                {lang}
+              </span>
             </div>
             <div className="flex-1">
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">

@@ -5,7 +5,9 @@ import { writeFileSync } from "node:fs";
 import { exportJWK, exportPKCS8, generateKeyPair } from "jose";
 
 const keys = await generateKeyPair("RS256", { extractable: true });
-const privateKey = (await exportPKCS8(keys.privateKey)).trimEnd().replace(/\n/g, " ");
+const privateKey = (await exportPKCS8(keys.privateKey))
+  .trimEnd()
+  .replace(/\n/g, " ");
 const publicKey = await exportJWK(keys.publicKey);
 const jwks = JSON.stringify({ keys: [{ use: "sig", ...publicKey }] });
 

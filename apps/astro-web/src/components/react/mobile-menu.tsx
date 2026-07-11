@@ -21,22 +21,25 @@ export function MobileMenu({ navLinks, currentPath }: MobileMenuProps) {
         aria-label="Toggle menu"
       >
         <div className="w-5 h-5 flex flex-col justify-center gap-1">
-          <span 
-            className={`block h-0.5 w-full bg-current transition-transform ${isOpen ? 'rotate-45 translate-y-1.5' : ''}`}
+          <span
+            className={`block h-0.5 w-full bg-current transition-transform ${isOpen ? "rotate-45 translate-y-1.5" : ""}`}
           />
-          <span 
-            className={`block h-0.5 w-full bg-current transition-opacity ${isOpen ? 'opacity-0' : ''}`}
+          <span
+            className={`block h-0.5 w-full bg-current transition-opacity ${isOpen ? "opacity-0" : ""}`}
           />
-          <span 
-            className={`block h-0.5 w-full bg-current transition-transform ${isOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+          <span
+            className={`block h-0.5 w-full bg-current transition-transform ${isOpen ? "-rotate-45 -translate-y-1.5" : ""}`}
           />
         </div>
       </button>
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" onClick={toggleMenu}>
-          <div 
+        <div
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+          onClick={toggleMenu}
+        >
+          <div
             className="fixed top-0 right-0 h-full w-80 bg-white dark:bg-[#0a0a0a] border-l border-stone-200 dark:border-stone-800 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
@@ -50,8 +53,18 @@ export function MobileMenu({ navLinks, currentPath }: MobileMenuProps) {
                   className="p-2 rounded-md text-slate-500 hover:text-slate-900 dark:hover:text-white"
                   aria-label="Close menu"
                 >
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
@@ -59,7 +72,9 @@ export function MobileMenu({ navLinks, currentPath }: MobileMenuProps) {
               {/* Mobile Navigation Links */}
               <nav className="flex flex-col gap-4">
                 {navLinks.map((link) => {
-                  const isActive = currentPath === link.href || (currentPath.startsWith(link.href) && link.href !== '/');
+                  const isActive =
+                    currentPath === link.href ||
+                    (currentPath.startsWith(link.href) && link.href !== "/");
                   return (
                     <a
                       key={link.href}

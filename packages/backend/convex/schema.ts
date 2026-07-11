@@ -132,7 +132,7 @@ export default defineSchema({
       v.object({
         targetAudience: v.string(),
         ecosystemFit: v.string(),
-      })
+      }),
     ),
     verdict: v.optional(
       v.object({
@@ -140,7 +140,7 @@ export default defineSchema({
         futurePotential: v.string(),
         communityStrength: v.string(),
         summary: v.string(),
-      })
+      }),
     ),
     category: v.optional(v.string()),
     primaryCategory: v.optional(v.string()),

@@ -79,14 +79,21 @@ function getBadge(stars: number, forks: number) {
 
 const badgeStyles: Record<string, string> = {
   hot: "text-orange-600 bg-orange-500/10 border-orange-500/20 dark:text-orange-400 dark:bg-orange-500/10 dark:border-orange-500/20",
-  launch: "text-purple-600 bg-purple-500/10 border-purple-500/20 dark:text-purple-400 dark:bg-purple-500/10 dark:border-purple-500/20",
+  launch:
+    "text-purple-600 bg-purple-500/10 border-purple-500/20 dark:text-purple-400 dark:bg-purple-500/10 dark:border-purple-500/20",
   new: "text-yellow-600 bg-yellow-500/10 border-yellow-500/20 dark:text-yellow-400 dark:bg-yellow-500/10 dark:border-yellow-500/20",
-  rising: "text-emerald-600 bg-emerald-500/10 border-emerald-500/20 dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/20",
+  rising:
+    "text-emerald-600 bg-emerald-500/10 border-emerald-500/20 dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/20",
 };
 
 function StarIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
       <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
     </svg>
   );
@@ -94,7 +101,12 @@ function StarIcon({ className }: { className?: string }) {
 
 function ForkIcon({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
       <path d="M7 3a2 2 0 0 1 2 2v2H7a2 2 0 1 1 0-4zm0 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm10-5a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-2 7v-2h2a2 2 0 1 1 0 4h-2v-2zm0-7V6h2a2 2 0 1 1 0-4h-2v2a2 2 0 0 1-2 2h-2v2h2a2 2 0 0 1 2 2zM9 10V8h2a2 2 0 0 1 2-2V4a2 2 0 1 1 0 4h-2v2z" />
     </svg>
   );
@@ -107,7 +119,9 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
   const stars = repo.stars ?? 0;
   const forks = repo.forks ?? 0;
   const description =
-    repo.aiSummary || repo.description || "Open source repository with strong developer velocity.";
+    repo.aiSummary ||
+    repo.description ||
+    "Open source repository with strong developer velocity.";
   const badge = getBadge(stars, forks);
   const dotColor = getLanguageColor(repo.language);
 
@@ -143,7 +157,11 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
             <StarIcon className="h-3 w-3" /> {formatNumber(stars)}
           </span>
           <a
-            href={repo.url || repo.repoUrl || `https://github.com/${repo.owner}/${repo.name}`}
+            href={
+              repo.url ||
+              repo.repoUrl ||
+              `https://github.com/${repo.owner}/${repo.name}`
+            }
             target="_blank"
             rel="noreferrer"
             className="text-emerald-600 dark:text-emerald-400 transition-colors hover:text-slate-900 dark:hover:text-white"
@@ -162,12 +180,14 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={`group relative flex flex-col justify-between overflow-hidden border bg-white dark:bg-[#111] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl rounded-xl ${
-        hovered ? "border-emerald-500/50 dark:border-emerald-500/50 shadow-emerald-500/10" : "border-stone-200 dark:border-stone-800"
+        hovered
+          ? "border-emerald-500/50 dark:border-emerald-500/50 shadow-emerald-500/10"
+          : "border-stone-200 dark:border-stone-800"
       } ${isLarge ? "col-span-full row-span-2 p-8 md:col-span-2" : "p-6"}`}
     >
       {/* Generated gradient header for visual pop */}
       <div
-        className={`absolute inset-x-0 top-0 h-1.5 transition-all duration-500 ${hovered ? 'opacity-100 h-2' : 'opacity-80'}`}
+        className={`absolute inset-x-0 top-0 h-1.5 transition-all duration-500 ${hovered ? "opacity-100 h-2" : "opacity-80"}`}
         style={{ background: generateGradient(repo.name) }}
       />
 
@@ -177,11 +197,16 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
           <div className="flex items-start gap-4">
             <div className="relative">
               <img
-                src={repo.avatar || repo.ownerAvatar || "https://github.com/github.png"}
+                src={
+                  repo.avatar ||
+                  repo.ownerAvatar ||
+                  "https://github.com/github.png"
+                }
                 alt={repo.owner}
-                className={`transition-all duration-500 ${isLarge ? 'h-14 w-14 rounded-xl' : 'h-12 w-12 rounded'} border border-stone-200 dark:border-stone-700 object-cover shadow-sm`}
+                className={`transition-all duration-500 ${isLarge ? "h-14 w-14 rounded-xl" : "h-12 w-12 rounded"} border border-stone-200 dark:border-stone-700 object-cover shadow-sm`}
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = 'https://github.com/github.png';
+                  (e.target as HTMLImageElement).src =
+                    "https://github.com/github.png";
                 }}
               />
               {repo.rank && (
@@ -196,7 +221,8 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
                   {repo.owner}
                 </span>
                 <span className="text-[10px] text-emerald-600 bg-emerald-50 dark:bg-emerald-950 px-1.5 rounded-sm font-mono font-bold tracking-tighter">
-                  +{repo.weeklyGrowth || Math.floor(Math.random() * 200 + 50)}% growth
+                  +{repo.weeklyGrowth || Math.floor(Math.random() * 200 + 50)}%
+                  growth
                 </span>
               </div>
               <h3
@@ -252,26 +278,33 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
         {/* Topic chips */}
         {repo.topics && repo.topics.length > 0 && (
           <div className="mb-5 flex flex-wrap gap-2">
-            {repo.topics.slice(0, isLarge ? 5 : 3).map((topic: string, i: number) => (
-              <span
-                key={i}
-                className="rounded-full border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 px-3 py-1 text-xs font-medium text-slate-500 dark:text-slate-400 transition-colors hover:bg-stone-100 dark:hover:bg-stone-700"
-              >
-                #{topic}
-              </span>
-            ))}
+            {repo.topics
+              .slice(0, isLarge ? 5 : 3)
+              .map((topic: string, i: number) => (
+                <span
+                  key={i}
+                  className="rounded-full border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 px-3 py-1 text-xs font-medium text-slate-500 dark:text-slate-400 transition-colors hover:bg-stone-100 dark:hover:bg-stone-700"
+                >
+                  #{topic}
+                </span>
+              ))}
           </div>
         )}
 
         {/* Footer */}
-        <div className={`flex flex-wrap items-center justify-between border-t border-stone-100 dark:border-stone-800 pt-4 text-xs font-mono text-slate-500 dark:text-slate-400`}>
+        <div
+          className={`flex flex-wrap items-center justify-between border-t border-stone-100 dark:border-stone-800 pt-4 text-xs font-mono text-slate-500 dark:text-slate-400`}
+        >
           <div className="flex items-center gap-5">
             <span className="flex items-center gap-2">
-              <span className={`h-2.5 w-2.5 rounded-full ${dotColor} shadow-[0_0_8px_rgba(0,0,0,0.1)] dark:shadow-[0_0_8px_rgba(255,255,255,0.1)]`} />
+              <span
+                className={`h-2.5 w-2.5 rounded-full ${dotColor} shadow-[0_0_8px_rgba(0,0,0,0.1)] dark:shadow-[0_0_8px_rgba(255,255,255,0.1)]`}
+              />
               {repo.language ?? "General"}
             </span>
             <span className="flex items-center gap-1.5 transition-colors group-hover:text-slate-700 dark:group-hover:text-slate-300">
-              <StarIcon className="h-4 w-4 text-amber-400" /> {formatNumber(stars)}
+              <StarIcon className="h-4 w-4 text-amber-400" />{" "}
+              {formatNumber(stars)}
             </span>
             <span className="flex items-center gap-1.5 transition-colors group-hover:text-slate-700 dark:group-hover:text-slate-300">
               <ForkIcon className="h-4 w-4" /> {formatNumber(forks)}
@@ -284,13 +317,19 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
               {formatDate(repo.updatedAt || repo.lastUpdated)}
             </span>
             <a
-              href={repo.url || repo.repoUrl || `https://github.com/${repo.owner}/${repo.name}`}
+              href={
+                repo.url ||
+                repo.repoUrl ||
+                `https://github.com/${repo.owner}/${repo.name}`
+              }
               target="_blank"
               rel="noreferrer"
               className="font-bold text-emerald-600 dark:text-emerald-400 transition-colors hover:text-emerald-500 dark:hover:text-emerald-300 flex items-center gap-1 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-1 rounded"
             >
-              GitHub 
-              <span className="text-sm leading-none transition-transform group-hover:translate-x-1">→</span>
+              GitHub
+              <span className="text-sm leading-none transition-transform group-hover:translate-x-1">
+                →
+              </span>
             </a>
           </div>
         </div>

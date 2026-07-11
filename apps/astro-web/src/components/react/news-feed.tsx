@@ -1,25 +1,29 @@
-import useSWR from "swr";
-import { fetcher } from "@/lib/fetcher";
-import { NewsCard } from "./news-card";
-import { mapConvexNews } from "@/lib/data-mapper";
 import { withConvex } from "@/lib/convex";
+import { mapConvexNews } from "@/lib/data-mapper";
+import { fetcher } from "@/lib/fetcher";
+import useSWR from "swr";
+import { NewsCard } from "./news-card";
 
 export const NewsFeed = withConvex(function NewsFeed() {
-  const { data: dbNews } = useSWR('http://localhost:3001/api/news', fetcher);
+  const { data: dbNews } = useSWR("http://localhost:3001/api/news", fetcher);
 
   if (dbNews === undefined) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-stone-50 dark:bg-[#0a0a0a]">
         <div className="animate-pulse flex flex-col items-center gap-4">
           <div className="w-12 h-12 rounded-full border-4 border-emerald-500 border-t-transparent animate-spin" />
-          <p className="text-slate-500 font-mono text-sm tracking-widest uppercase">Fetching Intelligence...</p>
+          <p className="text-slate-500 font-mono text-sm tracking-widest uppercase">
+            Fetching Intelligence...
+          </p>
         </div>
       </div>
     );
   }
 
-  const sortedNews = dbNews.map(mapConvexNews).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  
+  const sortedNews = dbNews
+    .map(mapConvexNews)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
   const leadStory = sortedNews[0];
   const otherStories = sortedNews.slice(1);
 
@@ -31,7 +35,8 @@ export const NewsFeed = withConvex(function NewsFeed() {
             The Chronicle
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-xl md:text-2xl font-serif">
-            Latest releases, breaking changes, and critical updates from the open-source ecosystem.
+            Latest releases, breaking changes, and critical updates from the
+            open-source ecosystem.
           </p>
         </header>
 

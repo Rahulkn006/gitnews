@@ -1,5 +1,5 @@
-import React from "react";
 import Link from "next/link";
+import React from "react";
 import { MiniStarGraph } from "./analytics-visuals";
 
 interface CompactRepoNewsCardProps {
@@ -57,32 +57,38 @@ export function CompactRepoNewsCard({ repo }: CompactRepoNewsCardProps) {
   const dotColor = langColors[repo.language] ?? "bg-slate-400";
   const growth = repo.weeklyGrowth || Math.floor(Math.random() * 200 + 50);
   const timeAgo = Math.floor(Math.random() * 59 + 1);
-  
+
   // Use opengraph image, fallback to avatar, fallback to gradient
-  const imageUrl = repo.url ? `https://opengraph.githubassets.com/1/${repo.owner}/${repo.name}` : (repo.avatar || repo.ownerAvatar);
+  const imageUrl = repo.url
+    ? `https://opengraph.githubassets.com/1/${repo.owner}/${repo.name}`
+    : repo.avatar || repo.ownerAvatar;
 
   return (
     <Link href={`/repo/${repo.owner}/${repo.name}`} className="block group">
       <article className="flex h-32 w-full overflow-hidden border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#111] transition-all duration-300 hover:shadow-md hover:border-stone-300 dark:hover:border-stone-700">
-        
         {/* Left: Thumbnail */}
         <div className="w-40 md:w-48 shrink-0 bg-stone-100 dark:bg-stone-900 relative overflow-hidden">
           {imageUrl ? (
-            <img 
-              src={imageUrl} 
+            <img
+              src={imageUrl}
               alt={repo.name}
               className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-transform duration-500 group-hover:scale-105"
               onError={(e) => {
-                e.currentTarget.style.display = 'none';
+                e.currentTarget.style.display = "none";
                 if (e.currentTarget.nextElementSibling) {
-                  (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'block';
+                  (
+                    e.currentTarget.nextElementSibling as HTMLElement
+                  ).style.display = "block";
                 }
               }}
             />
           ) : null}
-          <div 
-            className="absolute inset-0 w-full h-full" 
-            style={{ background: generateGradient(repo.name), display: imageUrl ? 'none' : 'block' }} 
+          <div
+            className="absolute inset-0 w-full h-full"
+            style={{
+              background: generateGradient(repo.name),
+              display: imageUrl ? "none" : "block",
+            }}
           />
         </div>
 
@@ -93,17 +99,22 @@ export function CompactRepoNewsCard({ repo }: CompactRepoNewsCardProps) {
               <span className="truncate text-[10px] font-bold uppercase tracking-widest text-slate-400">
                 {repo.owner} / {repo.name}
               </span>
-              <span className={`shrink-0 rounded border px-1.5 py-0.5 text-[9px] font-mono font-bold ${badgeStyles[badge.tone]}`}>
+              <span
+                className={`shrink-0 rounded border px-1.5 py-0.5 text-[9px] font-mono font-bold ${badgeStyles[badge.tone]}`}
+              >
                 {badge.label}
               </span>
             </div>
-            
+
             <h3 className="truncate font-serif font-bold text-base md:text-lg text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-              {repo.aiSummary ? repo.aiSummary.split('.')[0] : `Why developers are watching ${repo.name}`}
+              {repo.aiSummary
+                ? repo.aiSummary.split(".")[0]
+                : `Why developers are watching ${repo.name}`}
             </h3>
-            
+
             <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mt-1 font-sans leading-relaxed">
-              {repo.description || "Open source repository with strong developer velocity. Generating significant interest."}
+              {repo.description ||
+                "Open source repository with strong developer velocity. Generating significant interest."}
             </p>
           </div>
 
@@ -123,7 +134,6 @@ export function CompactRepoNewsCard({ repo }: CompactRepoNewsCardProps) {
             </span>
           </div>
         </div>
-
       </article>
     </Link>
   );

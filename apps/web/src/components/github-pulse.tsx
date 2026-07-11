@@ -56,17 +56,19 @@ export function GithubPulse() {
           Ecosystem Pulse
         </h3>
       </div>
-      
+
       <div className="relative border-l border-stone-200 dark:border-stone-800 ml-1.5 pl-6 flex flex-col gap-8">
         {MOCK_EVENTS.map((evt) => (
           <div key={evt.id} className="relative">
             {/* Timeline dot */}
-            <div className={`absolute -left-[29px] top-1 h-2.5 w-2.5 rounded-full border-2 border-white dark:border-[#0a0a0a] ${evt.tone === 'positive' ? 'bg-emerald-500' : evt.tone === 'warning' ? 'bg-amber-500' : 'bg-blue-500'}`} />
-            
+            <div
+              className={`absolute -left-[29px] top-1 h-2.5 w-2.5 rounded-full border-2 border-white dark:border-[#0a0a0a] ${evt.tone === "positive" ? "bg-emerald-500" : evt.tone === "warning" ? "bg-amber-500" : "bg-blue-500"}`}
+            />
+
             <div className="text-[10px] text-slate-400 font-mono tracking-widest uppercase mb-1">
               {evt.timeAgo}
             </div>
-            
+
             <div className="flex flex-col gap-1">
               <span className="inline-block px-2 py-0.5 bg-stone-100 dark:bg-stone-900 rounded text-xs font-mono font-bold text-slate-700 dark:text-slate-300 w-max border border-stone-200 dark:border-stone-800">
                 {evt.repo}
@@ -74,9 +76,7 @@ export function GithubPulse() {
               <h4 className="font-bold text-slate-900 dark:text-white mt-1">
                 {evt.event}
               </h4>
-              <p className="text-sm text-slate-500 font-serif">
-                {evt.detail}
-              </p>
+              <p className="text-sm text-slate-500 font-serif">{evt.detail}</p>
             </div>
           </div>
         ))}

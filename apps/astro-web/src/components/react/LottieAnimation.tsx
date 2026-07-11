@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import Lottie from "lottie-react";
+import { useEffect, useState } from "react";
 
 export interface LottieAnimationProps {
   animationData: any; // The JSON object imported for Lottie
@@ -28,7 +28,7 @@ export function LottieAnimation({
   if (!isMounted) {
     // Placeholder to maintain layout before hydration
     return (
-      <div 
+      <div
         className={`animate-pulse bg-stone-200 dark:bg-stone-800 rounded-lg ${className}`}
         style={{ width, height }}
       />

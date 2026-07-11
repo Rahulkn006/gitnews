@@ -1,10 +1,10 @@
 "use client";
 
-import { useQuery } from "convex/react";
+import { mapConvexRepo } from "@/lib/data-mapper";
 import { api } from "@v1/backend/convex/_generated/api";
+import { useQuery } from "convex/react";
 import Link from "next/link";
 import { RepoCard } from "./repo-card";
-import { mapConvexRepo } from "@/lib/data-mapper";
 
 export function TrendingSection() {
   const dbRepos = useQuery(api.github.getTrendingRepos);
@@ -23,8 +23,12 @@ export function TrendingSection() {
     <section className="py-16 max-w-7xl mx-auto px-4 md:px-8 border-b border-border/60">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <span className="text-[10px] font-mono text-primary uppercase tracking-widest block mb-1">Discover</span>
-          <h2 className="text-xl md:text-2xl font-bold font-mono tracking-tight text-foreground">Trending Repositories</h2>
+          <span className="text-[10px] font-mono text-primary uppercase tracking-widest block mb-1">
+            Discover
+          </span>
+          <h2 className="text-xl md:text-2xl font-bold font-mono tracking-tight text-foreground">
+            Trending Repositories
+          </h2>
         </div>
         <Link
           href="/trending"

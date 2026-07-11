@@ -22,7 +22,8 @@ export function NewsletterCard() {
         The Daily GitHub Digest
       </h3>
       <p className="mb-3 font-sans text-[10px] leading-relaxed text-muted-foreground">
-        Get the most important repositories, AI releases, and developer tooling updates delivered every morning.
+        Get the most important repositories, AI releases, and developer tooling
+        updates delivered every morning.
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <input
@@ -43,10 +44,14 @@ export function NewsletterCard() {
         </button>
       </form>
       {status === "success" && (
-        <p className="mt-2 text-[10px] font-mono text-primary">Thanks for subscribing.</p>
+        <p className="mt-2 text-[10px] font-mono text-primary">
+          Thanks for subscribing.
+        </p>
       )}
       {status === "error" && (
-        <p className="mt-2 text-[10px] font-mono text-destructive">Please enter a valid email.</p>
+        <p className="mt-2 text-[10px] font-mono text-destructive">
+          Please enter a valid email.
+        </p>
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 interface ResearchSource {
   title: string;
@@ -20,7 +20,10 @@ interface DeepResearchData {
   status: "available" | "unavailable";
 }
 
-export default function OllagraphDeepResearchClient({ owner, repo }: { owner: string; repo: string }) {
+export default function OllagraphDeepResearchClient({
+  owner,
+  repo,
+}: { owner: string; repo: string }) {
   const [data, setData] = useState<DeepResearchData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -28,10 +31,13 @@ export default function OllagraphDeepResearchClient({ owner, repo }: { owner: st
   useEffect(() => {
     async function fetchResearch() {
       try {
-        const response = await fetch(`/api/ollagraph/research?owner=${owner}&repo=${repo}`);
-        if (!response.ok) throw new Error('Failed to fetch');
+        const response = await fetch(
+          `/api/ollagraph/research?owner=${owner}&repo=${repo}`,
+        );
+        if (!response.ok) throw new Error("Failed to fetch");
         const json = await response.json();
-        if (json.error || json.status === 'unavailable') throw new Error(json.error || 'unavailable');
+        if (json.error || json.status === "unavailable")
+          throw new Error(json.error || "unavailable");
         setData(json);
       } catch (err) {
         setError(true);
@@ -57,46 +63,82 @@ export default function OllagraphDeepResearchClient({ owner, repo }: { owner: st
       {loading && (
         <div className="flex flex-col items-center justify-center p-12 bg-stone-50/80 dark:bg-[#111]/80 border border-stone-200 dark:border-stone-800 rounded-xl">
           <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-          <p className="font-mono text-sm text-stone-600 dark:text-stone-400">Crawling HackerNews, Reddit, and GitHub...</p>
+          <p className="font-mono text-sm text-stone-600 dark:text-stone-400">
+            Crawling HackerNews, Reddit, and GitHub...
+          </p>
         </div>
       )}
 
       {error && !loading && (
         <div className="flex flex-col items-center justify-center p-12 bg-red-50/80 dark:bg-red-950/20 border border-red-200 dark:border-red-900/50 rounded-xl">
-          <p className="font-mono text-sm text-red-600 dark:text-red-400">Deep research unavailable currently</p>
+          <p className="font-mono text-sm text-red-600 dark:text-red-400">
+            Deep research unavailable currently
+          </p>
         </div>
       )}
 
       {data && !loading && !error && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <ResearchCard title="Overview" content={data.overview} data={data} />
-          <ResearchCard title="Why Developers Watch" content={data.whyDevelopersWatch} data={data} />
-          <ResearchCard title="Community Sentiment" content={data.communitySentiment} data={data} />
-          <ResearchCard title="Learning Value" content={data.learningValue} data={data} />
-          <ResearchCard title="Production Usage" content={data.productionUsage} data={data} />
-          <ResearchCard title="Recent Activity" content={data.recentActivity} data={data} />
-          <ResearchCard title="Useful Resources" content={data.usefulResources} data={data} />
+          <ResearchCard
+            title="Why Developers Watch"
+            content={data.whyDevelopersWatch}
+            data={data}
+          />
+          <ResearchCard
+            title="Community Sentiment"
+            content={data.communitySentiment}
+            data={data}
+          />
+          <ResearchCard
+            title="Learning Value"
+            content={data.learningValue}
+            data={data}
+          />
+          <ResearchCard
+            title="Production Usage"
+            content={data.productionUsage}
+            data={data}
+          />
+          <ResearchCard
+            title="Recent Activity"
+            content={data.recentActivity}
+            data={data}
+          />
+          <ResearchCard
+            title="Useful Resources"
+            content={data.usefulResources}
+            data={data}
+          />
         </div>
       )}
     </section>
   );
 }
 
-function ResearchCard({ title, content, data }: { title: string; content: string, data: DeepResearchData }) {
+function ResearchCard({
+  title,
+  content,
+  data,
+}: { title: string; content: string; data: DeepResearchData }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  
-  const shortSummary = content.substring(0, 150) + '...';
+
+  const shortSummary = content.substring(0, 150) + "...";
 
   return (
     <>
-      <button 
+      <button
         onClick={() => setIsExpanded(true)}
         className="text-left bg-stone-50/80 dark:bg-[#111]/80 border border-stone-200 dark:border-stone-800 p-5 rounded-xl flex flex-col gap-2 group hover:border-purple-500/50 hover:shadow-md transition-all relative overflow-hidden h-full cursor-pointer"
       >
         <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-purple-500/10 to-transparent rounded-bl-full pointer-events-none"></div>
         <div className="flex justify-between items-center w-full">
-          <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-purple-600 dark:text-purple-400">{title}</h3>
-          <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${data.confidence === 'High' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : data.confidence === 'Medium' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}>
+          <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-purple-600 dark:text-purple-400">
+            {title}
+          </h3>
+          <span
+            className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${data.confidence === "High" ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : data.confidence === "Medium" ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400" : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"}`}
+          >
             {data.confidence} CONFIDENCE
           </span>
         </div>
@@ -111,7 +153,6 @@ function ResearchCard({ title, content, data }: { title: string; content: string
       {isExpanded && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/50 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white dark:bg-[#0a0a0a] border border-stone-200 dark:border-stone-800 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
-            
             <div className="flex justify-between items-center p-6 border-b border-stone-200 dark:border-stone-800">
               <div className="flex items-center gap-3">
                 <span className="w-3 h-3 bg-purple-500 rounded-sm rotate-45"></span>
@@ -119,7 +160,7 @@ function ResearchCard({ title, content, data }: { title: string; content: string
                   Detailed AI Intelligence Report
                 </h2>
               </div>
-              <button 
+              <button
                 onClick={() => setIsExpanded(false)}
                 className="text-stone-400 hover:text-stone-900 dark:hover:text-white p-2"
               >
@@ -128,9 +169,10 @@ function ResearchCard({ title, content, data }: { title: string; content: string
             </div>
 
             <div className="p-6 overflow-y-auto flex flex-col gap-8">
-              
               <div className="flex flex-col gap-3">
-                <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Overview</h4>
+                <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">
+                  Overview
+                </h4>
                 <div className="bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-5 rounded-xl">
                   <p className="font-sans text-sm text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-wrap">
                     {data.overview}
@@ -139,7 +181,9 @@ function ResearchCard({ title, content, data }: { title: string; content: string
               </div>
 
               <div className="flex flex-col gap-3">
-                <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Why Developers Watch</h4>
+                <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">
+                  Why Developers Watch
+                </h4>
                 <div className="bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-5 rounded-xl">
                   <p className="font-sans text-sm text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-wrap">
                     {data.whyDevelopersWatch}
@@ -148,17 +192,21 @@ function ResearchCard({ title, content, data }: { title: string; content: string
               </div>
 
               <div className="flex flex-col gap-3">
-                <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Community Sentiment</h4>
+                <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">
+                  Community Sentiment
+                </h4>
                 <div className="bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-5 rounded-xl">
                   <p className="font-sans text-sm text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-wrap">
                     {data.communitySentiment}
                   </p>
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-3">
-                  <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Learning Value</h4>
+                  <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">
+                    Learning Value
+                  </h4>
                   <div className="bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-5 rounded-xl h-full">
                     <p className="font-sans text-sm text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-wrap">
                       {data.learningValue}
@@ -166,7 +214,9 @@ function ResearchCard({ title, content, data }: { title: string; content: string
                   </div>
                 </div>
                 <div className="flex flex-col gap-3">
-                  <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Production Usage</h4>
+                  <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">
+                    Production Usage
+                  </h4>
                   <div className="bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-5 rounded-xl h-full">
                     <p className="font-sans text-sm text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-wrap">
                       {data.productionUsage}
@@ -176,13 +226,27 @@ function ResearchCard({ title, content, data }: { title: string; content: string
               </div>
 
               <div className="flex flex-col gap-3">
-                <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Adoption Signals & Real Evidence</h4>
+                <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">
+                  Adoption Signals & Real Evidence
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {data.sources.map((s, idx) => (
-                    <a key={idx} href={s.url} target="_blank" rel="noopener noreferrer" className="flex flex-col p-4 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-lg hover:border-purple-500 transition-colors">
-                      <span className="text-[10px] font-mono font-bold text-stone-500 uppercase tracking-wider mb-1">{s.platform}</span>
-                      <span className="text-sm font-bold text-stone-900 dark:text-stone-100 mb-2 line-clamp-1">{s.title}</span>
-                      <span className="text-xs text-stone-600 dark:text-stone-400 line-clamp-2">{s.summary}</span>
+                    <a
+                      key={idx}
+                      href={s.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col p-4 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-lg hover:border-purple-500 transition-colors"
+                    >
+                      <span className="text-[10px] font-mono font-bold text-stone-500 uppercase tracking-wider mb-1">
+                        {s.platform}
+                      </span>
+                      <span className="text-sm font-bold text-stone-900 dark:text-stone-100 mb-2 line-clamp-1">
+                        {s.title}
+                      </span>
+                      <span className="text-xs text-stone-600 dark:text-stone-400 line-clamp-2">
+                        {s.summary}
+                      </span>
                     </a>
                   ))}
                   {data.sources.length === 0 && (
@@ -194,14 +258,15 @@ function ResearchCard({ title, content, data }: { title: string; content: string
               </div>
 
               <div className="flex flex-col gap-3">
-                <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">Useful Resources</h4>
+                <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-stone-500">
+                  Useful Resources
+                </h4>
                 <div className="bg-stone-50 dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-5 rounded-xl">
                   <p className="font-sans text-sm text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-wrap">
                     {data.usefulResources}
                   </p>
                 </div>
               </div>
-
             </div>
           </div>
         </div>

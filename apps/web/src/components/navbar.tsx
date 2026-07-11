@@ -1,8 +1,8 @@
 "use client";
 
+import { ThemeToggle } from "@/components/theme-toggle";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -12,7 +12,7 @@ export function Navbar() {
     { name: "Trending", href: "/trending" },
     { name: "AI Projects", href: "/ai" },
     { name: "Repositories", href: "/repos" },
-    { name: "News", href: "/news" }
+    { name: "News", href: "/news" },
   ];
 
   return (
@@ -21,7 +21,9 @@ export function Navbar() {
       <div className="bg-stone-50/80 dark:bg-[#111]/80 border-b border-stone-200 dark:border-stone-800 text-[10px] tracking-widest text-slate-500 dark:text-slate-400 py-2 px-4 md:px-8 font-black uppercase">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <span className="inline-flex items-center justify-center px-2 py-0.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 rounded font-bold text-[9px]">LIVE</span>
+            <span className="inline-flex items-center justify-center px-2 py-0.5 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 rounded font-bold text-[9px]">
+              LIVE
+            </span>
             <span>DEVELOPER TECHNOLOGY INTELLIGENCE</span>
           </div>
           <div className="hidden sm:flex items-center gap-4">
@@ -37,8 +39,18 @@ export function Navbar() {
         <div className="flex items-center gap-8 md:gap-10">
           <Link href="/" className="flex items-center gap-2 group">
             <span className="font-serif font-black text-2xl text-slate-900 dark:text-white flex items-center gap-2 tracking-tighter">
-              <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-500 group-hover:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 4h-2m2 0h-3m3 0V9m-3 3h3m-3 3h3m-3 3h3M9 17h1m-1-3h1m-1-3h1m-1-3h1" />
+              <svg
+                className="w-5 h-5 text-emerald-600 dark:text-emerald-500 group-hover:rotate-12 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.5}
+                  d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 4h-2m2 0h-3m3 0V9m-3 3h3m-3 3h3m-3 3h3M9 17h1m-1-3h1m-1-3h1m-1-3h1"
+                />
               </svg>
               GitNews.
             </span>
@@ -51,8 +63,11 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm font-medium transition-colors hover:text-emerald-600 dark:hover:text-emerald-400 ${isActive ? "text-emerald-600 dark:text-emerald-400 font-bold" : "text-slate-500 dark:text-slate-400"
-                    }`}
+                  className={`text-sm font-medium transition-colors hover:text-emerald-600 dark:hover:text-emerald-400 ${
+                    isActive
+                      ? "text-emerald-600 dark:text-emerald-400 font-bold"
+                      : "text-slate-500 dark:text-slate-400"
+                  }`}
                 >
                   {link.name}
                 </Link>

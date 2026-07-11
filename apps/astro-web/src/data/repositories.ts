@@ -30,7 +30,7 @@ export const mockRepositories: Repository[] = [
     topics: ["react", "frontend", "declarative", "ui", "library"],
     lastUpdated: "2024-03-20T10:00:00Z",
     weeklyGrowth: 1500,
-    url: "https://github.com/facebook/react"
+    url: "https://github.com/facebook/react",
   },
   {
     id: "repo-2",
@@ -46,7 +46,7 @@ export const mockRepositories: Repository[] = [
     topics: ["nextjs", "react", "framework", "ssr", "ssg"],
     lastUpdated: "2024-03-21T12:30:00Z",
     weeklyGrowth: 2100,
-    url: "https://github.com/vercel/next.js"
+    url: "https://github.com/vercel/next.js",
   },
   {
     id: "repo-3",
@@ -62,7 +62,7 @@ export const mockRepositories: Repository[] = [
     topics: ["editor", "electron", "typescript", "vscode"],
     lastUpdated: "2024-03-21T09:15:00Z",
     weeklyGrowth: 800,
-    url: "https://github.com/microsoft/vscode"
+    url: "https://github.com/microsoft/vscode",
   },
   {
     id: "repo-4",
@@ -78,7 +78,7 @@ export const mockRepositories: Repository[] = [
     topics: ["kernel", "linux", "c", "os"],
     lastUpdated: "2024-03-21T14:20:00Z",
     weeklyGrowth: 600,
-    url: "https://github.com/torvalds/linux"
+    url: "https://github.com/torvalds/linux",
   },
   {
     id: "repo-5",
@@ -94,7 +94,7 @@ export const mockRepositories: Repository[] = [
     topics: ["machine-learning", "python", "deep-learning", "ai"],
     lastUpdated: "2024-03-20T18:45:00Z",
     weeklyGrowth: 450,
-    url: "https://github.com/tensorflow/tensorflow"
+    url: "https://github.com/tensorflow/tensorflow",
   },
   {
     id: "repo-6",
@@ -102,7 +102,8 @@ export const mockRepositories: Repository[] = [
     name: "vue",
     owner: "vuejs",
     ownerAvatar: "https://github.com/vuejs.png",
-    description: "Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web.",
+    description:
+      "Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web.",
     stars: 206000,
     forks: 34000,
     watchers: 5600,
@@ -110,7 +111,7 @@ export const mockRepositories: Repository[] = [
     topics: ["vue", "frontend", "framework", "javascript"],
     lastUpdated: "2024-03-21T08:10:00Z",
     weeklyGrowth: 350,
-    url: "https://github.com/vuejs/core"
+    url: "https://github.com/vuejs/core",
   },
   {
     id: "repo-7",
@@ -126,7 +127,7 @@ export const mockRepositories: Repository[] = [
     topics: ["kubernetes", "go", "containers", "orchestration"],
     lastUpdated: "2024-03-21T15:30:00Z",
     weeklyGrowth: 280,
-    url: "https://github.com/kubernetes/kubernetes"
+    url: "https://github.com/kubernetes/kubernetes",
   },
   {
     id: "repo-8",
@@ -134,7 +135,8 @@ export const mockRepositories: Repository[] = [
     name: "pytorch",
     owner: "pytorch",
     ownerAvatar: "https://github.com/pytorch.png",
-    description: "Tensors and Dynamic neural networks in Python with strong GPU acceleration",
+    description:
+      "Tensors and Dynamic neural networks in Python with strong GPU acceleration",
     stars: 76000,
     forks: 21000,
     watchers: 2200,
@@ -142,7 +144,7 @@ export const mockRepositories: Repository[] = [
     topics: ["pytorch", "machine-learning", "deep-learning", "ai"],
     lastUpdated: "2024-03-21T11:25:00Z",
     weeklyGrowth: 850,
-    url: "https://github.com/pytorch/pytorch"
+    url: "https://github.com/pytorch/pytorch",
   },
   {
     id: "repo-9",
@@ -158,7 +160,7 @@ export const mockRepositories: Repository[] = [
     topics: ["deno", "javascript", "typescript", "rust"],
     lastUpdated: "2024-03-21T16:00:00Z",
     weeklyGrowth: 400,
-    url: "https://github.com/denoland/deno"
+    url: "https://github.com/denoland/deno",
   },
   {
     id: "repo-10",
@@ -166,7 +168,8 @@ export const mockRepositories: Repository[] = [
     name: "flutter",
     owner: "flutter",
     ownerAvatar: "https://github.com/flutter.png",
-    description: "Flutter makes it easy and fast to build beautiful apps for mobile and beyond",
+    description:
+      "Flutter makes it easy and fast to build beautiful apps for mobile and beyond",
     stars: 160000,
     forks: 26000,
     watchers: 3700,
@@ -174,7 +177,7 @@ export const mockRepositories: Repository[] = [
     topics: ["flutter", "dart", "mobile", "ios", "android"],
     lastUpdated: "2024-03-21T13:40:00Z",
     weeklyGrowth: 600,
-    url: "https://github.com/flutter/flutter"
+    url: "https://github.com/flutter/flutter",
   },
   // Generate 20 more mock repositories
   ...Array.from({ length: 20 }).map((_, i) => ({
@@ -184,13 +187,15 @@ export const mockRepositories: Repository[] = [
     owner: `developer${i + 1}`,
     ownerAvatar: `https://github.com/github.png`,
     description: `An amazing open source project solving real world problems. Providing robust APIs and tools for modern developers.`,
-    stars: (i * 1234) % 50000 + 1000,
-    forks: (i * 432) % 10000 + 100,
-    watchers: (i * 87) % 1000 + 10,
-    language: ["TypeScript", "Rust", "Go", "Python", "JavaScript"][i % 5] || "TypeScript",
+    stars: ((i * 1234) % 50000) + 1000,
+    forks: ((i * 432) % 10000) + 100,
+    watchers: ((i * 87) % 1000) + 10,
+    language:
+      ["TypeScript", "Rust", "Go", "Python", "JavaScript"][i % 5] ||
+      "TypeScript",
     topics: ["opensource", "tooling", "development"],
     lastUpdated: new Date(1700000000000 - i * 86400000).toISOString(),
-    weeklyGrowth: (i * 33) % 1000 + 50,
-    url: `https://github.com/developer${i + 1}/awesome-project-${i + 1}`
-  }))
+    weeklyGrowth: ((i * 33) % 1000) + 50,
+    url: `https://github.com/developer${i + 1}/awesome-project-${i + 1}`,
+  })),
 ];

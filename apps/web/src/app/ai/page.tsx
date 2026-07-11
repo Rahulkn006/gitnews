@@ -1,11 +1,11 @@
 "use client";
 
-import { useQuery } from "convex/react";
-import { api } from "@v1/backend/convex/_generated/api";
-import Link from "next/link";
-import { RepoCard } from "@/components/repo-card";
 import { NewsCard } from "@/components/news-card";
-import { mapConvexRepo, mapConvexNews } from "@/lib/data-mapper";
+import { RepoCard } from "@/components/repo-card";
+import { mapConvexNews, mapConvexRepo } from "@/lib/data-mapper";
+import { api } from "@v1/backend/convex/_generated/api";
+import { useQuery } from "convex/react";
+import Link from "next/link";
 
 export default function AIPage() {
   const dbRepos = useQuery(api.github.getReposByCategory, { category: "AI" });
@@ -16,14 +16,21 @@ export default function AIPage() {
       <div className="min-h-screen flex items-center justify-center bg-stone-50 dark:bg-[#0a0a0a]">
         <div className="animate-pulse flex flex-col items-center gap-4">
           <div className="w-12 h-12 rounded-full border-4 border-emerald-500 border-t-transparent animate-spin" />
-          <p className="text-slate-500 font-mono text-sm tracking-widest uppercase">Fetching Intelligence...</p>
+          <p className="text-slate-500 font-mono text-sm tracking-widest uppercase">
+            Fetching Intelligence...
+          </p>
         </div>
       </div>
     );
   }
 
   const aiRepos = dbRepos.map(mapConvexRepo);
-  const aiNews = dbNews.map(mapConvexNews).filter(n => n.category === "AI Projects" || n.headline.toLowerCase().includes("ai"))
+  const aiNews = dbNews
+    .map(mapConvexNews)
+    .filter(
+      (n) =>
+        n.category === "AI Projects" || n.headline.toLowerCase().includes("ai"),
+    )
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
@@ -31,22 +38,54 @@ export default function AIPage() {
       {/* Magazine Banner Navigation */}
       <nav className="max-w-7xl mx-auto flex items-center justify-between mb-12 pb-6 border-b border-stone-200 dark:border-stone-800">
         <div className="flex items-center gap-8">
-          <Link href="/" className="font-serif text-3xl font-black tracking-tighter text-slate-900 dark:text-white">
+          <Link
+            href="/"
+            className="font-serif text-3xl font-black tracking-tighter text-slate-900 dark:text-white"
+          >
             GitNews.
           </Link>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
-            <Link href="/trending" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Trending</Link>
-            <Link href="/news" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">News</Link>
-            <Link href="/analyze" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Analyzer</Link>
-            <Link href="/live" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Live Pulse</Link>
-            <Link href="/ai" className="text-emerald-600 dark:text-emerald-400 font-bold">AI</Link>
-            <Link href="/discover" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Discover</Link>
+            <Link
+              href="/trending"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              Trending
+            </Link>
+            <Link
+              href="/news"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              News
+            </Link>
+            <Link
+              href="/analyze"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              Analyzer
+            </Link>
+            <Link
+              href="/live"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              Live Pulse
+            </Link>
+            <Link
+              href="/ai"
+              className="text-emerald-600 dark:text-emerald-400 font-bold"
+            >
+              AI
+            </Link>
+            <Link
+              href="/discover"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              Discover
+            </Link>
           </div>
         </div>
       </nav>
 
       <main className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
-        
         {/* Left Column: AI Projects */}
         <div className="lg:col-span-8 flex flex-col gap-12">
           <header className="mb-8 border-b border-stone-200 dark:border-stone-800 pb-8">
@@ -79,13 +118,15 @@ export default function AIPage() {
           </h2>
           <div className="flex flex-col">
             {aiNews.map((story) => (
-              <div key={story.id} className="border-b border-stone-200 dark:border-stone-800 last:border-0 pb-4 mb-4">
+              <div
+                key={story.id}
+                className="border-b border-stone-200 dark:border-stone-800 last:border-0 pb-4 mb-4"
+              >
                 <NewsCard article={story} />
               </div>
             ))}
           </div>
         </aside>
-
       </main>
     </div>
   );

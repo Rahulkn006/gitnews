@@ -7,7 +7,7 @@ export const WHY_TRENDING_DATA = [
       "35k+ new stars this month",
       "Used by thousands of learning resources",
       "Growing AI resource collections",
-      "High community contribution"
+      "High community contribution",
     ],
     verdict: "Worth Watching ⭐⭐⭐⭐⭐",
     score: "99/100",
@@ -35,7 +35,7 @@ export const WHY_TRENDING_DATA = [
     ],
     verdict: "Fast Growing 📈",
     score: "92/100",
-  }
+  },
 ];
 
 import { fetchWhyTrendingIntelligence } from "./ollagraph-handlers";

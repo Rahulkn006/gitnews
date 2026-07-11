@@ -1,13 +1,13 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import NewsHero from '@/components/news/NewsHero.astro';
-import BreakingNewsCarousel from '@/components/news/BreakingNewsCarousel.astro';
-import TrendingAIRadar from '@/components/news/TrendingAIRadar.astro';
-import DeveloperImpact from '@/components/news/DeveloperImpact.astro';
-import { InteractiveNewsGrid } from '@/components/react/interactive-news-grid';
-import { BackNavigation } from '@/components/react/back-navigation';
-import { newsService } from '@/services/news';
+import BreakingNewsCarousel from "@/components/news/BreakingNewsCarousel.astro";
+import DeveloperImpact from "@/components/news/DeveloperImpact.astro";
+import NewsHero from "@/components/news/NewsHero.astro";
+import TrendingAIRadar from "@/components/news/TrendingAIRadar.astro";
+import { BackNavigation } from "@/components/react/back-navigation";
+import { InteractiveNewsGrid } from "@/components/react/interactive-news-grid";
+import { newsService } from "@/services/news";
+import Navbar from "../components/Navbar.astro";
+import Layout from "../layouts/Layout.astro";
 
 // Fetch the AI news from our new service
 const newsItems = await newsService.getLatestAINews();

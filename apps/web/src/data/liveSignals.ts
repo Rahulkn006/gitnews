@@ -19,8 +19,9 @@ export const mockLiveSignals: LiveSignal[] = [
     sources: ["GitHub", "Reddit", "Hacker News", "Product Hunt"],
     trendingScore: 98,
     sentiment: "positive",
-    explanation: "This project is gaining attention because of new agent features, rapid commits and community discussions.",
-    timestamp: "2024-03-21T14:30:00Z"
+    explanation:
+      "This project is gaining attention because of new agent features, rapid commits and community discussions.",
+    timestamp: "2024-03-21T14:30:00Z",
   },
   {
     id: "sig-2",
@@ -30,8 +31,9 @@ export const mockLiveSignals: LiveSignal[] = [
     sources: ["GitHub", "Twitter", "Hacker News"],
     trendingScore: 95,
     sentiment: "positive",
-    explanation: "Trending due to the recent React Compiler announcement and upcoming v19 features.",
-    timestamp: "2024-03-21T14:15:00Z"
+    explanation:
+      "Trending due to the recent React Compiler announcement and upcoming v19 features.",
+    timestamp: "2024-03-21T14:15:00Z",
   },
   {
     id: "sig-3",
@@ -41,8 +43,9 @@ export const mockLiveSignals: LiveSignal[] = [
     sources: ["GitHub", "Reddit", "Twitter"],
     trendingScore: 88,
     sentiment: "mixed",
-    explanation: "Active discussions around caching behavior and the newly released Turbopack updates.",
-    timestamp: "2024-03-21T13:45:00Z"
+    explanation:
+      "Active discussions around caching behavior and the newly released Turbopack updates.",
+    timestamp: "2024-03-21T13:45:00Z",
   },
   {
     id: "sig-4",
@@ -52,8 +55,9 @@ export const mockLiveSignals: LiveSignal[] = [
     sources: ["Hacker News", "GitHub", "Twitter"],
     trendingScore: 100,
     sentiment: "positive",
-    explanation: "Viral adoption driven by developers replacing ESLint and Prettier for faster Rust-based tooling.",
-    timestamp: "2024-03-21T14:28:00Z"
+    explanation:
+      "Viral adoption driven by developers replacing ESLint and Prettier for faster Rust-based tooling.",
+    timestamp: "2024-03-21T14:28:00Z",
   },
   {
     id: "sig-5",
@@ -63,8 +67,9 @@ export const mockLiveSignals: LiveSignal[] = [
     sources: ["GitHub", "Reddit", "Product Hunt"],
     trendingScore: 92,
     sentiment: "positive",
-    explanation: "Surging in popularity as developers seek easy ways to run large language models locally.",
-    timestamp: "2024-03-21T14:05:00Z"
+    explanation:
+      "Surging in popularity as developers seek easy ways to run large language models locally.",
+    timestamp: "2024-03-21T14:05:00Z",
   },
   {
     id: "sig-6",
@@ -74,8 +79,9 @@ export const mockLiveSignals: LiveSignal[] = [
     sources: ["GitHub", "Twitter"],
     trendingScore: 85,
     sentiment: "positive",
-    explanation: "Steady growth as an all-in-one formatter and linter alternative in the web ecosystem.",
-    timestamp: "2024-03-21T13:20:00Z"
+    explanation:
+      "Steady growth as an all-in-one formatter and linter alternative in the web ecosystem.",
+    timestamp: "2024-03-21T13:20:00Z",
   },
   {
     id: "sig-7",
@@ -85,8 +91,9 @@ export const mockLiveSignals: LiveSignal[] = [
     sources: ["Hacker News", "Reddit", "Twitter", "GitHub"],
     trendingScore: 99,
     sentiment: "mixed",
-    explanation: "Spike in mentions following recent licensing changes and forks being created by the community.",
-    timestamp: "2024-03-21T14:25:00Z"
+    explanation:
+      "Spike in mentions following recent licensing changes and forks being created by the community.",
+    timestamp: "2024-03-21T14:25:00Z",
   },
   {
     id: "sig-8",
@@ -96,8 +103,9 @@ export const mockLiveSignals: LiveSignal[] = [
     sources: ["GitHub", "Hacker News", "Reddit"],
     trendingScore: 96,
     sentiment: "positive",
-    explanation: "Rapidly trending as an open-source alternative gaining traction from major tech companies.",
-    timestamp: "2024-03-21T14:10:00Z"
+    explanation:
+      "Rapidly trending as an open-source alternative gaining traction from major tech companies.",
+    timestamp: "2024-03-21T14:10:00Z",
   },
   {
     id: "sig-9",
@@ -107,8 +115,9 @@ export const mockLiveSignals: LiveSignal[] = [
     sources: ["GitHub", "Product Hunt"],
     trendingScore: 78,
     sentiment: "positive",
-    explanation: "Consistently popular tool seeing an uptick due to a new major feature release.",
-    timestamp: "2024-03-21T12:55:00Z"
+    explanation:
+      "Consistently popular tool seeing an uptick due to a new major feature release.",
+    timestamp: "2024-03-21T12:55:00Z",
   },
   {
     id: "sig-10",
@@ -118,19 +127,23 @@ export const mockLiveSignals: LiveSignal[] = [
     sources: ["GitHub", "Twitter", "Reddit"],
     trendingScore: 90,
     sentiment: "positive",
-    explanation: "Trending in the AI community alongside the release of several new open-weights models.",
-    timestamp: "2024-03-21T13:50:00Z"
+    explanation:
+      "Trending in the AI community alongside the release of several new open-weights models.",
+    timestamp: "2024-03-21T13:50:00Z",
   },
   // Generate 20 more mock signals
   ...Array.from({ length: 20 }).map((_, i) => ({
     id: `sig-${i + 11}`,
     repository: `trending-org/project-${i + 1}`,
     ownerAvatar: `https://github.com/github.png`,
-    mentionsToday: (i * 47) % 300 + 20,
-    sources: ["GitHub", "Reddit", "Hacker News", "Product Hunt"].slice(0, (i % 3) + 1),
-    trendingScore: (i * 13) % 40 + 60,
+    mentionsToday: ((i * 47) % 300) + 20,
+    sources: ["GitHub", "Reddit", "Hacker News", "Product Hunt"].slice(
+      0,
+      (i % 3) + 1,
+    ),
+    trendingScore: ((i * 13) % 40) + 60,
     sentiment: ["positive", "neutral", "mixed"][i % 3] as any,
     explanation: `This is an automatically generated pulse event for repository ${i + 11} capturing sudden developer interest.`,
-    timestamp: new Date(1700000000000 - i * 3600000).toISOString()
-  }))
+    timestamp: new Date(1700000000000 - i * 3600000).toISOString(),
+  })),
 ];

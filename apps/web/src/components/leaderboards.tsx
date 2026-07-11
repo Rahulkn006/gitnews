@@ -4,10 +4,20 @@ import { mockRepositories } from "@/data/repositories";
 import Link from "next/link";
 
 export function Leaderboards() {
-  const topRepos = [...mockRepositories].sort((a, b) => b.stars - a.stars).slice(0, 5);
-  const topDevelopers = ["torvalds", "yyx990803", "gaearon", "antfu", "sindresorhus"];
+  const topRepos = [...mockRepositories]
+    .sort((a, b) => b.stars - a.stars)
+    .slice(0, 5);
+  const topDevelopers = [
+    "torvalds",
+    "yyx990803",
+    "gaearon",
+    "antfu",
+    "sindresorhus",
+  ];
   const topOrgs = ["vercel", "facebook", "microsoft", "google", "kubernetes"];
-  const fastestGrowing = [...mockRepositories].sort((a, b) => b.weeklyGrowth - a.weeklyGrowth).slice(0, 5);
+  const fastestGrowing = [...mockRepositories]
+    .sort((a, b) => b.weeklyGrowth - a.weeklyGrowth)
+    .slice(0, 5);
 
   return (
     <div className="flex flex-col gap-10">
@@ -20,14 +30,26 @@ export function Leaderboards() {
         <ul className="flex flex-col gap-4">
           {topRepos.map((repo, idx) => (
             <li key={repo.id} className="flex items-center gap-4">
-              <span className="text-xs font-bold text-slate-400 w-5">#{idx + 1}</span>
-              <img src={repo.ownerAvatar} className="w-8 h-8 rounded border border-stone-200 dark:border-stone-800 object-cover" alt="" />
+              <span className="text-xs font-bold text-slate-400 w-5">
+                #{idx + 1}
+              </span>
+              <img
+                src={repo.ownerAvatar}
+                className="w-8 h-8 rounded border border-stone-200 dark:border-stone-800 object-cover"
+                alt=""
+              />
               <div className="flex-1 min-w-0">
-                <Link href={repo.url} target="_blank" className="text-sm text-slate-900 dark:text-white font-bold truncate hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors block">
+                <Link
+                  href={repo.url}
+                  target="_blank"
+                  className="text-sm text-slate-900 dark:text-white font-bold truncate hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors block"
+                >
                   {repo.name}
                 </Link>
               </div>
-              <span className="text-xs text-slate-500 font-mono font-medium">{(repo.stars / 1000).toFixed(1)}k</span>
+              <span className="text-xs text-slate-500 font-mono font-medium">
+                {(repo.stars / 1000).toFixed(1)}k
+              </span>
             </li>
           ))}
         </ul>
@@ -42,9 +64,15 @@ export function Leaderboards() {
         <ul className="flex flex-col gap-4">
           {topOrgs.map((org, idx) => (
             <li key={org} className="flex items-center gap-4">
-              <span className="text-xs font-bold text-slate-400 w-5">#{idx + 1}</span>
+              <span className="text-xs font-bold text-slate-400 w-5">
+                #{idx + 1}
+              </span>
               <div className="flex-1 min-w-0">
-                <Link href={`https://github.com/${org}`} target="_blank" className="text-sm text-slate-900 dark:text-white font-bold truncate hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors block">
+                <Link
+                  href={`https://github.com/${org}`}
+                  target="_blank"
+                  className="text-sm text-slate-900 dark:text-white font-bold truncate hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors block"
+                >
                   @{org}
                 </Link>
               </div>
@@ -62,18 +90,25 @@ export function Leaderboards() {
         <ul className="flex flex-col gap-4">
           {fastestGrowing.map((repo, idx) => (
             <li key={repo.id} className="flex items-center gap-4">
-              <span className="text-xs font-bold text-slate-400 w-5">#{idx + 1}</span>
+              <span className="text-xs font-bold text-slate-400 w-5">
+                #{idx + 1}
+              </span>
               <div className="flex-1 min-w-0">
-                <Link href={repo.url} target="_blank" className="text-sm text-slate-900 dark:text-white font-bold truncate hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors block">
+                <Link
+                  href={repo.url}
+                  target="_blank"
+                  className="text-sm text-slate-900 dark:text-white font-bold truncate hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors block"
+                >
                   {repo.name}
                 </Link>
               </div>
-              <span className="text-xs text-emerald-600 dark:text-emerald-400 font-mono font-medium">+{repo.weeklyGrowth}</span>
+              <span className="text-xs text-emerald-600 dark:text-emerald-400 font-mono font-medium">
+                +{repo.weeklyGrowth}
+              </span>
             </li>
           ))}
         </ul>
       </div>
-
     </div>
   );
 }

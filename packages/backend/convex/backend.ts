@@ -29,7 +29,8 @@ async function doCall(
   body: unknown,
 ) {
   const base = process.env.BACKEND_BASE_URL;
-  if (!base) throw new Error("BACKEND_BASE_URL not set on the Convex deployment");
+  if (!base)
+    throw new Error("BACKEND_BASE_URL not set on the Convex deployment");
   const res = await fetch(`${base}${path}`, {
     method,
     headers: {

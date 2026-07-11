@@ -7,7 +7,7 @@ export function Hero() {
     { label: "Trending Repos", value: "2,847", growth: "+14.2%" },
     { label: "AI Projects Tracked", value: "1,293", growth: "+22.5%" },
     { label: "Developer Tools", value: "856", growth: "+8.9%" },
-    { label: "Daily Updates", value: "142", growth: "Active" }
+    { label: "Daily Updates", value: "142", growth: "Active" },
   ];
 
   return (
@@ -30,7 +30,8 @@ export function Hero() {
 
         {/* Subtitle */}
         <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto mb-8 font-sans">
-          Track trending repositories, AI breakthroughs, developer tools and technology updates powered by intelligent discovery.
+          Track trending repositories, AI breakthroughs, developer tools and
+          technology updates powered by intelligent discovery.
         </p>
 
         {/* Actions */}
@@ -56,16 +57,20 @@ export function Hero() {
               key={i}
               className="bg-[#111]/40 backdrop-blur-sm border border-[#222]/80 rounded-xl p-5 text-left hover:border-emerald-500/30 transition-all group"
             >
-              <span className="text-[10px] font-mono text-[#666] uppercase tracking-wider block mb-2">{stat.label}</span>
+              <span className="text-[10px] font-mono text-[#666] uppercase tracking-wider block mb-2">
+                {stat.label}
+              </span>
               <div className="flex items-baseline justify-between">
                 <span className="text-2xl font-bold font-mono tracking-tight group-hover:text-emerald-400 transition-colors">
                   {stat.value}
                 </span>
-                <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
-                  stat.growth.startsWith("+") 
-                    ? "bg-emerald-500/10 text-emerald-400" 
-                    : "bg-blue-500/10 text-blue-400"
-                }`}>
+                <span
+                  className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
+                    stat.growth.startsWith("+")
+                      ? "bg-emerald-500/10 text-emerald-400"
+                      : "bg-blue-500/10 text-blue-400"
+                  }`}
+                >
                   {stat.growth}
                 </span>
               </div>

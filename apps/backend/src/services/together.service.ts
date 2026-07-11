@@ -22,7 +22,10 @@ export class TogetherService {
     });
   }
 
-  static async buildAiAnalysis(repo: any, readme?: string): Promise<AiAnalysisResult> {
+  static async buildAiAnalysis(
+    repo: any,
+    readme?: string,
+  ): Promise<AiAnalysisResult> {
     const language = repo.language ?? "general purpose";
     const stars = repo.stargazers_count || repo.stars;
     const description = repo.description ? ` ${repo.description}` : "";

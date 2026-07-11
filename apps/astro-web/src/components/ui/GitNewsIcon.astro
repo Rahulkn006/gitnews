@@ -1,11 +1,32 @@
 ---
 // Central reusable icon system for GitNews
-import { Fire, Brain, PlayCircle, Star, TrendUp, ShieldCheck, Lightning, RocketLaunch, GitFork, Users } from '@phosphor-icons/react';
+import {
+  Brain,
+  Fire,
+  GitFork,
+  Lightning,
+  PlayCircle,
+  RocketLaunch,
+  ShieldCheck,
+  Star,
+  TrendUp,
+  Users,
+} from "@phosphor-icons/react";
 
 export interface Props {
-  name: 'trending' | 'ai' | 'play' | 'star' | 'growth' | 'security' | 'active' | 'rocket' | 'fork' | 'users';
+  name:
+    | "trending"
+    | "ai"
+    | "play"
+    | "star"
+    | "growth"
+    | "security"
+    | "active"
+    | "rocket"
+    | "fork"
+    | "users";
   class?: string;
-  weight?: 'regular' | 'bold' | 'fill' | 'duotone' | 'light' | 'thin';
+  weight?: "regular" | "bold" | "fill" | "duotone" | "light" | "thin";
 }
 
 const { name, class: className = "w-5 h-5", weight = "duotone" } = Astro.props;

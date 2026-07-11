@@ -110,7 +110,10 @@ async function insertJob(
 export const processJob = internalAction({
   args: { jobId: v.id("jobs") },
   handler: async (ctx, { jobId }) => {
-    await ctx.runMutation(internal.jobs.setStatus, { jobId, status: "running" });
+    await ctx.runMutation(internal.jobs.setStatus, {
+      jobId,
+      status: "running",
+    });
     const job = await ctx.runQuery(internal.jobs.get, { jobId });
     if (!job) return;
     const base = process.env.BACKEND_BASE_URL;
@@ -138,7 +141,10 @@ export const processJob = internalAction({
         });
       }
     } catch (e) {
-      await ctx.runMutation(internal.jobs.complete, { jobId, error: String(e) });
+      await ctx.runMutation(internal.jobs.complete, {
+        jobId,
+        error: String(e),
+      });
     }
   },
 });

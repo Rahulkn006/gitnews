@@ -28,7 +28,10 @@ function Card({
     </div>
   );
 }
-function Row({ left, right }: { left: React.ReactNode; right: React.ReactNode }) {
+function Row({
+  left,
+  right,
+}: { left: React.ReactNode; right: React.ReactNode }) {
   return (
     <div className="flex items-center justify-between gap-2 px-4 py-2.5 text-sm">
       <span className="truncate font-mono text-primary/80">{left}</span>
@@ -66,7 +69,9 @@ export default function PlatformPage() {
 
   if (!current) {
     return (
-      <div className="p-8 text-sm text-primary/60">Setting up your workspace…</div>
+      <div className="p-8 text-sm text-primary/60">
+        Setting up your workspace…
+      </div>
     );
   }
 
@@ -121,7 +126,10 @@ export default function PlatformPage() {
                 <span className="text-primary/80">
                   {inv.workspaceName ?? "workspace"} · {inv.role}
                 </span>
-                <Button size="sm" onClick={() => acceptInvite({ inviteId: inv._id })}>
+                <Button
+                  size="sm"
+                  onClick={() => acceptInvite({ inviteId: inv._id })}
+                >
                   Accept
                 </Button>
               </div>

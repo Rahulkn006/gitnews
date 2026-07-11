@@ -1,12 +1,12 @@
-import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
-import tailwind from '@astrojs/tailwind';
+import react from "@astrojs/react";
+import tailwind from "@astrojs/tailwind";
+import { defineConfig } from "astro/config";
 
-import cloudflare from '@astrojs/cloudflare';
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'hybrid',
+  output: "hybrid",
   adapter: cloudflare(),
-  integrations: [react(), tailwind({ applyBaseStyles: false })]
+  integrations: [react(), tailwind({ applyBaseStyles: false })],
 });

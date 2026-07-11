@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-import { ShieldCheck } from "@phosphor-icons/react";
 import { DEVELOPER_NEWS_DATA } from "@/data/developer-news";
+import { ShieldCheck } from "@phosphor-icons/react";
+import React from "react";
 
 interface BreakingDevNewsProps {
   repositories?: any[];
@@ -15,23 +15,23 @@ export function BreakingDevNews({ repositories = [] }: BreakingDevNewsProps) {
   const liveWire = repositories
     .sort((a, b) => (b.growth24h || 0) - (a.growth24h || 0))
     .slice(0, 3)
-    .map(r => ({
+    .map((r) => ({
       id: r.id,
       icon: "🔥",
       headline: `${r.name} is rapidly climbing trending charts with +${r.growth24h || 0} stars today.`,
       source: "GitHub API",
-      timestamp: "Live"
+      timestamp: "Live",
     }));
 
   // Generate new releases randomly from recently updated repos
   const latestReleases = repositories
     .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))
     .slice(0, 4)
-    .map(r => ({
+    .map((r) => ({
       id: r.id,
       project: r.name,
       version: "Latest",
-      signal: "UPDATED"
+      signal: "UPDATED",
     }));
 
   return (
@@ -44,11 +44,17 @@ export function BreakingDevNews({ repositories = [] }: BreakingDevNewsProps) {
         </h3>
         <div className="flex flex-col gap-3">
           {liveWire.map((news) => (
-            <div key={news.id} className="flex flex-col gap-1 pb-3 border-b border-stone-200 dark:border-stone-800 last:border-0">
+            <div
+              key={news.id}
+              className="flex flex-col gap-1 pb-3 border-b border-stone-200 dark:border-stone-800 last:border-0"
+            >
               <div className="flex items-start gap-2.5">
                 <span className="text-sm shrink-0 mt-0.5">{news.icon}</span>
                 <div className="flex flex-col gap-1 min-w-0">
-                  <a href="#" className="font-bold text-sm text-slate-900 dark:text-white leading-tight hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors line-clamp-2">
+                  <a
+                    href="#"
+                    className="font-bold text-sm text-slate-900 dark:text-white leading-tight hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors line-clamp-2"
+                  >
                     {news.headline}
                   </a>
                   <div className="flex items-center gap-1.5 text-[9px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">
@@ -70,7 +76,10 @@ export function BreakingDevNews({ repositories = [] }: BreakingDevNewsProps) {
         </h3>
         <div className="flex flex-col gap-1">
           {latestReleases.map((release) => (
-            <div key={release.id} className="flex items-center justify-between py-2 border-b border-stone-100 dark:border-stone-800/50 last:border-0 group">
+            <div
+              key={release.id}
+              className="flex items-center justify-between py-2 border-b border-stone-100 dark:border-stone-800/50 last:border-0 group"
+            >
               <div className="flex flex-col min-w-0 pr-2">
                 <span className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors truncate">
                   {release.project}

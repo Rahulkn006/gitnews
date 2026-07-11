@@ -43,7 +43,9 @@ export const unreadCount = query({
     // most 10 unread rows is enough — O(10) instead of O(all notifications).
     const rows = await ctx.db
       .query("notifications")
-      .withIndex("by_user_read", (q) => q.eq("userId", userId).eq("read", false))
+      .withIndex("by_user_read", (q) =>
+        q.eq("userId", userId).eq("read", false),
+      )
       .take(10);
     return rows.length;
   },

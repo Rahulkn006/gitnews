@@ -13,7 +13,7 @@ export function SearchFilter({
   setSearchQuery,
   selectedFilter,
   setSelectedFilter,
-  filters
+  filters,
 }: SearchFilterProps) {
   return (
     <div className="flex flex-col gap-4 mb-8">

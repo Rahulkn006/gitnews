@@ -1,16 +1,16 @@
 ---
 import "../styles/globals.css";
-import { ThemeProvider } from "@/components/react/theme-provider";
 import Footer from "@/components/Footer.astro";
+import { ThemeProvider } from "@/components/react/theme-provider";
 
 interface Props {
   title?: string;
   description?: string;
 }
 
-const { 
-  title = "GitNews — AI-Powered GitHub Intelligence Directory", 
-  description = "Discover trending GitHub repositories, developer tools, machine learning framework launches, and technology news." 
+const {
+  title = "GitNews — AI-Powered GitHub Intelligence Directory",
+  description = "Discover trending GitHub repositories, developer tools, machine learning framework launches, and technology news.",
 } = Astro.props;
 ---
 

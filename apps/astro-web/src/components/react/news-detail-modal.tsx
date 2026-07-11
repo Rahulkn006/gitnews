@@ -1,6 +1,13 @@
-import React, { useEffect } from 'react';
-import { X, ArrowSquareOut, GitBranch, Star, TrendUp, Lightning } from '@phosphor-icons/react';
-import type { AINewsItem, RelatedRepo } from '@/services/news';
+import type { AINewsItem, RelatedRepo } from "@/services/news";
+import {
+  ArrowSquareOut,
+  GitBranch,
+  Lightning,
+  Star,
+  TrendUp,
+  X,
+} from "@phosphor-icons/react";
+import React, { useEffect } from "react";
 
 interface NewsDetailModalProps {
   article: AINewsItem;
@@ -8,22 +15,25 @@ interface NewsDetailModalProps {
   onClose: () => void;
 }
 
-export function NewsDetailModal({ article, isOpen, onClose }: NewsDetailModalProps) {
-  
+export function NewsDetailModal({
+  article,
+  isOpen,
+  onClose,
+}: NewsDetailModalProps) {
   // Close on escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
     if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
+      document.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     }
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'auto';
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "auto";
     };
   }, [isOpen, onClose]);
 
@@ -31,32 +41,30 @@ export function NewsDetailModal({ article, isOpen, onClose }: NewsDetailModalPro
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
-      
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-stone-900/80 backdrop-blur-sm transition-opacity" 
+      <div
+        className="absolute inset-0 bg-stone-900/80 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
       {/* Modal Content */}
       <div className="relative w-full max-w-4xl max-h-full overflow-y-auto bg-stone-50 dark:bg-stone-900 rounded-2xl shadow-2xl border border-stone-200 dark:border-stone-800 flex flex-col transform transition-all">
-        
         {/* Header Image & Close Button */}
         <div className="relative h-64 md:h-80 w-full shrink-0">
-          <img 
-            src={article.image} 
+          <img
+            src={article.image}
             alt={article.title}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-transparent to-transparent" />
-          
-          <button 
+
+          <button
             onClick={onClose}
             className="absolute top-4 right-4 p-2 bg-black/50 hover:bg-black/80 backdrop-blur text-white rounded-full transition-colors"
           >
             <X size={24} weight="bold" />
           </button>
-          
+
           <div className="absolute bottom-4 left-6">
             <span className="px-3 py-1.5 bg-emerald-500 text-white text-xs font-mono font-bold uppercase tracking-widest rounded shadow-sm">
               {article.category}
@@ -66,9 +74,10 @@ export function NewsDetailModal({ article, isOpen, onClose }: NewsDetailModalPro
 
         {/* Content Body */}
         <div className="p-6 md:p-10">
-          
           <div className="flex items-center gap-3 text-sm font-mono font-bold uppercase tracking-widest text-slate-500 mb-6">
-            <span className="text-emerald-600 dark:text-emerald-400">{article.source}</span>
+            <span className="text-emerald-600 dark:text-emerald-400">
+              {article.source}
+            </span>
             <span className="w-1.5 h-1.5 rounded-full bg-stone-300 dark:bg-stone-700"></span>
             <span>{article.publishedAt}</span>
           </div>
@@ -78,10 +87,8 @@ export function NewsDetailModal({ article, isOpen, onClose }: NewsDetailModalPro
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            
             {/* Left Column: Main Content */}
             <div className="md:col-span-2 space-y-8">
-              
               <div>
                 <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest mb-4 flex items-center gap-2 border-b border-stone-200 dark:border-stone-800 pb-2">
                   <Lightning className="w-5 h-5 text-blue-500" /> The Details
@@ -97,7 +104,10 @@ export function NewsDetailModal({ article, isOpen, onClose }: NewsDetailModalPro
                 </h3>
                 <ul className="space-y-3">
                   {article.keyPoints.map((point, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-stone-700 dark:text-stone-300">
+                    <li
+                      key={idx}
+                      className="flex items-start gap-3 text-stone-700 dark:text-stone-300"
+                    >
                       <span className="text-emerald-500 font-bold mt-1">•</span>
                       <span>{point}</span>
                     </li>
@@ -107,25 +117,26 @@ export function NewsDetailModal({ article, isOpen, onClose }: NewsDetailModalPro
 
               <div>
                 <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest mb-4 flex items-center gap-2 border-b border-stone-200 dark:border-stone-800 pb-2">
-                  <TrendUp className="w-5 h-5 text-purple-500" /> Why Developers Care
+                  <TrendUp className="w-5 h-5 text-purple-500" /> Why Developers
+                  Care
                 </h3>
                 <p className="text-stone-700 dark:text-stone-300 leading-relaxed font-sans p-4 bg-purple-50 dark:bg-purple-900/10 rounded-xl border border-purple-100 dark:border-purple-900/30">
                   {article.developerImpact}
                 </p>
               </div>
-
             </div>
 
             {/* Right Column: Related Repos */}
             <div className="space-y-6">
               <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest mb-4 flex items-center gap-2 border-b border-stone-200 dark:border-stone-800 pb-2">
-                <GitBranch className="w-5 h-5 text-emerald-500" /> Repositories Behind This News
+                <GitBranch className="w-5 h-5 text-emerald-500" /> Repositories
+                Behind This News
               </h3>
-              
+
               <div className="flex flex-col gap-4">
                 {article.relatedRepos.map((repo, idx) => (
-                  <a 
-                    key={idx} 
+                  <a
+                    key={idx}
                     href={repo.url}
                     className="block p-4 rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 hover:border-emerald-500 dark:hover:border-emerald-500 transition-colors shadow-sm group"
                   >
@@ -135,11 +146,11 @@ export function NewsDetailModal({ article, isOpen, onClose }: NewsDetailModalPro
                       </h4>
                       <ArrowSquareOut className="w-4 h-4 text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
-                    
+
                     <p className="text-xs text-stone-500 dark:text-stone-400 mb-4 line-clamp-2 leading-relaxed">
                       {repo.description}
                     </p>
-                    
+
                     <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase tracking-widest text-slate-500">
                       <span className="flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-blue-500"></span>
@@ -154,9 +165,7 @@ export function NewsDetailModal({ article, isOpen, onClose }: NewsDetailModalPro
                 ))}
               </div>
             </div>
-
           </div>
-
         </div>
       </div>
     </div>

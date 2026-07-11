@@ -1,6 +1,6 @@
-import { Repository } from "@/data/repositories";
-import { NewsItem } from "@/data/news";
-import { Id } from "@v1/backend/convex/_generated/dataModel";
+import type { NewsItem } from "@/data/news";
+import type { Repository } from "@/data/repositories";
+import type { Id } from "@v1/backend/convex/_generated/dataModel";
 
 type ConvexRepository = {
   _id: Id<"repositories">;
@@ -35,14 +35,18 @@ type ConvexNews = {
   createdAt: number;
 };
 
-export function mapConvexRepo(repo: ConvexRepository, index: number): Repository {
+export function mapConvexRepo(
+  repo: ConvexRepository,
+  index: number,
+): Repository {
   return {
     id: repo._id,
     rank: index + 1,
     name: repo.name,
     owner: repo.owner,
     ownerAvatar: repo.avatar || "https://github.com/github.png",
-    description: repo.aiSummary || repo.description || "An amazing open source project.",
+    description:
+      repo.aiSummary || repo.description || "An amazing open source project.",
     stars: repo.stars,
     forks: repo.forks,
     watchers: Math.floor(repo.stars * 0.05), // Estimate watchers
@@ -57,11 +61,18 @@ export function mapConvexRepo(repo: ConvexRepository, index: number): Repository
 export function mapConvexNews(newsItem: ConvexNews): NewsItem {
   let dateString = newsItem.date;
   if (!dateString.includes("T")) {
-     dateString = new Date(newsItem.createdAt).toISOString();
+    dateString = new Date(newsItem.createdAt).toISOString();
   }
 
   let categoryStr: NewsItem["category"] = "New Releases";
-  const validCategories = ["New Releases", "Breaking Changes", "Major Updates", "Developer Tools", "Security", "AI Projects"];
+  const validCategories = [
+    "New Releases",
+    "Breaking Changes",
+    "Major Updates",
+    "Developer Tools",
+    "Security",
+    "AI Projects",
+  ];
   if (validCategories.includes(newsItem.category)) {
     categoryStr = newsItem.category as NewsItem["category"];
   } else if (newsItem.category.toLowerCase().includes("ai")) {
@@ -85,25 +96,31 @@ export function mapConvexNews(newsItem: ConvexNews): NewsItem {
   };
 }
 
-import { LiveSignal } from "@/data/liveSignals";
+import type { LiveSignal } from "@/data/liveSignals";
 
-export function mapLiveSignal(repo: ConvexRepository, index: number): LiveSignal {
+export function mapLiveSignal(
+  repo: ConvexRepository,
+  index: number,
+): LiveSignal {
   const sourcesOptions = [
     ["GitHub", "Reddit", "Hacker News"],
     ["GitHub", "Twitter", "Product Hunt"],
     ["GitHub", "Hacker News"],
-    ["GitHub", "Reddit", "Twitter"]
+    ["GitHub", "Reddit", "Twitter"],
   ];
 
   return {
     id: repo._id,
     repository: `${repo.owner}/${repo.name}`,
     ownerAvatar: repo.avatar || "https://github.com/github.png",
-    mentionsToday: Math.floor(repo.forks * 0.5) + (index * 10),
+    mentionsToday: Math.floor(repo.forks * 0.5) + index * 10,
     sources: sourcesOptions[index % sourcesOptions.length] || ["GitHub"],
     trendingScore: Math.min(100, Math.floor(80 + (repo.stars % 20))),
     sentiment: repo.stars % 3 === 0 ? "mixed" : "positive",
-    explanation: repo.aiSummary || repo.description || "Gaining traction quickly among developers.",
-    timestamp: new Date(repo.updatedAt).toISOString()
+    explanation:
+      repo.aiSummary ||
+      repo.description ||
+      "Gaining traction quickly among developers.",
+    timestamp: new Date(repo.updatedAt).toISOString(),
   };
 }

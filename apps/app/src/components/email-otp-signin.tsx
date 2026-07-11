@@ -35,7 +35,12 @@ export function EmailOtpSignin() {
           placeholder="you@example.com"
           className={inputCls}
         />
-        <Button type="submit" variant="outline" className="font-mono" disabled={pending}>
+        <Button
+          type="submit"
+          variant="outline"
+          className="font-mono"
+          disabled={pending}
+        >
           {pending ? "Sending…" : "Send code"}
         </Button>
         {error && <p className="text-xs text-red-500">{error}</p>}

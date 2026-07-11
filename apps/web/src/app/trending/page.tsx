@@ -1,22 +1,28 @@
 "use client";
 
-import { useQuery } from "convex/react";
-import { api } from "@v1/backend/convex/_generated/api";
-import Link from "next/link";
 import { RepoCard } from "@/components/repo-card";
 import { mapConvexRepo } from "@/lib/data-mapper";
+import { api } from "@v1/backend/convex/_generated/api";
+import { useQuery } from "convex/react";
+import Link from "next/link";
 
 export default function TrendingPage() {
   const dbTrending = useQuery(api.github.getTrendingRepos);
   const dbFeatured = useQuery(api.github.getFeaturedRepos);
   const dbLatest = useQuery(api.github.getLatestRepos);
 
-  if (dbTrending === undefined || dbFeatured === undefined || dbLatest === undefined) {
+  if (
+    dbTrending === undefined ||
+    dbFeatured === undefined ||
+    dbLatest === undefined
+  ) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-stone-50 dark:bg-[#0a0a0a]">
         <div className="animate-pulse flex flex-col items-center gap-4">
           <div className="w-12 h-12 rounded-full border-4 border-emerald-500 border-t-transparent animate-spin" />
-          <p className="text-slate-500 font-mono text-sm tracking-widest uppercase">Fetching Intelligence...</p>
+          <p className="text-slate-500 font-mono text-sm tracking-widest uppercase">
+            Fetching Intelligence...
+          </p>
         </div>
       </div>
     );
@@ -32,16 +38,49 @@ export default function TrendingPage() {
       {/* Magazine Banner Navigation */}
       <nav className="max-w-7xl mx-auto flex items-center justify-between mb-12 pb-6 border-b border-stone-200 dark:border-stone-800">
         <div className="flex items-center gap-8">
-          <Link href="/" className="font-serif text-3xl font-black tracking-tighter text-slate-900 dark:text-white">
+          <Link
+            href="/"
+            className="font-serif text-3xl font-black tracking-tighter text-slate-900 dark:text-white"
+          >
             GitNews.
           </Link>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
-            <Link href="/trending" className="text-emerald-600 dark:text-emerald-400 font-bold">Trending</Link>
-            <Link href="/news" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">News</Link>
-            <Link href="/analyze" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Analyzer</Link>
-            <Link href="/live" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Live Pulse</Link>
-            <Link href="/ai" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">AI</Link>
-            <Link href="/discover" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Discover</Link>
+            <Link
+              href="/trending"
+              className="text-emerald-600 dark:text-emerald-400 font-bold"
+            >
+              Trending
+            </Link>
+            <Link
+              href="/news"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              News
+            </Link>
+            <Link
+              href="/analyze"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              Analyzer
+            </Link>
+            <Link
+              href="/live"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              Live Pulse
+            </Link>
+            <Link
+              href="/ai"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              AI
+            </Link>
+            <Link
+              href="/discover"
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              Discover
+            </Link>
           </div>
         </div>
       </nav>

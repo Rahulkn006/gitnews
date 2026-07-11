@@ -4,7 +4,8 @@ export const SHOULD_LEARN_DATA = [
     name: "AI Agents",
     icon: "🤖",
     verdict: "LEARN NOW",
-    verdictColor: "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 border-emerald-500/30",
+    verdictColor:
+      "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 border-emerald-500/30",
     reason: "AI automation demand increasing rapidly across all sectors.",
     difficulty: "Intermediate",
     futureScore: 5,
@@ -14,7 +15,8 @@ export const SHOULD_LEARN_DATA = [
     name: "Rust",
     icon: "🦀",
     verdict: "WATCH",
-    verdictColor: "bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 border-blue-500/30",
+    verdictColor:
+      "bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 border-blue-500/30",
     reason: "Growing backend adoption for performance-critical systems.",
     difficulty: "Advanced",
     futureScore: 4,
@@ -69,7 +71,10 @@ export const LEARNING_SIGNALS_DATA = [
   },
 ];
 
-import { fetchOpportunityRadar, fetchShouldLearnThis } from "./ollagraph-handlers";
+import {
+  fetchOpportunityRadar,
+  fetchShouldLearnThis,
+} from "./ollagraph-handlers";
 
 /**
  * Async fetchers ready for Ollagraph integration.

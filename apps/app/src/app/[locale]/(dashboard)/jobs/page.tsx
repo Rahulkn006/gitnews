@@ -52,8 +52,8 @@ export default function JobsPage() {
           <div>
             <h1 className="text-xl font-medium text-primary">Jobs</h1>
             <p className="text-sm text-primary/60">
-              Workspace-scoped. Created in Convex → processed by the external backend
-              → completed via webhook. Updates live.
+              Workspace-scoped. Created in Convex → processed by the external
+              backend → completed via webhook. Updates live.
             </p>
           </div>
           <Button onClick={runDemo} disabled={pending || !current}>

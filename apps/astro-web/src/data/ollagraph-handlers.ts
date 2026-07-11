@@ -12,7 +12,7 @@ export async function fetchWhyTrendingIntelligence() {
   // const repos = await getTrendingReposFromBackend();
   // const enriched = await Promise.all(repos.map(r => ollagraph.analyzeRepositoryGraph(r.owner, r.name)));
   // return mapToWhyTrending(enriched);
-  
+
   // For now, return the stable mock data to ensure UI doesn't break
   return WHY_TRENDING_DATA;
 }

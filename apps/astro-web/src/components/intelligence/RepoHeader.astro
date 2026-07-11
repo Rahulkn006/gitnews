@@ -11,7 +11,15 @@ interface Props {
   weeklyGrowth?: number;
 }
 
-const { name, owner, description, language, stars, forks, weeklyGrowth = 0 } = Astro.props;
+const {
+  name,
+  owner,
+  description,
+  language,
+  stars,
+  forks,
+  weeklyGrowth = 0,
+} = Astro.props;
 
 function formatNumber(num: number) {
   if (num >= 1000000) return (num / 1000000).toFixed(1) + "M";

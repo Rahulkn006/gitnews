@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export function BreakingTicker() {
   const [mounted, setMounted] = useState(false);
@@ -26,11 +26,14 @@ export function BreakingTicker() {
         <span className="animate-pulse mr-2 h-2 w-2 bg-red-500 rounded-full inline-block" />
         LIVE WIRE
       </div>
-      
+
       {/* Marquee Animation */}
       <div className="flex whitespace-nowrap animate-marquee hover:pause pl-40">
         {[...breakingNews, ...breakingNews].map((news, i) => (
-          <span key={i} className="mx-8 font-mono text-sm inline-flex items-center gap-2">
+          <span
+            key={i}
+            className="mx-8 font-mono text-sm inline-flex items-center gap-2"
+          >
             <span className="text-emerald-200">•</span>
             {news}
           </span>

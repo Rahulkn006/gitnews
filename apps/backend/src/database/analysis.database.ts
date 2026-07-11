@@ -1,4 +1,4 @@
-import prisma from './prisma';
+import prisma from "./prisma";
 
 export class AnalysisDatabase {
   static async upsertAnalysis(repositoryId: string, data: any) {
@@ -7,14 +7,14 @@ export class AnalysisDatabase {
       update: data,
       create: {
         repositoryId,
-        ...data
+        ...data,
       },
     });
   }
 
   static async getAnalysisByRepositoryId(repositoryId: string) {
     return prisma.repositoryAnalysis.findUnique({
-      where: { repositoryId }
+      where: { repositoryId },
     });
   }
 }

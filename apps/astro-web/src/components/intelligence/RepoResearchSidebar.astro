@@ -11,18 +11,29 @@ const { repoName, analysis, score } = Astro.props;
 
 // Compute values safely with fallbacks
 const whatItDoes = analysis.whatItDoes || "A popular open-source repository.";
-const mainPurpose = analysis.summary || "Provides tools and utilities for developers.";
-const whoShouldUse = analysis.bestUseCases || "Developers looking to optimize their workflow.";
+const mainPurpose =
+  analysis.summary || "Provides tools and utilities for developers.";
+const whoShouldUse =
+  analysis.bestUseCases || "Developers looking to optimize their workflow.";
 const devLevel = analysis.learningDifficulty || "Intermediate";
 const learningValue = analysis.learningValue || "High";
-const productionReady = analysis.developerAdoption || "Widely adopted by the community.";
+const productionReady =
+  analysis.developerAdoption || "Widely adopted by the community.";
 const futurePotential = analysis.futurePotential || "Strong growth expected.";
 
 // Score cards
-const learningScore = analysis.scores?.learningValue ? `${analysis.scores.learningValue}/100` : "95/100";
-const marketDemand = analysis.scores?.marketDemand ? `${analysis.scores.marketDemand}/100` : "High";
-const communityStrength = analysis.scores?.community ? `${analysis.scores.community}/100` : "Excellent";
-const futureScope = analysis.scores?.futureScope ? `${analysis.scores.futureScope}/100` : "Extremely High";
+const learningScore = analysis.scores?.learningValue
+  ? `${analysis.scores.learningValue}/100`
+  : "95/100";
+const marketDemand = analysis.scores?.marketDemand
+  ? `${analysis.scores.marketDemand}/100`
+  : "High";
+const communityStrength = analysis.scores?.community
+  ? `${analysis.scores.community}/100`
+  : "Excellent";
+const futureScope = analysis.scores?.futureScope
+  ? `${analysis.scores.futureScope}/100`
+  : "Extremely High";
 ---
 
 <div class="flex flex-col gap-6">

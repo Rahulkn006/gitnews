@@ -12,8 +12,12 @@ export class OllimaService {
   /**
    * Generates structured repository intelligence using Ollima API
    */
-  async generateIntelligence(repoData: any, owner: string, repo: string): Promise<OllimaIntelligence> {
-    const prompt = `Act as an expert developer AI analyst. You are analyzing the GitHub repository ${owner}/${repo} (${repoData.description || 'No description'}).
+  async generateIntelligence(
+    repoData: any,
+    owner: string,
+    repo: string,
+  ): Promise<OllimaIntelligence> {
+    const prompt = `Act as an expert developer AI analyst. You are analyzing the GitHub repository ${owner}/${repo} (${repoData.description || "No description"}).
 Stars: ${repoData.stargazers_count}
 Language: ${repoData.language}
 Forks: ${repoData.forks_count}
@@ -31,36 +35,45 @@ Return ONLY a valid JSON object with EXACTLY these keys:
 
     try {
       // @ts-ignore
-      const ollimaKey = typeof import.meta !== 'undefined' ? import.meta.env.OLLIMA_API_KEY : process.env.OLLIMA_API_KEY;
-      
+      const ollimaKey =
+        typeof import.meta !== "undefined"
+          ? import.meta.env.OLLIMA_API_KEY
+          : process.env.OLLIMA_API_KEY;
+
       if (ollimaKey) {
         // Using standard OpenAI compatible endpoint for Ollima API
         const res = await fetch("https://api.ollima.com/v1/chat/completions", {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${ollimaKey}`,
-            "Content-Type": "application/json"
+            Authorization: `Bearer ${ollimaKey}`,
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             model: "gpt-4o-mini",
-            messages: [{ role: "user", content: prompt }]
-          })
+            messages: [{ role: "user", content: prompt }],
+          }),
         });
-        
+
         if (res.ok) {
           const data = await res.json();
           const content = data.choices[0].message.content;
           // Clean up potential markdown formatting in JSON response
-          const jsonStr = content.replace(/^```json\n/, '').replace(/\n```$/, '');
+          const jsonStr = content
+            .replace(/^```json\n/, "")
+            .replace(/\n```$/, "");
           const parsed = JSON.parse(jsonStr);
           return {
             summary: parsed.summary || "",
             whyTrending: parsed.whyTrending || "",
             difficulty: parsed.difficulty || "",
             strengths: Array.isArray(parsed.strengths) ? parsed.strengths : [],
-            limitations: Array.isArray(parsed.limitations) ? parsed.limitations : [],
+            limitations: Array.isArray(parsed.limitations)
+              ? parsed.limitations
+              : [],
             useCases: Array.isArray(parsed.useCases) ? parsed.useCases : [],
-            alternatives: Array.isArray(parsed.alternatives) ? parsed.alternatives : [],
+            alternatives: Array.isArray(parsed.alternatives)
+              ? parsed.alternatives
+              : [],
           };
         } else {
           const text = await res.text();
@@ -71,7 +84,10 @@ Return ONLY a valid JSON object with EXACTLY these keys:
         throw new Error("OLLIMA_API_KEY not found");
       }
     } catch (e) {
-      console.log("[Ollima] Intelligence generation failed, using unavailable status...", e);
+      console.log(
+        "[Ollima] Intelligence generation failed, using unavailable status...",
+        e,
+      );
       // Fallback response so the page does not crash
       return {
         summary: "AI intelligence temporarily unavailable",
@@ -80,7 +96,7 @@ Return ONLY a valid JSON object with EXACTLY these keys:
         strengths: [],
         limitations: [],
         useCases: [],
-        alternatives: []
+        alternatives: [],
       };
     }
   }

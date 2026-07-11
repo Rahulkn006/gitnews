@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router } from "express";
 
 const router = Router();
 
-router.post('/analyze', async (req, res) => {
+router.post("/analyze", async (req, res) => {
   // AI analysis route placeholder
-  res.json({ message: 'AI Analysis endpoint' });
+  res.json({ message: "AI Analysis endpoint" });
 });
 
 export default router;

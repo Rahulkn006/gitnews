@@ -12,7 +12,12 @@ function genCode() {
   crypto.getRandomValues(b);
   return Array.from(b, (x) => (x % 10).toString()).join("");
 }
-async function send(ctx: Ctx | undefined, label: string, email: string, token: string) {
+async function send(
+  ctx: Ctx | undefined,
+  label: string,
+  email: string,
+  token: string,
+) {
   console.warn(`[auth] ${label} code for ${email}: ${token}`); // dev fallback
   try {
     await ctx?.runAction(internal.email.sendEmail, {

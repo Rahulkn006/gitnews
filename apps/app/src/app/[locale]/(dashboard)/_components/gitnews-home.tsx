@@ -45,7 +45,9 @@ function RepoCard({ repo }: { repo: Record<string, unknown> }) {
     >
       <div className="mb-4 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-primary">{data.name}</p>
+          <p className="truncate text-sm font-semibold text-primary">
+            {data.name}
+          </p>
           <p className="truncate text-sm text-primary/60">{data.owner}</p>
         </div>
         <span className="rounded-full border border-primary/10 bg-primary/5 px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-primary/70">
@@ -83,7 +85,11 @@ export function GitNewsHome() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
   const repos = useMemo(() => {
-    const merged = [...(featured ?? []), ...(trending ?? []), ...(latest ?? [])];
+    const merged = [
+      ...(featured ?? []),
+      ...(trending ?? []),
+      ...(latest ?? []),
+    ];
     const deduped = new Map<string, (typeof merged)[number]>();
     for (const repo of merged) {
       deduped.set(repo._id, repo);
@@ -93,7 +99,8 @@ export function GitNewsHome() {
 
   const filteredRepos = useMemo(() => {
     return repos.filter((repo) => {
-      const haystack = `${repo.name} ${repo.owner} ${repo.description ?? ""} ${repo.language ?? ""} ${repo.category ?? ""}`.toLowerCase();
+      const haystack =
+        `${repo.name} ${repo.owner} ${repo.description ?? ""} ${repo.language ?? ""} ${repo.category ?? ""}`.toLowerCase();
       const matchesSearch = haystack.includes(search.toLowerCase());
       const matchesCategory =
         activeCategory === "All" || repo.category === activeCategory;
@@ -126,10 +133,12 @@ export function GitNewsHome() {
                 StartupNiti-inspired AI repository news
               </div>
               <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-                Discover the tools and projects shaping the next wave of software.
+                Discover the tools and projects shaping the next wave of
+                software.
               </h1>
               <p className="mt-3 max-w-xl text-sm text-primary/70 sm:text-base">
-                A streamlined feed of trending GitHub repositories, curated by momentum, language, and category.
+                A streamlined feed of trending GitHub repositories, curated by
+                momentum, language, and category.
               </p>
             </div>
 
@@ -139,9 +148,12 @@ export function GitNewsHome() {
               </div>
               {spotlight ? (
                 <div>
-                  <p className="text-lg font-semibold text-primary">{spotlight.name}</p>
+                  <p className="text-lg font-semibold text-primary">
+                    {spotlight.name}
+                  </p>
                   <p className="mt-1 max-w-sm text-sm text-primary/60">
-                    {spotlight.description ?? "A standout repository with broad developer interest."}
+                    {spotlight.description ??
+                      "A standout repository with broad developer interest."}
                   </p>
                 </div>
               ) : (
@@ -186,8 +198,12 @@ export function GitNewsHome() {
           <div className="rounded-[24px] border border-border/70 bg-card/70 p-4 shadow-sm sm:p-5">
             <div className="mb-4 flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-semibold text-primary">Trending now</h2>
-                <p className="text-sm text-primary/60">Fresh picks with growing traction.</p>
+                <h2 className="text-lg font-semibold text-primary">
+                  Trending now
+                </h2>
+                <p className="text-sm text-primary/60">
+                  Fresh picks with growing traction.
+                </p>
               </div>
               <span className="rounded-full bg-primary/10 px-3 py-1 text-sm text-primary/70">
                 {filteredRepos.length} results
@@ -196,9 +212,9 @@ export function GitNewsHome() {
 
             <div className="grid gap-4 md:grid-cols-2">
               {filteredRepos.length ? (
-                filteredRepos.slice(0, 8).map((repo) => (
-                  <RepoCard key={repo._id} repo={repo} />
-                ))
+                filteredRepos
+                  .slice(0, 8)
+                  .map((repo) => <RepoCard key={repo._id} repo={repo} />)
               ) : (
                 <div className="rounded-2xl border border-dashed border-border/60 bg-background/40 p-6 text-sm text-primary/60 md:col-span-2">
                   No repositories match the current filters yet.
@@ -210,12 +226,17 @@ export function GitNewsHome() {
           <div className="space-y-6">
             <div className="rounded-[24px] border border-border/70 bg-card/70 p-5 shadow-sm">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-primary">Latest updates</h3>
+                <h3 className="text-lg font-semibold text-primary">
+                  Latest updates
+                </h3>
                 <ArrowUpRight className="h-4 w-4 text-primary/50" />
               </div>
               <div className="space-y-3">
                 {(latest ?? []).slice(0, 4).map((repo) => (
-                  <div key={repo._id} className="rounded-xl border border-border/60 bg-background/50 p-3">
+                  <div
+                    key={repo._id}
+                    className="rounded-xl border border-border/60 bg-background/50 p-3"
+                  >
                     <p className="font-medium text-primary">{repo.name}</p>
                     <p className="mt-1 text-sm text-primary/60">{repo.owner}</p>
                   </div>
@@ -225,13 +246,20 @@ export function GitNewsHome() {
 
             <div className="rounded-[24px] border border-border/70 bg-card/70 p-5 shadow-sm">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-primary">What to expect</h3>
+                <h3 className="text-lg font-semibold text-primary">
+                  What to expect
+                </h3>
                 <Sparkles className="h-4 w-4 text-primary/50" />
               </div>
               <ul className="space-y-2 text-sm text-primary/70">
-                <li>• Curated repository cards with star, language, and recency signals.</li>
+                <li>
+                  • Curated repository cards with star, language, and recency
+                  signals.
+                </li>
                 <li>• Search and category filters for quick discovery.</li>
-                <li>• A modern feed designed for fast scanning and discovery.</li>
+                <li>
+                  • A modern feed designed for fast scanning and discovery.
+                </li>
               </ul>
             </div>
           </div>

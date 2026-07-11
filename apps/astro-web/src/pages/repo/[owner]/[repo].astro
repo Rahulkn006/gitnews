@@ -1,15 +1,15 @@
 ---
 export const prerender = false;
 import Layout from "@/layouts/Layout.astro";
-import { ConvexHttpClient } from "convex/browser";
 import { api } from "@v1/backend/convex/_generated/api";
+import { ConvexHttpClient } from "convex/browser";
 
-import RepoHeader from "@/components/intelligence/RepoHeader.astro";
-import WhyWatching from "@/components/intelligence/WhyWatching.astro";
 import IntelligenceGrid from "@/components/intelligence/IntelligenceGrid.astro";
+import RepoHeader from "@/components/intelligence/RepoHeader.astro";
 import RepoResearchSidebar from "@/components/intelligence/RepoResearchSidebar.astro";
-import OllagraphDeepResearchClient from "@/components/react/OllagraphDeepResearchClient";
+import WhyWatching from "@/components/intelligence/WhyWatching.astro";
 import YoutubeLearningHub from "@/components/intelligence/YoutubeLearningHub.astro";
+import OllagraphDeepResearchClient from "@/components/react/OllagraphDeepResearchClient";
 import SimilarReposSidebar from "@/components/react/SimilarReposSidebar";
 import { BackNavigation } from "@/components/react/back-navigation";
 import { ollagraph } from "@/services/ollagraph";
@@ -22,7 +22,10 @@ if (!owner || !name) {
 }
 
 const convex = new ConvexHttpClient(import.meta.env.PUBLIC_CONVEX_URL);
-const repo = await convex.query(api.github.getRepoByOwnerAndName, { owner, name });
+const repo = await convex.query(api.github.getRepoByOwnerAndName, {
+  owner,
+  name,
+});
 
 if (!repo) {
   return Astro.redirect("/");
@@ -32,10 +35,15 @@ if (!repo) {
 const analysis = await ollagraph.analyzeRepository(owner, name);
 
 const title = `${repo.name} by ${repo.owner} - GitNews Analysis`;
-const description = analysis.summary || repo.description || `In-depth developer analysis for ${owner}/${name}`;
+const description =
+  analysis.summary ||
+  repo.description ||
+  `In-depth developer analysis for ${owner}/${name}`;
 
-const learningValue = analysis.learningDifficulty || repo.verdict?.learningValue || "Intermediate";
-const futurePotential = analysis.futurePotential || repo.verdict?.futurePotential || "Growing";
+const learningValue =
+  analysis.learningDifficulty || repo.verdict?.learningValue || "Intermediate";
+const futurePotential =
+  analysis.futurePotential || repo.verdict?.futurePotential || "Growing";
 ---
 
 <Layout title={title} description={description}>

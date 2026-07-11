@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { LEARNING_SIGNALS_DATA } from "@/data/learning-intelligence";
+import React from "react";
 
 interface LearningSignalsProps {
   repositories?: any[];
@@ -13,7 +13,7 @@ export function LearningSignals({ repositories = [] }: LearningSignalsProps) {
   // Extract top languages or topics as learning signals
   const topics = repositories.reduce((acc, r) => {
     r.topics?.forEach((t: string) => {
-      if (!['github', 'api', 'library'].includes(t.toLowerCase())) {
+      if (!["github", "api", "library"].includes(t.toLowerCase())) {
         acc[t] = (acc[t] || 0) + (r.growth24h || 1);
       }
     });
@@ -27,8 +27,13 @@ export function LearningSignals({ repositories = [] }: LearningSignalsProps) {
       id: index,
       rank: `0${index + 1}`,
       topic: topic.charAt(0).toUpperCase() + topic.slice(1),
-      reasonLabel: index === 0 ? "Highest Demand" : (index === 1 ? "Rapid Growth" : "Emerging Tech"),
-      reason: `Gaining significant traction across trending projects with a combined growth impact of ${Math.round(score)}.`
+      reasonLabel:
+        index === 0
+          ? "Highest Demand"
+          : index === 1
+            ? "Rapid Growth"
+            : "Emerging Tech",
+      reason: `Gaining significant traction across trending projects with a combined growth impact of ${Math.round(score)}.`,
     }));
 
   return (
@@ -36,10 +41,13 @@ export function LearningSignals({ repositories = [] }: LearningSignalsProps) {
       <h3 className="font-serif font-black uppercase text-sm tracking-tight text-slate-900 dark:text-white mb-3">
         This Week's Learning
       </h3>
-      
+
       <div className="flex flex-col gap-4">
         {signals.map((signal) => (
-          <div key={signal.id} className="flex flex-col gap-1 pb-3 border-b border-stone-200 dark:border-stone-800 last:border-0 last:pb-0">
+          <div
+            key={signal.id}
+            className="flex flex-col gap-1 pb-3 border-b border-stone-200 dark:border-stone-800 last:border-0 last:pb-0"
+          >
             <span className="text-xl font-serif font-black text-slate-300 dark:text-slate-700 leading-none mb-1">
               {signal.rank}
             </span>

@@ -31,7 +31,10 @@ export function formatNumber(value: number): string {
   return String(value);
 }
 
-export function getBadge(stars: number, forks: number): { label: string; tone: string } {
+export function getBadge(
+  stars: number,
+  forks: number,
+): { label: string; tone: string } {
   if (stars >= 100_000) return { label: "Trending", tone: "hot" };
   if (forks >= 10_000) return { label: "Launch", tone: "launch" };
   if (stars < 5_000) return { label: "New Star", tone: "new" };
@@ -40,9 +43,11 @@ export function getBadge(stars: number, forks: number): { label: string; tone: s
 
 export const badgeStyles: Record<string, string> = {
   hot: "text-orange-600 bg-orange-500/10 border-orange-500/20 dark:text-orange-400 dark:bg-orange-500/10 dark:border-orange-500/20",
-  launch: "text-purple-600 bg-purple-500/10 border-purple-500/20 dark:text-purple-400 dark:bg-purple-500/10 dark:border-purple-500/20",
+  launch:
+    "text-purple-600 bg-purple-500/10 border-purple-500/20 dark:text-purple-400 dark:bg-purple-500/10 dark:border-purple-500/20",
   new: "text-yellow-600 bg-yellow-500/10 border-yellow-500/20 dark:text-yellow-400 dark:bg-yellow-500/10 dark:border-yellow-500/20",
-  rising: "text-emerald-600 bg-emerald-500/10 border-emerald-500/20 dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/20",
+  rising:
+    "text-emerald-600 bg-emerald-500/10 border-emerald-500/20 dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/20",
 };
 
 export function hashString(str: string): number {

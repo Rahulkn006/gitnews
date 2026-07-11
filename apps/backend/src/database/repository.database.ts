@@ -1,4 +1,4 @@
-import prisma from './prisma';
+import prisma from "./prisma";
 
 export class RepositoryDatabase {
   static async upsertRepository(data: any) {
@@ -11,7 +11,7 @@ export class RepositoryDatabase {
 
   static async getTrendingRepositories() {
     return prisma.repository.findMany({
-      orderBy: { stars: 'desc' },
+      orderBy: { stars: "desc" },
       take: 20,
     });
   }
@@ -20,11 +20,11 @@ export class RepositoryDatabase {
     return prisma.repository.findFirst({
       where: {
         owner,
-        name
+        name,
       },
       include: {
-        analysis: true
-      }
+        analysis: true,
+      },
     });
   }
 
@@ -34,7 +34,7 @@ export class RepositoryDatabase {
         language,
         id: { not: currentRepoId },
       },
-      orderBy: { stars: 'desc' },
+      orderBy: { stars: "desc" },
       take: 6,
     });
   }

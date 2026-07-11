@@ -1,8 +1,8 @@
 ---
 // Section 5: YouTube Learning Hub
 import GitNewsIcon from "@/components/ui/GitNewsIcon.astro";
-import YoutubeCard from "./YoutubeCard.astro";
 import { youtubeService } from "@/services/youtube";
+import YoutubeCard from "./YoutubeCard.astro";
 
 interface Props {
   repoName: string;
@@ -13,7 +13,11 @@ interface Props {
 const { repoName, owner, language } = Astro.props;
 
 // Fetch real videos or use mock fallback internally
-const allVideos = await youtubeService.getLearningVideos(repoName, owner, language);
+const allVideos = await youtubeService.getLearningVideos(
+  repoName,
+  owner,
+  language,
+);
 const videos = allVideos.slice(0, 10);
 ---
 

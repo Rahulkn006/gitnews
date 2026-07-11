@@ -22,7 +22,8 @@ function send(res, status, obj) {
   res.writeHead(status, {
     "content-type": "application/json",
     "access-control-allow-origin": "*",
-    "access-control-allow-headers": "authorization,content-type,x-service-key,x-user-id",
+    "access-control-allow-headers":
+      "authorization,content-type,x-service-key,x-user-id",
     "access-control-allow-methods": "GET,POST,OPTIONS",
   });
   res.end(JSON.stringify(obj));
@@ -71,7 +72,10 @@ const server = http.createServer(async (req, res) => {
           aud: payload.aud,
         });
       } catch (e) {
-        return send(res, 401, { verified: false, error: String(e?.message || e) });
+        return send(res, 401, {
+          verified: false,
+          error: String(e?.message || e),
+        });
       }
     }
 

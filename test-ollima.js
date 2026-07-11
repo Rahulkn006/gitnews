@@ -1,11 +1,32 @@
-import fetch from 'node-fetch';
-import fs from 'fs';
+import fs from "fs";
+import fetch from "node-fetch";
 
 const companies = [
-  "openai", "anthropic", "huggingface", "mistralai",
-  "microsoft", "google", "meta", "amazon", "apple", "netflix", "uber", "airbnb", "shopify",
-  "github", "docker", "vercel", "supabase", "mongodb", "postmanlabs", "jetbrains", "hashicorp",
-  "cloudflare", "nvidia", "intel", "amd"
+  "openai",
+  "anthropic",
+  "huggingface",
+  "mistralai",
+  "microsoft",
+  "google",
+  "meta",
+  "amazon",
+  "apple",
+  "netflix",
+  "uber",
+  "airbnb",
+  "shopify",
+  "github",
+  "docker",
+  "vercel",
+  "supabase",
+  "mongodb",
+  "postmanlabs",
+  "jetbrains",
+  "hashicorp",
+  "cloudflare",
+  "nvidia",
+  "intel",
+  "amd",
 ];
 
 async function getScores() {
@@ -28,10 +49,10 @@ Here are the companies: ${companies.join(", ")}`;
         model: "llama3",
         prompt: prompt,
         format: "json",
-        stream: false
-      })
+        stream: false,
+      }),
     });
-    
+
     if (res.ok) {
       const data = await res.json();
       console.log("OLLIMA SCORES:");

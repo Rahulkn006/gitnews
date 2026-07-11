@@ -19,7 +19,12 @@ export const sendEmail = internalAction({
       port: Number(process.env.SMTP_PORT ?? "1025"),
       secure: false,
       ...(process.env.SMTP_USER
-        ? { auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS ?? "" } }
+        ? {
+            auth: {
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_PASS ?? "",
+            },
+          }
         : {}),
     });
     await transport.sendMail({
