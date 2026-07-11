@@ -1,0 +1,6 @@
+{
+  "buildCommand": "turbo run build",
+  "outputDirectory": "apps/astro-web/dist",
+  "framework": "astro",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./"
+}
