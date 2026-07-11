@@ -148,9 +148,11 @@ const RepoBattleComponent = () => {
     setBattleResult(null);
 
     try {
-      const result = await fetch("/api/battle/compare", {
+      const { getApiUrl } = await import("@/lib/api");
+      const result = await fetch(`${getApiUrl()}/api/battle/compare`, {
         method: "POST",
-        body: JSON.stringify({ repoAId: repoA._id, repoBId: repoB._id }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ repoAId: `${repoA.owner}/${repoA.name}`, repoBId: `${repoB.owner}/${repoB.name}` }),
       }).then((res) => res.json());
       setBattleResult(result);
     } catch (e: any) {

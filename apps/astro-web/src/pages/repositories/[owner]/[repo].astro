@@ -2,6 +2,7 @@
 export const prerender = false;
 import Layout from "@/layouts/Layout.astro";
 import { fetcher } from "@/lib/fetcher";
+import { getApiUrl } from "@/lib/api";
 
 import IntelligenceGrid from "@/components/intelligence/IntelligenceGrid.astro";
 import RepoHeader from "@/components/intelligence/RepoHeader.astro";
@@ -20,7 +21,7 @@ if (!owner || !name) {
 
 let repo;
 try {
-  const res = await fetch(`http://localhost:3001/api/repositories/${owner}/${name}`);
+  const res = await fetch(`${getApiUrl()}/api/repositories/${owner}/${name}`);
   if (res.ok) {
     repo = await res.json();
   }
@@ -34,7 +35,7 @@ if (!repo) {
 
 let analysis: any = {};
 try {
-  const analysisRes = await fetch(`http://localhost:3001/api/repositories/${owner}/${name}/analysis`);
+  const analysisRes = await fetch(`${getApiUrl()}/api/repositories/${owner}/${name}/analysis`);
   if (analysisRes.ok) {
     analysis = await analysisRes.json();
   }

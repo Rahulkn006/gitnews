@@ -1,6 +1,6 @@
 
 import { mapConvexNews } from "@/lib/data-mapper";
-import { fetcher } from "@/lib/fetcher";
+import { fetcher } from "@/lib/api";
 import React from "react";
 import useSWR from "swr";
 import { MiniStarGraph } from "./analytics-visuals";
@@ -10,7 +10,7 @@ export function RepoArticlePage({
   owner,
   name,
 }: { owner: string; name: string }) {
-  const { data: dbNews } = useSWR("http://localhost:3001/api/news", fetcher);
+  const { data: dbNews } = useSWR("/api/news", fetcher);
 
   if (dbNews === undefined) {
     return (

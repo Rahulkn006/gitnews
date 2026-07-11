@@ -1,11 +1,11 @@
 
 import { mapConvexNews } from "@/lib/data-mapper";
-import { fetcher } from "@/lib/fetcher";
+import { fetcher } from "@/lib/api";
 import useSWR from "swr";
 import { NewsCard } from "./news-card";
 
 export function NewsFeed() {
-  const { data: dbNews } = useSWR("http://localhost:3001/api/news", fetcher);
+  const { data: dbNews } = useSWR("/api/news", fetcher);
 
   if (dbNews === undefined) {
     return (

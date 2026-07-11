@@ -1,5 +1,5 @@
 
-import { fetcher } from "@/lib/fetcher";
+import { fetcher } from "@/lib/api";
 import useSWR from "swr";
 
 export function RepoAnalysis({
@@ -7,7 +7,7 @@ export function RepoAnalysis({
   name,
 }: { owner: string; name: string }) {
   const { data: repo } = useSWR(
-    `http://localhost:3001/api/repositories/${owner}/${name}`,
+    `/api/repositories/${owner}/${name}`,
     fetcher,
   );
 

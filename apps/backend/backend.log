@@ -2,34 +2,55 @@
 > backend@1.0.0 dev
 > tsx watch src/server.ts
 
-◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
-Scheduler initialized
-Backend server running on http://lo12:44:50 PM [12:44:50 PM [tsx] change in ./src/routes/repositories.routes.ts R12:44:55 PM [tsx] Process didn't exit in 5s. Force killing...
-12:54:37 PM [tsx] change in ./src/services/github.service.ts Process hasn't exited. Killing process...
-[DEBUG] Fetching /:owner/:repo -> owner=facebook, repo=react
-[DEBUG] getRepoByOwnerAndName returned: null
-12:54:37 PM [tsx] change in ./src/services/github.service.ts Restarting...
-c◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
 Scheduler initialized
 Backend server running on http://localhost:3001
-[DEBUG] Fetching /:owner/:repo -> owner=facebook, repo=react
-[DEBUG] getRepoByOwnerAndName returned: react
-[Ollagraph] Constructing deep analysis for facebook/react...
-[Ollima] Local Ollama unavailable, falling back to Ollima API...
-[Ollagraph] Ollama unavailable, falling back to Together AI...
-[DEBUG] Fetching /:owner/:repo -> owner=codecrafters-io, repo=build-your-own-x
-[DEBUG] getRepoByOwnerAndName returned: build-your-own-x
-[Ollagraph] Constructing deep analysis for codecrafters-io/build-your-own-x...
-fetchGitHubAPI failed for /repos/codecrafters-io/build-your-own-x/contents/package.json: Error: GitHub API request failed: 404 Not Found
-    at Function.fetchJson (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/services/github.service.ts:53:13)
-    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
-    at async Function.fetchGitHubAPI (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/services/github.service.ts:63:20)
-    at async Function.fetchRepoFile (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/services/github.service.ts:97:22)
-    at async Promise.all (index 3)
-    at async OllagraphClient.analyzeRepository (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/services/intelligence/ollagraph.service.ts:73:52)
-    at async <anonymous> (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/routes/repositories.routes.ts:60:33)
-[Ollima] Local Ollama unavailable, falling back to Ollima API...
-[Ollagraph] Ollama unavailable, falling back to Together AI...
+1:39:27 PM [tsx] change in ./src/routes/battle.routes.ts Restarting...
+cnode:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+Error: Transform failed with 1 error:
+/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/routes/battle.routes.ts:88:24: ERROR: Syntax error "`"
+    at failureErrorWithLog (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/tsx/node_modules/esbuild/lib/main.js:1477:15)
+    at /home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/tsx/node_modules/esbuild/lib/main.js:756:50
+    at responseCallbacks.<computed> (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/tsx/node_modules/esbuild/lib/main.js:623:9)
+    at handleIncomingPacket (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/tsx/node_modules/esbuild/lib/main.js:678:12)
+    at Socket.readFromStdout (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/tsx/node_modules/esbuild/lib/main.js:601:7)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {
+  name: 'TransformError'
+}
+
+Node.js v22.23.1
+1:44:38 PM [tsx] change in ./src/routes/battle.routes.ts Rerunning...
+cnode:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+Error: Transform failed with 1 error:
+/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/routes/battle.routes.ts:130:43: ERROR: Syntax error "`"
+    at failureErrorWithLog (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/tsx/node_modules/esbuild/lib/main.js:1477:15)
+    at /home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/tsx/node_modules/esbuild/lib/main.js:756:50
+    at responseCallbacks.<computed> (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/tsx/node_modules/esbuild/lib/main.js:623:9)
+    at handleIncomingPacket (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/tsx/node_modules/esbuild/lib/main.js:678:12)
+    at Socket.readFromStdout (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/tsx/node_modules/esbuild/lib/main.js:601:7)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {
+  name: 'TransformError'
+}
+
+Node.js v22.23.1
+1:44:46 PM [tsx] change in ./src/routes/battle.routes.ts Rerunning...
+c◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+Scheduler initialized
+Backend server running on http://localhost:3001
 Running GitHub Sync Job
 Starting GitHub Sync...
 GitHub Sync Complete.

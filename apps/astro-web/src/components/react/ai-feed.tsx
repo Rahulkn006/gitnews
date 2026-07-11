@@ -1,6 +1,6 @@
 
 import { mapConvexRepo } from "@/lib/data-mapper";
-import { fetcher } from "@/lib/fetcher";
+import { fetcher } from "@/lib/api";
 import {
   Brain,
   ChartLineUp,
@@ -180,7 +180,7 @@ const DEV_RECOMMENDATIONS = [
 
 export function AIFeed() {
   const { data: dbRepos } = useSWR(
-    "http://localhost:3001/api/repositories?category=AI",
+    "/api/repositories?category=AI",
     fetcher,
   );
   const [isTimeout, setIsTimeout] = useState(false);

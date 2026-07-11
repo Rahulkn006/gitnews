@@ -31,7 +31,7 @@ export function CompactRepoNewsCard({ repo }: CompactRepoNewsCardProps) {
   );
 
   return (
-    <a href={`/repo/${repo.owner}/${repo.name}`} className="block group">
+    <a href={`/repositories/${repo.owner}/${repo.name}`} className="block group">
       <article className="w-full border-b border-stone-200 dark:border-stone-800 bg-transparent transition-all duration-300 hover:bg-stone-50/50 dark:hover:bg-[#111]/30 py-5">
         <div className="flex flex-col justify-between min-w-0 flex-1">
           <div>

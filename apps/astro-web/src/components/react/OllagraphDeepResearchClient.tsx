@@ -31,14 +31,18 @@ export default function OllagraphDeepResearchClient({
   useEffect(() => {
     async function fetchResearch() {
       try {
+        const { getApiUrl } = await import("@/lib/api");
         const response = await fetch(
-          `/api/ollagraph/research?owner=${owner}&repo=${repo}`,
+          `${getApiUrl()}/api/repositories/${owner}/${repo}/analysis`,
         );
         if (!response.ok) throw new Error("Failed to fetch");
         const json = await response.json();
-        if (json.error || json.status === "unavailable")
-          throw new Error(json.error || "unavailable");
-        setData(json);
+        
+        const deepResearch = json.deepResearch;
+        if (!deepResearch || deepResearch.status === "unavailable") {
+          throw new Error("unavailable");
+        }
+        setData(deepResearch);
       } catch (err) {
         setError(true);
       } finally {

@@ -109,7 +109,7 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
     // Basic small card fallback
     return (
       <a
-        href={`/repo/${repo.owner}/${repo.name}`}
+        href={`/repositories/${repo.owner}/${repo.name}`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         className="group relative flex flex-col justify-between border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#111] p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:z-[100] z-10 rounded-xl"
@@ -215,7 +215,7 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
 
       {/* 2. MAIN (AI Generated Headline) */}
       <div className={`${isLarge ? "mb-6" : "mb-5"}`}>
-        <a href={`/repo/${repo.owner}/${repo.name}`} className="block">
+        <a href={`/repositories/${repo.owner}/${repo.name}`} className="block">
           <h2
             className={`font-serif font-black text-slate-900 dark:text-white transition-colors group-hover:text-emerald-600 dark:group-hover:text-emerald-400 leading-tight ${
               isLarge ? "text-3xl md:text-4xl" : "text-xl md:text-2xl"
@@ -334,7 +334,7 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
               {bookmarked ? "★" : "☆"}
             </button>
             <a
-              href={`/repo/${repo.owner}/${repo.name}`}
+              href={`/repositories/${repo.owner}/${repo.name}`}
               className="font-bold text-emerald-700 dark:text-emerald-300 transition-colors bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:hover:bg-emerald-900/50 border border-emerald-200 dark:border-emerald-800 px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm flex items-center gap-2 shadow-sm"
             >
               Analysis

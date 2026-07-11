@@ -1,7 +1,7 @@
 import type { LiveSignal } from "@/data/liveSignals";
 
 import { mapLiveSignal } from "@/lib/data-mapper";
-import { fetcher } from "@/lib/fetcher";
+import { fetcher } from "@/lib/api";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
@@ -11,7 +11,7 @@ export function LivePulseFeed() {
     "Last hour" | "Today" | "This week"
   >("Today");
   const { data: dbRepos } = useSWR(
-    "http://localhost:3001/api/repositories?type=latest",
+    "/api/repositories?type=latest",
     fetcher,
   );
 

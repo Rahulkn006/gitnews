@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { getApiUrl } from "@/lib/api";
 
 interface SimilarRepo {
   owner: string;
@@ -20,7 +21,7 @@ export default function SimilarReposSidebar({
     async function fetchSimilar() {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/repositories/${owner}/${repo}/similar`,
+          `${getApiUrl()}/api/repositories/${owner}/${repo}/similar`,
         );
         if (response.ok) {
           const data = await response.json();
@@ -64,7 +65,7 @@ export default function SimilarReposSidebar({
         {repos.map((r, i) => (
           <a
             key={i}
-            href={`/repo/${r.owner}/${r.name}`}
+            href={`/repositories/${r.owner}/${r.name}`}
             className="block group bg-white dark:bg-[#111] border border-stone-200 dark:border-stone-800 p-4 rounded-xl hover:border-emerald-500/50 transition-all shadow-sm"
           >
             <div className="flex justify-between items-start mb-2">
