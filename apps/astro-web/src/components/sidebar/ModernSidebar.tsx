@@ -196,12 +196,7 @@ export function ModernSidebar() {
               href="/olla/compare"
               active={currentPath === "/olla/compare"}
             />
-            <SidebarItem
-              icon={BookmarkSimple}
-              label="Saved Repositories"
-              href="/olla/saved"
-              active={currentPath === "/olla/saved"}
-            />
+
             <SidebarItem
               icon={Buildings}
               label="Top Company Repos"

@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/backend/:match*",
+      "destination": "http://49.204.146.233:3001/:match*"
+    }
+  ]
+}

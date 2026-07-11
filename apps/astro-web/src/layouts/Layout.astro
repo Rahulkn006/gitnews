@@ -15,7 +15,7 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" class="dark" suppress-hydration-warning>
+<html lang="en" suppress-hydration-warning>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -38,12 +38,8 @@ const {
           } else if (theme === 'dark') {
             document.documentElement.classList.add('dark');
           } else {
-            // System preference
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-              document.documentElement.classList.add('dark');
-            } else {
-              document.documentElement.classList.remove('dark');
-            }
+            // Default to light
+            document.documentElement.classList.remove('dark');
           }
         } catch (e) {}
       })();

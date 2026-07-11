@@ -2,12 +2,189 @@
 > astro-web@0.0.1 dev
 > astro dev
 
-13:27:44 [WARN] The currently selected adapter `@astrojs/cloudflare` is not compatible with the image service "Sharp".
-13:27:44 [types] Generated 2ms
+15:00:03 [WARN] The currently selected adapter `@astrojs/cloudflare` is not compatible with the image service "Sharp".
+15:00:03 [types] Generated 1ms
 
- astro  v4.16.19 ready in 1728 ms
+ astro  v4.16.19 ready in 1686 ms
 
 ┃ Local    http://localhost:4321/
 ┃ Network  use --host to expose
 
-13:27:44 watching for file changes...
+15:00:03 watching for file changes...
+Browserslist: browsers data (caniuse-lite) is 17 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+warn - The class `ease-[cubic-bezier(0.16,1,0.3,1)]` is ambiguous and matches multiple utilities.
+warn - If this is content and not a class, replace it with `ease-&lsqb;cubic-bezier(0.16,1,0.3,1)&rsqb;` to silence this warning.
+15:02:06 [200] /olla/compare 469ms
+15:02:06 [200] / 8ms
+15:02:11 [200] /trending 8ms
+15:02:20 [404] /ai 7ms
+15:04:24 [200] /market 19ms
+15:04:47 [200] /olla/compare 15ms
+15:04:52 [302] /olla/company-repos 6ms
+15:04:52 [200] /olla/company-index 9ms
+15:05:01 [200] / 23ms
+[YouTube] Fetching real learning videos for codecrafters-io/build-your-own-x...
+15:05:09 [200] /repositories/codecrafters-io/build-your-own-x 75ms
+15:05:18 [200] / 16ms
+15:05:22 [200] /olla/company-index 21ms
+15:05:42 [200] / 24ms
+15:05:46 [200] /market 17ms
+15:06:23 [200] / 26ms
+15:06:56 [302] /olla/company-repos 10ms
+15:06:56 [200] /olla/company-index 14ms
+15:07:10 [200] /olla/compare 17ms
+15:07:15 [302] /olla/company-repos 8ms
+15:07:16 [200] /olla/company-index 15ms
+15:07:31 [200] / 19ms
+15:10:27 [200] / 17ms
+[YouTube] Cache hit for codecrafters-io/build-your-own-x
+15:10:36 [200] /repositories/codecrafters-io/build-your-own-x 66ms
+15:10:45 [200] / 19ms
+15:10:55 [200] /olla/company-index 14ms
+15:11:20 [404] /ai 4ms
+15:11:24 [404] /ai 1ms
+15:12:50 [watch] src/lib/api.ts
+15:12:53 [200] / 22ms
+15:13:38 [404] /ai 6ms
+15:13:46 [200] /olla/compare 15ms
+15:13:50 [200] /market 16ms
+[News] Fetching live news from HackerNews...
+15:13:56 [200] /news 1336ms
+15:13:59 [404] /repos 2ms
+15:14:05 [404] /ai 2ms
+15:14:08 [200] /trending 16ms
+15:14:16 [200] / 19ms
+15:21:18 [watch] src/lib/api.ts
+15:21:21 [200] / 15ms
+15:21:22 [200] / 14ms
+15:24:26 [200] /olla/company-index 14ms
+15:32:00 [200] /olla/compare 14ms
+[YouTube] Cache hit for codecrafters-io/build-your-own-x
+15:50:04 [200] /repositories/codecrafters-io/build-your-own-x 76ms
+15:51:26 [200] / 21ms
+15:51:31 [200] /market 12ms
+16:14:13 [200] /olla/compare 16ms
+[News] Fetching live news from HackerNews...
+16:21:13 [200] /news 2470ms
+17:05:51 [200] / 24ms
+17:06:58 [200] /olla/company-index 15ms
+17:07:04 [200] /olla/compare 14ms
+17:07:07 [200] /market 20ms
+[News] Fetching live news from HackerNews...
+17:07:11 [200] /news 1347ms
+17:07:13 [404] /repos 4ms
+17:07:20 [200] /trending 15ms
+17:07:28 [200] / 21ms
+17:12:33 Configuration file updated. Restarting...
+17:12:33 [WARN] The currently selected adapter `@astrojs/cloudflare` is not compatible with the image service "Sharp".
+17:12:33 [types] Generated 1ms
+17:12:33 [vite] Port 4321 is in use, trying another one...
+17:12:38 Configuration file updated. Restarting...
+✘ [ERROR] The build was canceled
+
+17:12:40 [WARN] The currently selected adapter `@astrojs/cloudflare` is not compatible with the image service "Sharp".
+17:12:40 [types] Generated 2ms
+17:12:40 [vite] Port 4321 is in use, trying another one...
+17:12:48 Configuration file updated. Restarting...
+[astro] Unable to load your Astro config
+
+17:12:48 [ERROR] [config] Missing "./serverless" specifier in "@astrojs/vercel" package
+  Stack trace:
+    at /home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/astro.config.mjs
+    [...] See full stack trace in the browser, or rerun with --verbose.
+
+17:12:48 [ERROR] Continuing with previous valid configuration
+
+17:13:35 Configuration file updated. Restarting...
+[astro] Unable to load your Astro config
+
+17:13:35 [ERROR] [config] Missing "./serverless" specifier in "@astrojs/vercel" package
+  Stack trace:
+    at /home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/astro-web/astro.config.mjs
+    [...] See full stack trace in the browser, or rerun with --verbose.
+
+17:13:35 [ERROR] Continuing with previous valid configuration
+
+17:13:36 Configuration file updated. Restarting...
+17:13:36 [types] Generated 1ms
+17:13:36 [vite] Re-optimizing dependencies because vite config has changed
+17:13:59 [watch] .vercel/output/static/analyze/index.html
+17:13:59 [watch] .vercel/output/static/discover/index.html
+17:14:02 [watch] .vercel/output/static/learning/interview/index.html
+17:14:02 [watch] .vercel/output/static/learning/projects/index.html
+17:14:02 [watch] .vercel/output/static/learning/similar/index.html
+17:14:02 [watch] .vercel/output/static/market/index.html
+17:14:02 [watch] .vercel/output/static/market/open-source/index.html
+17:14:02 [watch] .vercel/output/static/market/releases/index.html
+17:14:02 [watch] .vercel/output/static/market/signals/index.html
+17:14:02 [watch] .vercel/output/static/olla/company-repos/index.html
+17:14:02 [watch] .vercel/output/static/olla/saved/index.html
+17:14:02 [watch] .vercel/output/static/space/profile/index.html
+17:14:02 [watch] .vercel/output/static/space/settings/index.html
+17:14:02 [watch] .vercel/output/static/ai-projects/index.html
+17:14:02 [watch] .vercel/output/static/live/index.html
+17:14:02 [watch] .vercel/output/static/market/index.html
+17:14:02 [watch] .vercel/output/static/olla/company-index/index.html
+17:14:02 [watch] .vercel/output/static/olla/compare/index.html
+17:14:02 [watch] .vercel/output/static/trending/index.html
+17:14:02 [watch] .vercel/output/static/repositories/index.html
+17:14:03 [watch] .vercel/output/static/news/index.html
+17:14:04 [watch] .vercel/output/static/index.html
+17:26:45 [watch] .vercel/output/static/analyze/index.html
+17:26:45 [watch] .vercel/output/static/discover/index.html
+17:26:45 [watch] .vercel/output/static/learning/interview/index.html
+17:26:45 [watch] .vercel/output/static/learning/projects/index.html
+17:26:45 [watch] .vercel/output/static/learning/similar/index.html
+17:26:45 [watch] .vercel/output/static/market/index.html
+17:26:45 [watch] .vercel/output/static/market/open-source/index.html
+17:26:45 [watch] .vercel/output/static/market/releases/index.html
+17:26:45 [watch] .vercel/output/static/market/signals/index.html
+17:26:45 [watch] .vercel/output/static/olla/company-repos/index.html
+17:26:45 [watch] .vercel/output/static/olla/saved/index.html
+17:26:45 [watch] .vercel/output/static/olla/company-index/index.html
+17:26:45 [watch] .vercel/output/static/olla/compare/index.html
+17:26:45 [watch] .vercel/output/static/space/profile/index.html
+17:26:45 [watch] .vercel/output/static/space/settings/index.html
+17:26:45 [watch] .vercel/output/static/ai-projects/index.html
+17:26:45 [watch] .vercel/output/static/live/index.html
+17:26:45 [watch] .vercel/output/static/trending/index.html
+17:26:45 [watch] .vercel/output/static/repositories/index.html
+17:26:45 [watch] .vercel/output/static/news/index.html
+17:26:45 [watch] .vercel/output/static/index.html
+17:27:06 [watch] .vercel/output/static/analyze/index.html
+17:27:06 [watch] .vercel/output/static/discover/index.html
+17:27:10 [watch] .vercel/output/static/learning/interview/index.html
+17:27:10 [watch] .vercel/output/static/learning/projects/index.html
+17:27:10 [watch] .vercel/output/static/learning/similar/index.html
+17:27:10 [watch] .vercel/output/static/market/index.html
+17:27:10 [watch] .vercel/output/static/market/open-source/index.html
+17:27:10 [watch] .vercel/output/static/market/releases/index.html
+17:27:10 [watch] .vercel/output/static/market/signals/index.html
+17:27:11 [watch] .vercel/output/static/olla/company-repos/index.html
+17:27:11 [watch] .vercel/output/static/olla/saved/index.html
+17:27:11 [watch] .vercel/output/static/space/profile/index.html
+17:27:11 [watch] .vercel/output/static/space/settings/index.html
+17:27:11 [watch] .vercel/output/static/ai-projects/index.html
+17:27:11 [watch] .vercel/output/static/live/index.html
+17:27:11 [watch] .vercel/output/static/market/index.html
+17:27:11 [watch] .vercel/output/static/olla/company-index/index.html
+17:27:11 [watch] .vercel/output/static/olla/compare/index.html
+17:27:11 [watch] .vercel/output/static/trending/index.html
+17:27:11 [watch] .vercel/output/static/repositories/index.html
+17:27:13 [watch] .vercel/output/static/news/index.html
+17:27:13 [watch] .vercel/output/static/index.html
+18:45:10 [200] HEAD / 15ms
+18:45:31 [200] / 15ms
+20:06:17 [vite] .env.local changed, restarting server...
+20:06:17 Restarting...
+20:06:17 [types] Generated 1ms
+20:06:17 [vite] Port 4321 is in use, trying another one...
+20:06:17 [vite] 
+20:06:17 [ERROR] [vite] Error: cannot print server URLs before server.listen is called.
+21:41:36 Configuration file updated. Restarting...
+21:41:36 [types] Generated 3ms
+21:41:36 [vite] Port 4321 is in use, trying another one...
+21:41:36 [vite] Port 4322 is in use, trying another one...

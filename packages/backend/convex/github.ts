@@ -262,11 +262,8 @@ export const syncGitHubData = internalAction({
       });
     }
 
-    await ctx.scheduler.runAfter(
-      60 * 60 * 1000,
-      internal.github.syncGitHubData,
-      {},
-    );
+    // Removed ctx.scheduler.runAfter to prevent exponential fork bomb.
+    // crons.ts already handles the hourly scheduling.
   },
 });
 
@@ -352,7 +349,8 @@ export const upsertRepository = internalMutation({
     const pastSnapshots = await ctx.db
       .query("repositorySnapshots")
       .withIndex("by_repo_id", (q) => q.eq("repoId", args.githubId))
-      .collect();
+      .order("desc")
+      .take(200); // Only fetch the last ~200 hours to save DB I/O (200 h > 7 days)
 
     // Find closest snapshot to 24h ago
     const snap24h =

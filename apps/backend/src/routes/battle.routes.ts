@@ -13,8 +13,8 @@ router.post("/compare", async (req, res) => {
     const [ownerA, nameA] = repoAId.split('/');
     const [ownerB, nameB] = repoBId.split('/');
     
-    let repoA = await GitHubService.getRepoByOwnerAndName(ownerA, nameA);
-    let repoB = await GitHubService.getRepoByOwnerAndName(ownerB, nameB);
+    let repoA: any = await GitHubService.getRepoByOwnerAndName(ownerA, nameA);
+    let repoB: any = await GitHubService.getRepoByOwnerAndName(ownerB, nameB);
 
     if (!repoA || !repoB) {
       return res.status(404).json({ error: "One or both repositories not found." });

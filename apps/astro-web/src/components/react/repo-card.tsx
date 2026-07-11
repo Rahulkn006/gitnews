@@ -79,7 +79,6 @@ function UsersIcon({ className }: { className?: string }) {
 }
 
 export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
-  const [bookmarked, setBookmarked] = useState(false);
   const [hovered, setHovered] = useState(false);
 
   const stars = repo.stars ?? 0;
@@ -323,16 +322,7 @@ export function RepoCard({ repo, size = "medium" }: RepoCardProps) {
           </div>
 
           <div className="ml-auto flex items-center gap-2 md:gap-4">
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setBookmarked(!bookmarked);
-              }}
-              className="hidden sm:flex items-center justify-center rounded-full border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 w-8 h-8 text-slate-400 transition-colors hover:text-emerald-600 hover:border-emerald-200 dark:hover:border-emerald-800"
-              aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
-            >
-              {bookmarked ? "★" : "☆"}
-            </button>
+
             <a
               href={`/repositories/${repo.owner}/${repo.name}`}
               className="font-bold text-emerald-700 dark:text-emerald-300 transition-colors bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:hover:bg-emerald-900/50 border border-emerald-200 dark:border-emerald-800 px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm flex items-center gap-2 shadow-sm"

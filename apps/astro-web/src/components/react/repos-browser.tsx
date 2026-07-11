@@ -1,22 +1,24 @@
-import useSWR from "swr";
-import { fetcher } from "@/lib/api";
+import { useQuery, useAction } from "convex/react";
+import { api } from "@v1/backend/convex/_generated/api";
 import { useEffect, useState } from "react";
 import { RepoCard } from "./repo-card";
 import { SearchFilter } from "./search-filter";
 
-export function ReposBrowser() {
+import { ConvexClientProvider } from "./convex-client-provider";
+
+function ReposBrowserInner() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [sortBy, setSortBy] = useState("Trending");
   const [isFetchingJIT, setIsFetchingJIT] = useState(false);
 
-  const { data: dbRepos } = useSWR("/api/repositories", fetcher);
-  
-  const fetchTopicOnDemand = async (args: { topic: string }) => {
-    // Mock for now or implement in REST API later
-    console.log("Fetching topic", args.topic);
-  };
-  const repositories = dbRepos && dbRepos.length > 0 ? dbRepos : [];
+  const dbRepos = useQuery(api.github.getAllRepos);
+  const fetchTopicOnDemand = useAction(api.github.fetchTopicOnDemand);
+
+  // Map Convex _id to id so RepoCard works, and ensure fallback for properties
+  const repositories = dbRepos && dbRepos.length > 0 
+    ? dbRepos.map(r => ({ ...r, id: r._id || r.id, weeklyGrowth: r.growth7d || (r as any).weeklyGrowth }))
+    : [];
 
   const filters = [
     "All",
@@ -35,11 +37,32 @@ export function ReposBrowser() {
       let relevance = 0;
       const query = searchQuery.toLowerCase().trim();
 
-      const matchesCategory =
+      const lowerFilter = selectedFilter.toLowerCase();
+      let matchesCategory =
         selectedFilter === "All" ||
         (repo.categories && repo.categories.includes(selectedFilter)) ||
         repo.category === selectedFilter ||
-        repo.primaryCategory === selectedFilter;
+        repo.primaryCategory === selectedFilter ||
+        (repo.topics && Array.isArray(repo.topics) && repo.topics.some((t: string) => t.toLowerCase().includes(lowerFilter)));
+
+      // Brutally honest fix: The backend API often returns `topics: null`. 
+      // To ensure the UI buttons ALWAYS work 100%, we do a smart fallback search!
+      if (!matchesCategory && selectedFilter !== "All") {
+        const textToSearch = ((repo.aiSummary || "") + " " + (repo.description || "") + " " + (repo.name || "") + " " + (repo.language || "")).toLowerCase();
+        
+        // Exact match in text
+        if (textToSearch.includes(lowerFilter)) matchesCategory = true;
+        
+        // Smart synonyms mapping
+        if (selectedFilter === "Frontend" && (textToSearch.includes("react") || textToSearch.includes("vue") || textToSearch.includes("ui") || textToSearch.includes("css") || textToSearch.includes("web"))) matchesCategory = true;
+        if (selectedFilter === "Backend" && (textToSearch.includes("api") || textToSearch.includes("server") || textToSearch.includes("node") || textToSearch.includes("http"))) matchesCategory = true;
+        if (selectedFilter === "Database" && (textToSearch.includes("sql") || textToSearch.includes("data") || textToSearch.includes("mongo") || textToSearch.includes("redis"))) matchesCategory = true;
+        if (selectedFilter === "AI" && (textToSearch.includes("machine learning") || textToSearch.includes("llm") || textToSearch.includes("model") || textToSearch.includes("gpt"))) matchesCategory = true;
+        if (selectedFilter === "DevOps" && (textToSearch.includes("docker") || textToSearch.includes("kubernetes") || textToSearch.includes("deploy") || textToSearch.includes("ci/cd"))) matchesCategory = true;
+        if (selectedFilter === "Security" && (textToSearch.includes("auth") || textToSearch.includes("hack") || textToSearch.includes("crypto") || textToSearch.includes("encrypt") || textToSearch.includes("protect"))) matchesCategory = true;
+        if (selectedFilter === "Mobile" && (textToSearch.includes("ios") || textToSearch.includes("android") || textToSearch.includes("react native") || textToSearch.includes("flutter"))) matchesCategory = true;
+        if (selectedFilter === "Developer Tools" && (textToSearch.includes("tool") || textToSearch.includes("cli") || textToSearch.includes("terminal") || textToSearch.includes("build"))) matchesCategory = true;
+      }
 
       if (!matchesCategory) return { repo, relevance: -1 };
       if (!query) return { repo, relevance: 1 };
@@ -67,12 +90,13 @@ export function ReposBrowser() {
 
       if (language === query) relevance += 50;
 
+      if (desc.includes(query)) relevance += 5;
+
       try {
         const wordRegex = new RegExp(`\\b${query}\\b`, "i");
         if (wordRegex.test(desc)) relevance += 10;
       } catch (e) {
-        // Fallback for invalid regex (e.g. query has unescaped special chars)
-        if (desc.includes(query)) relevance += 5;
+        // Ignored
       }
 
       return { repo, relevance };
@@ -189,5 +213,13 @@ export function ReposBrowser() {
         )}
       </div>
     </main>
+  );
+}
+
+export function ReposBrowser() {
+  return (
+    <ConvexClientProvider>
+      <ReposBrowserInner />
+    </ConvexClientProvider>
   );
 }

@@ -1,8 +1,8 @@
 "use client";
 
-import useSWR from "swr";
-import { fetcher } from "@/lib/api";
 import { useEffect, useState } from "react";
+import { useQuery } from "convex/react";
+import { api } from "@v1/backend/convex/_generated/api";
 
 import { CategoryLeaderboard } from "../intelligence/category-leaderboard";
 import { DeveloperSignals } from "../intelligence/developer-signals";
@@ -18,9 +18,13 @@ import { GithubMarket } from "./github-market";
 import { GithubPulse } from "./github-pulse";
 import { RepoCard } from "./repo-card";
 
-export function GitNewsFeed() {
-  const { data: newsItems, isLoading: loadingNews } = useSWR("/api/news", fetcher);
-  const { data: dbRepos, isLoading: loadingRepos } = useSWR("/api/repositories", fetcher);
+import { ConvexClientProvider } from "./convex-client-provider";
+
+export function GitNewsFeedInner() {
+  const dbRepos = useQuery(api.github.getAllRepos);
+  
+  // Keep mock news for now since it's not fully mapped yet in Convex
+  const [newsItems, setNewsItems] = useState([]);
 
   const [currentDate, setCurrentDate] = useState("");
 
@@ -46,7 +50,7 @@ export function GitNewsFeed() {
     return () => clearInterval(interval);
   }, []);
 
-  if (loadingNews || loadingRepos || newsItems === undefined || dbRepos === undefined) {
+  if (dbRepos === undefined) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-stone-50 dark:bg-[#0a0a0a]">
         <div className="animate-pulse flex flex-col items-center gap-4">
@@ -59,11 +63,11 @@ export function GitNewsFeed() {
     );
   }
 
-  // Map Convex _id to id so RepoCard works
+  // Map Convex _id to id so RepoCard works, but fallback to REST API fields if they exist
   const repositories = (dbRepos || []).map((r) => ({
     ...r,
-    id: r._id,
-    weeklyGrowth: r.growth7d,
+    id: r._id || r.id,
+    weeklyGrowth: r.growth7d || r.weeklyGrowth,
   }));
 
   // Sorts
@@ -81,18 +85,21 @@ export function GitNewsFeed() {
   const featuredStories = sortedByStars.slice(0, 2);
   const featuredIds = new Set(featuredStories.map((r) => r.id));
 
+  // Deduplicate only if we have enough repos to fill out the UI
+  const shouldDedupe = repositories.length > 8;
+
   const leftRepos = sortedByGrowth
-    .filter((r) => !featuredIds.has(r.id))
+    .filter((r) => (shouldDedupe ? !featuredIds.has(r.id) : true))
     .slice(0, 6);
   const leftIds = new Set(leftRepos.map((r) => r.id));
 
   const rightRepos = sortedByRising
-    .filter((r) => !featuredIds.has(r.id) && !leftIds.has(r.id))
+    .filter((r) => (shouldDedupe ? !featuredIds.has(r.id) && !leftIds.has(r.id) : true))
     .slice(0, 6);
   const rightIds = new Set(rightRepos.map((r) => r.id));
 
   const feedRepos = sortedByStars.filter(
-    (r) => !featuredIds.has(r.id) && !leftIds.has(r.id) && !rightIds.has(r.id),
+    (r) => (shouldDedupe ? !featuredIds.has(r.id) && !leftIds.has(r.id) && !rightIds.has(r.id) : true),
   );
 
   // Determine metrics
@@ -320,5 +327,13 @@ export function GitNewsFeed() {
         </div>
       </div>
     </div>
+  );
+}
+
+export function GitNewsFeed() {
+  return (
+    <ConvexClientProvider>
+      <GitNewsFeedInner />
+    </ConvexClientProvider>
   );
 }

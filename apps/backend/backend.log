@@ -55,3 +55,67 @@ Running GitHub Sync Job
 Starting GitHub Sync...
 GitHub Sync Complete.
 GitHub Sync completed successfully
+2:50:05 PM [tsx] change in ./src/routes/market.routes.ts Restarting...
+c◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+Scheduler initialized
+Backend server running on http://localhost:3001
+Running GitHub Sync Job
+Starting GitHub Sync...
+GitHub Sync Complete.
+GitHub Sync completed successfully
+[DEBUG] Fetching /:owner/:repo -> owner=codecrafters-io, repo=build-your-own-x
+[DEBUG] getRepoByOwnerAndName returned: build-your-own-x
+[DEBUG] Fetching /:owner/:repo -> owner=codecrafters-io, repo=build-your-own-x
+[DEBUG] getRepoByOwnerAndName returned: build-your-own-x
+[DEBUG] Fetching /:owner/:repo -> owner=codecrafters-io, repo=build-your-own-x
+[DEBUG] getRepoByOwnerAndName returned: build-your-own-x
+Running GitHub Sync Job
+Starting GitHub Sync...
+GitHub Sync Complete.
+GitHub Sync completed successfully
+Running GitHub Sync Job
+Starting GitHub Sync...
+GitHub Sync Complete.
+GitHub Sync completed successfully
+5:25:14 PM [tsx] change in ./src/routes/battle.routes.ts Restarting...
+c◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+Scheduler initialized
+Backend server running on http://localhost:3001
+Running GitHub Sync Job
+Starting GitHub Sync...
+GitHub Sync failed TypeError: fetch failed
+    at node:internal/deps/undici/undici:15141:13
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at runNextTicks (node:internal/process/task_queues:68:3)
+    at process.processImmediate (node:internal/timers:452:9)
+    at async Function.fetchJson (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/services/github.service.ts:42:22)
+    at async Function.fetchReposByEndpoint (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/services/github.service.ts:107:18)
+    at async Promise.all (index 0)
+    at async Function.syncGitHubData (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/services/github.service.ts:120:50)
+    at async <anonymous> (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/apps/backend/src/scheduler/githubSync.ts:9:7)
+    at async execute (/home/ubuntu/internproject/gitnews/convex-template5-main/convex-template5-main/node_modules/node-cron/src/scheduler/runner.ts:194:26) {
+  [cause]: ConnectTimeoutError: Connect Timeout Error (attempted address: api.github.com:443, timeout: 10000ms)
+      at onConnectTimeout (node:internal/deps/undici/undici:2754:28)
+      at Immediate._onImmediate (node:internal/deps/undici/undici:2735:11)
+      at process.processImmediate (node:internal/timers:484:21) {
+    code: 'UND_ERR_CONNECT_TIMEOUT',
+    [Symbol(undici.error.UND_ERR)]: true,
+    [Symbol(undici.error.UND_ERR_CONNECT_TIMEOUT)]: true
+  }
+}
+Running GitHub Sync Job
+Starting GitHub Sync...
+GitHub Sync Complete.
+GitHub Sync completed successfully
+Running GitHub Sync Job
+Starting GitHub Sync...
+GitHub Sync Complete.
+GitHub Sync completed successfully
+Running GitHub Sync Job
+Starting GitHub Sync...
+GitHub Sync Complete.
+GitHub Sync completed successfully
+Running GitHub Sync Job
+Starting GitHub Sync...
+GitHub Sync Complete.
+GitHub Sync completed successfully
