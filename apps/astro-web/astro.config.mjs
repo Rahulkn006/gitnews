@@ -11,7 +11,7 @@ export default defineConfig({
   integrations: [react(), tailwind({ applyBaseStyles: false })],
   vite: {
     server: {
-      allowedHosts: true
-    }
-  }
+      allowedHosts: true,
+    },
+  },
 });
