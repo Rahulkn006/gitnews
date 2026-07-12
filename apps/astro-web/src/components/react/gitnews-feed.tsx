@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useQuery } from "convex/react";
-import { api } from "@v1/backend/convex/_generated/api";
+import useSWR from "swr";
+import { fetcher } from "@/lib/api";
 
 import { CategoryLeaderboard } from "../intelligence/category-leaderboard";
 import { DeveloperSignals } from "../intelligence/developer-signals";
@@ -18,10 +18,8 @@ import { GithubMarket } from "./github-market";
 import { GithubPulse } from "./github-pulse";
 import { RepoCard } from "./repo-card";
 
-import { ConvexClientProvider } from "./convex-client-provider";
-
 export function GitNewsFeedInner() {
-  const dbRepos = useQuery(api.github.getAllRepos);
+  const { data: dbRepos } = useSWR("/api/repositories", fetcher);
   
   // Keep mock news for now since it's not fully mapped yet in Convex
   const [newsItems, setNewsItems] = useState([]);
@@ -331,9 +329,5 @@ export function GitNewsFeedInner() {
 }
 
 export function GitNewsFeed() {
-  return (
-    <ConvexClientProvider>
-      <GitNewsFeedInner />
-    </ConvexClientProvider>
-  );
+  return <GitNewsFeedInner />;
 }

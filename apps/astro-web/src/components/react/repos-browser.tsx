@@ -1,10 +1,8 @@
-import { useQuery, useAction } from "convex/react";
-import { api } from "@v1/backend/convex/_generated/api";
 import { useEffect, useState } from "react";
+import useSWR from "swr";
+import { fetcher } from "@/lib/api";
 import { RepoCard } from "./repo-card";
 import { SearchFilter } from "./search-filter";
-
-import { ConvexClientProvider } from "./convex-client-provider";
 
 function ReposBrowserInner() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,8 +10,7 @@ function ReposBrowserInner() {
   const [sortBy, setSortBy] = useState("Trending");
   const [isFetchingJIT, setIsFetchingJIT] = useState(false);
 
-  const dbRepos = useQuery(api.github.getAllRepos);
-  const fetchTopicOnDemand = useAction(api.github.fetchTopicOnDemand);
+  const { data: dbRepos } = useSWR("/api/repositories", fetcher);
 
   // Map Convex _id to id so RepoCard works, and ensure fallback for properties
   const repositories = dbRepos && dbRepos.length > 0 
@@ -128,24 +125,7 @@ function ReposBrowserInner() {
   });
 
   useEffect(() => {
-    const query = searchQuery.trim();
-    if (query.length < 2) return;
-
-    const timeout = setTimeout(async () => {
-      // If we don't have enough local results, let's ask GitHub in real-time!
-      if (filteredRepos.length < 3) {
-        try {
-          setIsFetchingJIT(true);
-          await fetchTopicOnDemand({ topic: query });
-        } catch (e) {
-          console.error("Failed JIT fetch:", e);
-        } finally {
-          setIsFetchingJIT(false);
-        }
-      }
-    }, 1500);
-
-    return () => clearTimeout(timeout);
+    // JIT fetch removed since there is no equivalent Express endpoint.
   }, [searchQuery, filteredRepos.length]);
 
   return (
@@ -217,9 +197,5 @@ function ReposBrowserInner() {
 }
 
 export function ReposBrowser() {
-  return (
-    <ConvexClientProvider>
-      <ReposBrowserInner />
-    </ConvexClientProvider>
-  );
+  return <ReposBrowserInner />;
 }
