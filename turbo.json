@@ -14,7 +14,15 @@
         "OPENPANEL_SECRET_KEY",
         "SENTRY_AUTH_TOKEN",
         "SENTRY_ORG",
-        "SENTRY_PROJECT"
+        "SENTRY_PROJECT",
+        "PUBLIC_CONVEX_URL",
+        "OLLAGRAPH_API_KEY",
+        "OLLIMA_API_KEY",
+        "YOUTUBE_API_KEY",
+        "GITHUB_TOKEN",
+        "PUBLIC_API_URL",
+        "NEXT_PUBLIC_API_URL",
+        "NEXT_PUBLIC_BACKEND_URL"
       ],
       "inputs": ["$TURBO_DEFAULT$", ".env"],
       "dependsOn": ["^build"],
