@@ -30,10 +30,18 @@ if (!repo) {
 }
 
 let analysis: any = {};
-try {
-  analysis = await fetcher(`/api/repositories/${owner}/${name}/analysis`);
-} catch (e) {
-  console.error("Failed to fetch analysis", e);
+if (repo.analysis) {
+  try {
+    analysis = {
+      ...repo.analysis,
+      deepResearch: repo.analysis.deepResearch ? JSON.parse(repo.analysis.deepResearch) : null,
+      scores: repo.analysis.scores ? JSON.parse(repo.analysis.scores) : null,
+      codeIntelligence: repo.analysis.codeIntelligence ? JSON.parse(repo.analysis.codeIntelligence) : null,
+      techStack: repo.analysis.techStack ? JSON.parse(repo.analysis.techStack) : null,
+    };
+  } catch (e) {
+    console.error("Failed to parse repo.analysis JSON fields", e);
+  }
 }
 
 const title = `${repo.name} by ${repo.owner} - GitNews Analysis`;
