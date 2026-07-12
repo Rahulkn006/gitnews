@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getApiUrl } from "@/lib/api";
+import { fetcher } from "@/lib/api";
 
 interface SimilarRepo {
   owner: string;
@@ -20,13 +20,8 @@ export default function SimilarReposSidebar({
   useEffect(() => {
     async function fetchSimilar() {
       try {
-        const response = await fetch(
-          `${getApiUrl()}/api/repositories/${owner}/${repo}/similar`,
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setRepos(data);
-        }
+        const data = await fetcher(`/api/repositories/${owner}/${repo}/similar`);
+        setRepos(data);
       } catch (err) {
         console.error("Failed to fetch similar repos", err);
       } finally {
