@@ -55,6 +55,7 @@ export const youtubeService = {
       );
 
       if (!res.ok) {
+        await res.text().catch(() => {});
         throw new Error(`YouTube API failed: ${res.statusText}`);
       }
 

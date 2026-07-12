@@ -50,6 +50,7 @@ export class GitHubService {
     });
 
     if (!response.ok) {
+      await response.text().catch(() => {});
       throw new Error(
         `GitHub API request failed: ${response.status} ${response.statusText}`,
       );
