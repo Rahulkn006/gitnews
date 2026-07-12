@@ -3,6 +3,24 @@ export const prerender = false;
 import Layout from "@/layouts/Layout.astro";
 import { fetcher } from "@/lib/api";
 
+if (!(globalThis as any).__fetchInstrumented) {
+  (globalThis as any).__fetchInstrumented = true;
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (...args) => {
+    const url = typeof args[0] === 'string' ? args[0] : (args[0] as any)?.url || 'unknown';
+    console.log(`[SSR INST] [GLOBAL FETCH START] URL: ${url}`);
+    const start = Date.now();
+    try {
+      const response = await originalFetch(...args);
+      console.log(`[SSR INST] [GLOBAL FETCH SUCCESS] (${Date.now() - start}ms) URL: ${url} STATUS: ${response.status}`);
+      return response;
+    } catch (e: any) {
+      console.log(`[SSR INST] [GLOBAL FETCH ERROR] (${Date.now() - start}ms) URL: ${url} ERROR: ${e.message}`);
+      throw e;
+    }
+  };
+}
+
 import IntelligenceGrid from "@/components/intelligence/IntelligenceGrid.astro";
 import RepoHeader from "@/components/intelligence/RepoHeader.astro";
 import RepoResearchSidebar from "@/components/intelligence/RepoResearchSidebar.astro";
@@ -14,15 +32,19 @@ import { BackNavigation } from "@/components/react/back-navigation";
 // Use "repo" from params since file is [repo].astro
 const { owner, repo: name } = Astro.params;
 
+console.log("[SSR INST] [START] SSR START for owner:", owner, "repo:", name);
+
 if (!owner || !name) {
   return Astro.redirect("/");
 }
 
 let repo;
 try {
+  console.log("[SSR INST] [FETCH] Repository fetch begins for /api/repositories/" + owner + "/" + name);
   repo = await fetcher(`/api/repositories/${owner}/${name}`);
+  console.log("[SSR INST] [FETCH] Repository fetch completed");
 } catch (e) {
-  console.error(e);
+  console.error("[SSR INST] [ERROR] Repository fetch failed", e);
 }
 
 if (!repo) {
@@ -32,6 +54,7 @@ if (!repo) {
 let analysis: any = {};
 if (repo.analysis) {
   try {
+    console.log("[SSR INST] [PARSE] Analysis parsing begins");
     analysis = {
       ...repo.analysis,
       deepResearch: repo.analysis.deepResearch ? JSON.parse(repo.analysis.deepResearch) : null,
@@ -39,10 +62,12 @@ if (repo.analysis) {
       codeIntelligence: repo.analysis.codeIntelligence ? JSON.parse(repo.analysis.codeIntelligence) : null,
       techStack: repo.analysis.techStack ? JSON.parse(repo.analysis.techStack) : null,
     };
+    console.log("[SSR INST] [PARSE] Analysis parsing completed");
   } catch (e) {
     console.error("Failed to parse repo.analysis JSON fields", e);
   }
 }
+console.log("[SSR INST] [RENDER] Preparing to render components...");
 
 const title = `${repo.name} by ${repo.owner} - GitNews Analysis`;
 const description =
@@ -105,8 +130,11 @@ const futurePotential =
       </div>
 
       {/* Full Width YouTube Learning Hub */}
+      {(() => { console.log("[SSR INST] [RENDER] YoutubeLearningHub begins"); return null; })()}
       <YoutubeLearningHub repoName={repo.name} owner={repo.owner} language={repo.language} />
+      {(() => { console.log("[SSR INST] [RENDER] YoutubeLearningHub completed"); return null; })()}
 
     </div>
   </div>
 </Layout>
+{(() => { console.log("[SSR INST] [END] SSR END for", owner, name); return null; })()}

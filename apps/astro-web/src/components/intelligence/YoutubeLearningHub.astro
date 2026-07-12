@@ -13,11 +13,13 @@ interface Props {
 const { repoName, owner, language } = Astro.props;
 
 // Fetch real videos or use mock fallback internally
+console.log("[SSR INST] [YOUTUBE] youtubeService.getLearningVideos begins");
 const allVideos = await youtubeService.getLearningVideos(
   repoName,
   owner,
   language,
 );
+console.log("[SSR INST] [YOUTUBE] youtubeService.getLearningVideos completed, found:", allVideos.length);
 const videos = allVideos.slice(0, 10);
 ---
 

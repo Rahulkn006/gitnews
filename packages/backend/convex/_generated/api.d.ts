@@ -20,9 +20,9 @@ import type * as counters from "../counters.js";
 import type * as crons from "../crons.js";
 import type * as dashboard from "../dashboard.js";
 import type * as devGuard from "../devGuard.js";
+import type * as email from "../email.js";
 import type * as email_index from "../email/index.js";
 import type * as email_templates_subscriptionEmail from "../email/templates/subscriptionEmail.js";
-import type * as email from "../email.js";
 import type * as env from "../env.js";
 import type * as files from "../files.js";
 import type * as github from "../github.js";
@@ -49,14 +49,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-/**
- * A utility for referencing Convex functions in your app's API.
- *
- * Usage:
- * ```js
- * const myFunctionReference = api.myModule.myFunction;
- * ```
- */
+
 declare const fullApi: ApiFromModules<{
   ResendOTP: typeof ResendOTP;
   apiKeys: typeof apiKeys;
@@ -70,9 +63,9 @@ declare const fullApi: ApiFromModules<{
   crons: typeof crons;
   dashboard: typeof dashboard;
   devGuard: typeof devGuard;
+  email: typeof email;
   "email/index": typeof email_index;
   "email/templates/subscriptionEmail": typeof email_templates_subscriptionEmail;
-  email: typeof email;
   env: typeof env;
   files: typeof files;
   github: typeof github;
@@ -94,14 +87,30 @@ declare const fullApi: ApiFromModules<{
   "utils/validators": typeof utils_validators;
   web: typeof web;
 }>;
-declare const fullApiWithMounts: typeof fullApi;
 
+/**
+ * A utility for referencing Convex functions in your app's public API.
+ *
+ * Usage:
+ * ```js
+ * const myFunctionReference = api.myModule.myFunction;
+ * ```
+ */
 export declare const api: FilterApi<
-  typeof fullApiWithMounts,
+  typeof fullApi,
   FunctionReference<any, "public">
 >;
+
+/**
+ * A utility for referencing Convex functions in your app's internal API.
+ *
+ * Usage:
+ * ```js
+ * const myFunctionReference = internal.myModule.myFunction;
+ * ```
+ */
 export declare const internal: FilterApi<
-  typeof fullApiWithMounts,
+  typeof fullApi,
   FunctionReference<any, "internal">
 >;
 

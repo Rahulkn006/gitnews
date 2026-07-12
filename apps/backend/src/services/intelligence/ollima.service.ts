@@ -123,6 +123,80 @@ Return ONLY a valid JSON object with EXACTLY these keys:
       };
     }
   }
+
+  /**
+   * Generates intelligent match reasons for similar repositories
+   */
+  async generateSimilarRepoReasons(
+    baseRepo: { name: string; owner: string; description?: string | null },
+    similarRepos: { name: string; owner: string; description?: string | null }[]
+  ): Promise<Record<string, string>> {
+    if (similarRepos.length === 0) return {};
+
+    const similarReposList = similarRepos
+      .map((r) => `- ${r.owner}/${r.name} (${r.description || "No description"})`)
+      .join("\n");
+
+    const prompt = `Act as an expert developer AI analyst. We have a base repository ${baseRepo.owner}/${baseRepo.name} (${baseRepo.description || "No description"}).
+We also have a list of similar repositories in the same ecosystem:
+${similarReposList}
+
+For each similar repository, generate a short 1-sentence explanation (under 15 words) of why it is a good match or alternative to the base repository.
+Return ONLY a valid JSON object where the keys are the exact repository names (e.g. "${similarRepos[0].name}") and the values are the 1-sentence explanations.`;
+
+    try {
+      // 1. Try local Ollama processing
+      try {
+        const ollamaRes = await fetch("http://localhost:11434/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            model: "llama3",
+            prompt: prompt,
+            format: "json",
+            stream: false,
+          }),
+        });
+        
+        if (ollamaRes.ok) {
+          const data = await ollamaRes.json();
+          return JSON.parse(data.response);
+        }
+      } catch (e) {
+        console.log("[Ollima] Local Ollama unavailable for similar repos, falling back...");
+      }
+
+      const ollimaKey = process.env.OLLIMA_API_KEY;
+
+      if (ollimaKey) {
+        const res = await fetch("https://api.ollima.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${ollimaKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [{ role: "user", content: prompt }],
+            response_format: { type: "json_object" },
+          }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          const content = data.choices[0].message.content;
+          return JSON.parse(content);
+        } else {
+          console.error("[Ollima] API error for similar repos:", res.status, await res.text());
+        }
+      }
+    } catch (e) {
+      console.log("[Ollima] Similar repo reasons generation failed:", e);
+    }
+
+    // Fallback: return empty object if all generation attempts fail
+    return {};
+  }
 }
 
 export const ollima = new OllimaService();
