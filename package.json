@@ -6,6 +6,7 @@
     "node": "24.x"
   },
   "scripts": {
+    "postinstall": "node patch-vercel.js",
     "build": "turbo build && cp -r apps/astro-web/.vercel .",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
