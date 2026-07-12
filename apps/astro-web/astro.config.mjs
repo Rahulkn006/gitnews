@@ -9,4 +9,9 @@ export default defineConfig({
   output: "hybrid",
   adapter: vercel(),
   integrations: [react(), tailwind({ applyBaseStyles: false })],
+  vite: {
+    server: {
+      allowedHosts: true
+    }
+  }
 });
