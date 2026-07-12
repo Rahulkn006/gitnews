@@ -34,51 +34,79 @@ const { owner, repo: name } = Astro.params;
 
 console.log("[SSR INST] [START] SSR START for owner:", owner, "repo:", name);
 
-if (!owner || !name) {
-  return Astro.redirect("/");
-}
-
 let repo;
-try {
-  console.log("[SSR INST] [FETCH] Repository fetch begins for /api/repositories/" + owner + "/" + name);
-  repo = await fetcher(`/api/repositories/${owner}/${name}`);
-  console.log("[SSR INST] [FETCH] Repository fetch completed");
-} catch (e) {
-  console.error("[SSR INST] [ERROR] Repository fetch failed", e);
-}
-
-if (!repo) {
-  return Astro.redirect("/");
-}
-
 let analysis: any = {};
-if (repo.analysis) {
-  try {
-    console.log("[SSR INST] [PARSE] Analysis parsing begins");
-    analysis = {
-      ...repo.analysis,
-      deepResearch: repo.analysis.deepResearch ? JSON.parse(repo.analysis.deepResearch) : null,
-      scores: repo.analysis.scores ? JSON.parse(repo.analysis.scores) : null,
-      codeIntelligence: repo.analysis.codeIntelligence ? JSON.parse(repo.analysis.codeIntelligence) : null,
-      techStack: repo.analysis.techStack ? JSON.parse(repo.analysis.techStack) : null,
-    };
-    console.log("[SSR INST] [PARSE] Analysis parsing completed");
-  } catch (e) {
-    console.error("Failed to parse repo.analysis JSON fields", e);
+let title = "";
+let description = "";
+let learningValue = "";
+let futurePotential = "";
+
+try {
+  if (!owner || !name) {
+    return Astro.redirect("/");
   }
+
+  try {
+    console.log("[SSR INST] [FETCH] Repository fetch begins for /api/repositories/" + owner + "/" + name);
+    repo = await fetcher(`/api/repositories/${owner}/${name}`);
+    console.log("[SSR INST] [FETCH] Repository fetch completed");
+  } catch (e) {
+    console.error("[SSR INST] [ERROR] Repository fetch failed", e);
+  }
+
+  if (!repo) {
+    return Astro.redirect("/");
+  }
+
+  if (repo.analysis) {
+    try {
+      console.log("[SSR INST] [PARSE] Analysis parsing begins");
+      analysis = {
+        ...repo.analysis,
+        deepResearch: repo.analysis.deepResearch ? JSON.parse(repo.analysis.deepResearch) : null,
+        scores: repo.analysis.scores ? JSON.parse(repo.analysis.scores) : null,
+        codeIntelligence: repo.analysis.codeIntelligence ? JSON.parse(repo.analysis.codeIntelligence) : null,
+        techStack: repo.analysis.techStack ? JSON.parse(repo.analysis.techStack) : null,
+      };
+      console.log("[SSR INST] [PARSE] Analysis parsing completed");
+    } catch (e) {
+      console.error("Failed to parse repo.analysis JSON fields", e);
+    }
+  }
+  console.log("[SSR INST] [RENDER] Preparing to render components...");
+
+  title = `${repo.name} by ${repo.owner} - GitNews Analysis`;
+  description =
+    analysis.summary ||
+    repo.description ||
+    `In-depth developer analysis for ${owner}/${name}`;
+
+  learningValue =
+    analysis.learningDifficulty || repo.verdict?.learningValue || "Intermediate";
+  futurePotential =
+    analysis.futurePotential || repo.verdict?.futurePotential || "Growing";
+
+} catch (error: any) {
+  console.error("[SSR EXCEPTION CAUGHT]");
+  console.error("error.name:", error?.name);
+  console.error("error.message:", error?.message);
+  console.error("error.stack:", error?.stack);
+  console.error("error.cause:", error?.cause);
+  
+  let currentCause = error?.cause;
+  let depth = 1;
+  while (currentCause) {
+    console.error(`nested cause ${depth}:`, currentCause);
+    currentCause = currentCause.cause;
+    depth++;
+  }
+
+  console.error("request URL:", Astro.request.url);
+  console.error("repository owner:", owner);
+  console.error("repository name:", name);
+  
+  throw error;
 }
-console.log("[SSR INST] [RENDER] Preparing to render components...");
-
-const title = `${repo.name} by ${repo.owner} - GitNews Analysis`;
-const description =
-  analysis.summary ||
-  repo.description ||
-  `In-depth developer analysis for ${owner}/${name}`;
-
-const learningValue =
-  analysis.learningDifficulty || repo.verdict?.learningValue || "Intermediate";
-const futurePotential =
-  analysis.futurePotential || repo.verdict?.futurePotential || "Growing";
 ---
 
 <Layout title={title} description={description}>
