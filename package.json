@@ -3,7 +3,7 @@
   "private": true,
   "workspaces": ["packages/*", "apps/*", "tooling/*"],
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "scripts": {
     "build": "turbo build && cp -r apps/astro-web/.vercel .",
